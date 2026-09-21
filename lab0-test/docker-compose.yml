@@ -1,0 +1,6 @@
+version: '3.8'
+services:
+  java-tester:
+    image: eclipse-temurin:17-jre-alpine
+    platform: linux/amd64     # bat buoc tren Mac Apple Silicon (image nay khong co ban arm64)
+    command: java -version

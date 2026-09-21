@@ -1,0 +1,8 @@
+# Giam kich thuoc build context => build nhanh hon.
+# Luu y: KHONG duoc ignore build/libs vi Dockerfile can COPY file JAR tu do.
+.gradle/
+build/classes/
+build/tmp/
+build/resources/
+src/
+*.md

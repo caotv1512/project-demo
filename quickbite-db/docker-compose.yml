@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  quickbite-db:
+    image: postgres:15-alpine
+    container_name: quickbite-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret_password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - quickbite-net
+    restart: always
+
+volumes:
+  db-data:
+
+networks:
+  quickbite-net:
+    name: quickbite-net      # Ten CO DINH - neu bo dong nay, Compose se them tien to
+    driver: bridge           # project vao ten mang va stack backend se khong tim thay

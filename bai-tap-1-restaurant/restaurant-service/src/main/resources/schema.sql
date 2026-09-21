@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS restaurants (
+    id      BIGSERIAL    PRIMARY KEY,
+    name    VARCHAR(150) NOT NULL UNIQUE,
+    address VARCHAR(255) NOT NULL,
+    rating  NUMERIC(2,1) NOT NULL DEFAULT 0.0
+);

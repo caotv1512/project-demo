@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  quickbite-restaurant:
+    build:
+      context: ./restaurant-service
+    container_name: quickbite-restaurant
+
+    # KHONG can dong "platform" nhu user-service!
+    # Vi eclipse-temurin:21-jre-alpine CO SAN ban arm64 (con ban 17 thi khong).
+    # Day la vi du song ve viec kiem tra kien truc image truoc khi chon tag.
+
+    ports:
+      - "${RESTAURANT_SERVER_PORT}:${RESTAURANT_SERVER_PORT}"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${RESTAURANT_DB_NAME}
+      - DB_USERNAME=${RESTAURANT_DB_USERNAME}
+      - DB_PASSWORD=${RESTAURANT_DB_PASSWORD}
+      - SERVER_PORT=${RESTAURANT_SERVER_PORT}
+    networks:
+      - quickbite-net
+    restart: unless-stopped
+
+networks:
+  quickbite-net:
+    external: true

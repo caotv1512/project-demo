@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.quickbite'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly   'org.postgresql:postgresql'
+}
+
+// QUAN TRONG: ep ten file JAR co dinh la "user-service.jar".
+// Mac dinh Gradle sinh ra "user-service-1.0.0.jar" (co kem version),
+// se khong khop voi dong COPY build/libs/user-service.jar trong Dockerfile.
+bootJar {
+    archiveFileName = 'user-service.jar'
+}

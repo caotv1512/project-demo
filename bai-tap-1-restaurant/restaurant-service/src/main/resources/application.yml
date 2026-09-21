@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: restaurant-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:quickbite_restaurant_db}
+    username: ${DB_USERNAME:quickbite_restaurant}
+    password: ${DB_PASSWORD:quickbite_restaurant}
+    hikari:
+      connection-timeout: 5000
+      initialization-fail-timeout: 10000   # doi DB toi da 10s roi bao loi ngay (de hoc lam demo loi)
+  sql:
+    init:
+      mode: always
+
+server:
+  port: ${SERVER_PORT:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

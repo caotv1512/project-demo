@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  quickbite-user:
+    build:
+      context: ./user-service
+    container_name: quickbite-user
+
+    # --------------------------------------------------------------
+    # Image eclipse-temurin:17-jre-alpine CHI CO ban amd64 (khong co arm64).
+    # Dong duoi ep Docker dung ban amd64 + gia lap tren Mac Apple Silicon.
+    # - May Windows / Linux / Mac Intel : day la kien truc goc, khong ton gi.
+    # - May Mac M1/M2/M3/M4             : chay qua Rosetta, do tre khong dang ke.
+    # Bo dong nay tren Mac Apple Silicon => loi "no matching manifest for linux/arm64".
+    # --------------------------------------------------------------
+    platform: linux/amd64
+
+    ports:
+      - "${USER_SERVER_PORT}:${USER_SERVER_PORT}"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${USER_DB_NAME}
+      - DB_USERNAME=${USER_DB_USERNAME}
+      - DB_PASSWORD=${USER_DB_PASSWORD}
+      - SERVER_PORT=${USER_SERVER_PORT}
+    networks:
+      - quickbite-net
+    restart: unless-stopped
+
+networks:
+  quickbite-net:
+    external: true      # Su dung mang ao chung do database da tao truoc do
+                        # => BAT BUOC chay stack quickbite-db TRUOC

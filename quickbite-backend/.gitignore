@@ -1,0 +1,12 @@
+# Hang rao DUY NHAT ngan secret bi commit len Git
+.env
+
+# Gradle / Java
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/

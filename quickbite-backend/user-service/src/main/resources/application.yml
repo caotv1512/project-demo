@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: user-service
+
+  # Gia tri sau dau ":" la GIA TRI MAC DINH khi bien moi truong khong ton tai.
+  # Nho vay app van chay duoc khi debug truc tiep tren IDE (khong qua Docker).
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:quickbite_user_db}
+    username: ${DB_USERNAME:quickbite_user}
+    password: ${DB_PASSWORD:quickbite_user}
+    hikari:
+      connection-timeout: 5000
+      initialization-fail-timeout: 10000   # doi DB toi da 10s roi bao loi ngay (de hoc lam demo loi)
+
+  # Tu dong chay schema.sql va data.sql moi lan khoi dong.
+  # Ca hai file deu viet theo kieu idempotent (chay lai nhieu lan khong loi).
+  sql:
+    init:
+      mode: always
+
+server:
+  port: ${SERVER_PORT:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always     # de sinh vien nhin thay trang thai ket noi DB
+
+logging:
+  level:
+    root: INFO
