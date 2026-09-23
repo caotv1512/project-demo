@@ -261,9 +261,11 @@ cd ~/Downloads/quickbite-demo/quickbite-backend/user-service
 > ```
 
 ```bash
-ls -lh build/libs/
+ls -lh ~/Downloads/quickbite-demo/quickbite-backend/user-service/build/libs/
 ```
 **Phải thấy:** `user-service.jar` (~24M)
+
+> 💡 Dùng đường dẫn đầy đủ ở đây là cố ý: nếu bạn vừa chạy `./build-jar.sh` ở khung trên thì thư mục hiện hành đã đổi, gõ `ls build/libs/` sẽ báo `No such file or directory`.
 
 > **Vì sao kiểm tra:** đây là nguyên nhân số 1 gây lỗi `COPY failed` ở bước sau.
 
@@ -592,7 +594,20 @@ docker compose ps
 ```
 **Phải thấy:** `quickbite-user` · `Up` · `0.0.0.0:8081->8081/tcp`
 
-### 5.3 · Kiểm chứng
+### 5.3 · Đợi app sẵn sàng rồi mới gọi API
+
+```bash
+until curl -fsS http://localhost:8081/actuator/health >/dev/null 2>&1; do sleep 2; done && echo "San sang!"
+```
+```powershell
+do { Start-Sleep 2 } until (curl.exe -fsS http://localhost:8081/actuator/health 2>$null); echo "San sang!"
+```
+
+> ⚠️ **Trạng thái `Up` chưa có nghĩa là gọi được API.** Lệnh `docker compose up -d` trả về **ngay lập tức**, nhưng Spring Boot cần thêm khoảng 15 giây mới nghe được cổng. Gọi `curl` sớm hơn sẽ nhận `Connection reset by peer` hoặc `Connection refused` — và bạn dễ tưởng nhầm là hỏng.
+>
+> Vòng lặp trên tự thử lại mỗi 2 giây cho tới khi sẵn sàng. Nếu ngại gõ dài, thay bằng `sleep 15`.
+
+### 5.4 · Kiểm chứng
 
 ```bash
 curl http://localhost:8081/actuator/health
@@ -730,11 +745,22 @@ cp .env.backup .env && rm .env.backup && docker compose down && docker compose u
 
 ## 🧪 Thí nghiệm 9 — Trùng cổng
 
+Trước hết **nhả cổng 8081** bằng cách tắt backend — nếu không, chính `nginx` mới là cái báo lỗi và bài học sẽ lệch:
+
+```bash
+cd ~/Downloads/quickbite-demo/quickbite-backend && docker compose down
+```
+
+Cho `nginx` chiếm cổng 8081:
+
 ```bash
 docker run -d --name chiem-cong -p 8081:80 nginx:alpine
 ```
+
+Giờ thử bật lại backend:
+
 ```bash
-cd ~/Downloads/quickbite-demo/quickbite-backend && docker compose up -d --force-recreate
+cd ~/Downloads/quickbite-demo/quickbite-backend && docker compose up -d
 ```
 
 **Sẽ thấy:**
@@ -921,6 +947,12 @@ rm /tmp/thu-tab.yml
 # BÀI 7 — TÌM LỖI
 
 **Nguyên tắc: không đoán mò. Thu hẹp phạm vi theo thứ tự.**
+
+> ⚠️ **Về đúng thư mục trước đã.** Thí nghiệm 12 vừa rồi đưa bạn sang `/tmp`, mà mọi lệnh `docker compose` đều đọc file cấu hình ở thư mục hiện hành:
+> ```bash
+> cd ~/Downloads/quickbite-demo/quickbite-backend
+> ```
+> Quên bước này thì mọi lệnh dưới đây đều báo `no configuration file provided: not found`.
 
 ### Bước 1 — Container còn sống không?
 

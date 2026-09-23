@@ -1,0 +1,63 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # -------- user-service --------
+        - id: user_route
+          uri: http://user-service:8081          # TEN SERVICE, khong phai IP
+          predicates:
+            - Path=/api/v1/users/**              # dieu kien khop
+          filters:
+            - StripPrefix=2                      # bo 2 doan dau: /api/v1
+
+        # -------- restaurant-service --------
+        - id: restaurant_route
+          uri: http://restaurant-service:8082
+          predicates:
+            - Path=/api/v1/restaurants/**
+          filters:
+            - StripPrefix=2
+
+        # -------- order-service --------
+        - id: order_route
+          uri: http://order-service:8083
+          predicates:
+            - Path=/api/v1/orders/**
+          filters:
+            - StripPrefix=2
+
+        # -------- notification-service --------
+        - id: notification_route
+          uri: http://notification-service:8084
+          predicates:
+            - Path=/api/v1/notifications/**
+          filters:
+            - StripPrefix=2
+
+      # CORS cau hinh MOT LAN tai gateway, thay vi lap lai o tung service
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,gateway
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true        # bat buoc: mo /actuator/gateway/routes de xem bang dinh tuyen
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO

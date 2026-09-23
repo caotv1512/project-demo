@@ -1,0 +1,77 @@
+# ==========================================================================
+#  Session 05 - He thong 4 microservices + API Gateway
+#
+#  DIEM MAU CHOT: chi DUY NHAT api-gateway co khoi "ports".
+#  Bon service con lai KHONG mo cong ra may that -> khong ai goi truc tiep
+#  duoc tu ben ngoai, moi request bat buoc di qua gateway.
+# ==========================================================================
+services:
+
+  # ------------------- CUA NGO DUY NHAT RA BEN NGOAI -------------------
+  api-gateway:
+    build: ./api-gateway
+    container_name: quickbite5-gateway
+    platform: linux/amd64
+    ports:
+      - "${GATEWAY_HOST_PORT}:8080"     # HOST:CONTAINER - hai so khong bat buoc giong nhau
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+  # ------------------- CAC SERVICE NOI BO (khong co "ports") -------------------
+  user-service:
+    build: ./user-service
+    container_name: quickbite5-user
+    platform: linux/amd64
+    # KHONG co "ports" - day chinh la bai hoc "Internal Ports"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${USER_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${USER_DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${USER_DB_PASSWORD}
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+  restaurant-service:
+    build: ./restaurant-service
+    container_name: quickbite5-restaurant
+    platform: linux/amd64
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${RESTAURANT_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${RESTAURANT_DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${RESTAURANT_DB_PASSWORD}
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+  order-service:
+    build: ./order-service
+    container_name: quickbite5-order
+    platform: linux/amd64
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${ORDER_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${ORDER_DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${ORDER_DB_PASSWORD}
+      # Feign goi sang cac service khac bang TEN SERVICE, khong phai IP
+      - USER_SERVICE_URL=http://user-service:8081
+      - RESTAURANT_SERVICE_URL=http://restaurant-service:8082
+      - NOTIFICATION_SERVICE_URL=http://notification-service:8084
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+  notification-service:
+    build: ./notification-service
+    container_name: quickbite5-notification
+    platform: linux/amd64
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${NOTIFICATION_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${NOTIFICATION_DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${NOTIFICATION_DB_PASSWORD}
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+networks:
+  quickbite5-net:
+    external: true        # mang do stack quickbite5-db tao ra => bat buoc bat DB truoc

@@ -1,0 +1,23 @@
+services:
+  quickbite5-db:
+    image: postgres:15-alpine
+    container_name: quickbite5-db
+    ports:
+      - "5433:5432"          # 5433 tren may that, de khong dung Session 04 (5432)
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret_password
+    volumes:
+      - db5-data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - quickbite5-net
+    restart: always
+
+volumes:
+  db5-data:
+
+networks:
+  quickbite5-net:
+    name: quickbite5-net
+    driver: bridge

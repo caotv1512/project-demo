@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/quickbite_order_db}
+    username: ${SPRING_DATASOURCE_USERNAME:quickbite_order}
+    password: ${SPRING_DATASOURCE_PASSWORD:quickbite_order}
+    hikari:
+      connection-timeout: 5000
+      initialization-fail-timeout: 10000
+  sql:
+    init:
+      mode: always
+
+server:
+  port: ${SERVER_PORT:8083}
+
+# Dia chi cac service khac - Feign doc tu day.
+# Gia tri la TEN SERVICE trong docker-compose.yml, KHONG phai IP.
+services:
+  user:         { url: "${USER_SERVICE_URL:http://localhost:8081}" }
+  restaurant:   { url: "${RESTAURANT_SERVICE_URL:http://localhost:8082}" }
+  notification: { url: "${NOTIFICATION_SERVICE_URL:http://localhost:8084}" }
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.quickbite.order: INFO

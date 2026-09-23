@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/quickbite_user_db}
+    username: ${SPRING_DATASOURCE_USERNAME:quickbite_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:quickbite_user}
+    hikari:
+      connection-timeout: 5000
+      initialization-fail-timeout: 10000
+  sql:
+    init:
+      mode: always
+
+server:
+  port: ${SERVER_PORT:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
