@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuickBite · Bảng trạng thái triển khai</title>
+<style>
+:root{--red:#BD2728;--red-soft:#FDECEC;--bg:#F9FAFC;--ink:#1B1F24;--muted:#5B6572;
+      --line:#E3E7EC;--green:#2E7D32;--green-bg:#E8F5E9;--amber:#E07C00;--amber-bg:#FFF4E5;
+      --slate:#44546A;--code:#23272E;
+      --font:"Inter","Segoe UI",-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+      --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6}
+header{background:#fff;border-bottom:3px solid var(--red);padding:20px 26px;
+       box-shadow:0 1px 14px rgba(27,31,36,.07)}
+.hin{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.kick{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+h1{font-size:21px;margin:2px 0 0;font-weight:800}
+.live{margin-left:auto;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+main{max-width:1100px;margin:0 auto;padding:28px 26px 60px}
+.intro{background:#fff;border:1px solid var(--line);border-left:5px solid var(--red);
+       border-radius:0 11px 11px 0;padding:16px 20px;margin-bottom:24px}
+.intro p{margin:6px 0;font-size:14.5px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;
+      box-shadow:0 1px 3px rgba(27,31,36,.05)}
+.card .top{padding:15px 19px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.card .name{font-size:17px;font-weight:800;letter-spacing:.02em}
+.badge{margin-left:auto;font-size:11px;font-weight:750;padding:3px 10px;border-radius:20px}
+.card.staging .top{background:var(--green-bg)} .card.staging .name{color:#1B3A1E}
+.card.staging .badge{background:#fff;color:var(--green);border:1px solid #A8CFAB}
+.card.uat .top{background:var(--amber-bg)} .card.uat .name{color:#8A5000}
+.card.uat .badge{background:#fff;color:var(--amber);border:1px solid #E5C9A6}
+.card.release .top{background:var(--red-soft)} .card.release .name{color:#8C1D1A}
+.card.release .badge{background:#fff;color:var(--red);border:1px solid #F3C9C9}
+.body{padding:17px 19px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;
+     border-bottom:1px dashed var(--line);font-size:13.5px}
+.row:last-of-type{border-bottom:none}
+.row .k{color:var(--muted);flex:none}
+.row .v{font-family:var(--mono);font-size:12.5px;text-align:right;word-break:break-all}
+.big{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--ink);
+     letter-spacing:.02em;margin:4px 0 10px}
+.empty{color:var(--muted);font-style:italic;font-size:13.5px;padding:14px 0}
+.ago{font-size:12px;color:var(--muted);margin-top:10px}
+a{color:var(--red);font-size:12.5px}
+footer{max-width:1100px;margin:0 auto;padding:0 26px 40px;color:var(--muted);font-size:12.5px;text-align:center}
+.tri{width:0;height:0;margin:24px auto 12px;border-left:15px solid transparent;
+     border-right:15px solid transparent;border-top:13px solid var(--red)}
+@media(max-width:860px){.grid{grid-template-columns:1fr}h1{font-size:17px}}
+</style>
+</head>
+<body>
+<header><div class="hin">
+  <div>
+    <div class="kick">Rikkei Academy · Session 07</div>
+    <h1>QuickBite · Bảng trạng thái triển khai</h1>
+  </div>
+  <div class="live"><span class="dot"></span><span id="tick">đang theo dõi…</span></div>
+</div></header>
+
+<main>
+  <div class="intro">
+    <p><strong>Trang này do GitHub Actions tự cập nhật.</strong> Mỗi khi có người đẩy code lên nhánh
+       <code>staging</code>, <code>uat</code> hoặc <code>release</code>, workflow sẽ ghi lại mã commit và thời điểm vào đây.</p>
+    <p>Trang tự tải lại mỗi 15 giây — cứ mở sẵn rồi xem nó đổi ngay trên lớp.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card staging" id="c-staging">
+      <div class="top"><span class="name">staging</span><span class="badge">tự động</span></div>
+      <div class="body"><div class="empty">Chưa có lần triển khai nào</div></div>
+    </div>
+    <div class="card uat" id="c-uat">
+      <div class="top"><span class="name">uat</span><span class="badge">cần duyệt</span></div>
+      <div class="body"><div class="empty">Chưa có lần triển khai nào</div></div>
+    </div>
+    <div class="card release" id="c-release">
+      <div class="top"><span class="name">release</span><span class="badge">cần duyệt</span></div>
+      <div class="body"><div class="empty">Chưa có lần triển khai nào</div></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="tri"></div>
+  <div><strong>Rikkei Academy</strong> — Học viện đào tạo lập trình chất lượng Nhật Bản</div>
+  <div style="margin-top:5px"><a href="https://github.com/caotv1512/project-demo/actions">Xem lịch sử chạy trên GitHub Actions →</a></div>
+</footer>
+
+<script>
+const ENVS = ['staging','uat','release'];
+
+function khoangThoiGian(iso){
+  const giay = Math.floor((Date.now() - new Date(iso)) / 1000);
+  if (giay < 60)    return giay + ' giây trước';
+  if (giay < 3600)  return Math.floor(giay/60) + ' phút trước';
+  if (giay < 86400) return Math.floor(giay/3600) + ' giờ trước';
+  return Math.floor(giay/86400) + ' ngày trước';
+}
+
+function ve(env, d){
+  const el = document.querySelector('#c-' + env + ' .body');
+  if (!d) { el.innerHTML = '<div class="empty">Chưa có lần triển khai nào</div>'; return; }
+  el.innerHTML = `
+    <div class="big">${d.commit_ngan}</div>
+    <div class="row"><span class="k">Nhánh</span><span class="v">${d.nhanh}</span></div>
+    <div class="row"><span class="k">Phiên bản</span><span class="v">${d.nhan_phien_ban}</span></div>
+    <div class="row"><span class="k">Cổng</span><span class="v">${d.cong}</span></div>
+    <div class="row"><span class="k">Người đẩy</span><span class="v">${d.nguoi_day}</span></div>
+    <div class="row"><span class="k">Thời điểm</span><span class="v">${d.thoi_diem}</span></div>
+    <div class="ago">Triển khai ${khoangThoiGian(d.thoi_diem_iso)}</div>
+    <div style="margin-top:8px"><a href="${d.link_run}" target="_blank">Xem log lần chạy →</a></div>`;
+}
+
+async function taiDuLieu(){
+  for (const env of ENVS){
+    try {
+      const r = await fetch(env + '.json?t=' + Date.now());
+      ve(env, r.ok ? await r.json() : null);
+    } catch(e){ ve(env, null); }
+  }
+  document.getElementById('tick').textContent =
+    'cập nhật lúc ' + new Date().toLocaleTimeString('vi-VN');
+}
+
+taiDuLieu();
+setInterval(taiDuLieu, 15000);
+</script>
+</body>
+</html>
