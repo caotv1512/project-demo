@@ -1,0 +1,178 @@
+# ==========================================================================
+#  BÀI 4 — DEPLOY THEO 3 MÔI TRƯỜNG: staging · uat · release
+#
+#  Ý tưởng: MỘT file workflow phục vụ cả ba môi trường. Nhánh Git nào được
+#  push sẽ quyết định môi trường nào được triển khai.
+#
+#      push staging  →  môi trường STAGING  (tự động, không cần duyệt)
+#      push uat      →  môi trường UAT      (nghiệm thu, nên bật duyệt tay)
+#      push release  →  môi trường RELEASE  (phát hành, bắt buộc duyệt tay)
+# ==========================================================================
+name: 04 · Deploy theo môi trường
+
+on:
+  push:
+    branches: [staging, uat, release]
+  workflow_dispatch:
+    inputs:
+      moi_truong:
+        description: 'Chọn môi trường để triển khai thử'
+        type: choice
+        options: [staging, uat, release]
+        default: staging
+
+env:
+  SERVICE_DIR: quickbite-backend/user-service
+
+jobs:
+  # ------------------------------------------------------------------
+  # JOB 1 — Xác định môi trường từ tên nhánh
+  # Dùng "outputs" để truyền giá trị sang các job sau.
+  # ------------------------------------------------------------------
+  xac_dinh_moi_truong:
+    name: Xác định môi trường
+    runs-on: ubuntu-latest
+    outputs:
+      ten_moi_truong: ${{ steps.chon.outputs.ten_moi_truong }}
+      cong_dich:      ${{ steps.chon.outputs.cong_dich }}
+      can_duyet_tay:  ${{ steps.chon.outputs.can_duyet_tay }}
+      nhan_phien_ban: ${{ steps.chon.outputs.nhan_phien_ban }}
+    steps:
+      - name: Suy ra môi trường từ nhánh Git
+        id: chon
+        run: |
+          # Nếu bấm chạy tay thì lấy lựa chọn của người dùng,
+          # ngược lại lấy theo tên nhánh đang được push.
+          NHANH="${{ inputs.moi_truong || github.ref_name }}"
+          echo "Nhánh / lựa chọn: $NHANH"
+
+          case "$NHANH" in
+            staging)
+              echo "ten_moi_truong=staging"  >> $GITHUB_OUTPUT
+              echo "cong_dich=8101"          >> $GITHUB_OUTPUT
+              echo "can_duyet_tay=false"     >> $GITHUB_OUTPUT
+              echo "nhan_phien_ban=snapshot" >> $GITHUB_OUTPUT
+              ;;
+            uat)
+              echo "ten_moi_truong=uat"      >> $GITHUB_OUTPUT
+              echo "cong_dich=8102"          >> $GITHUB_OUTPUT
+              echo "can_duyet_tay=true"      >> $GITHUB_OUTPUT
+              echo "nhan_phien_ban=rc"       >> $GITHUB_OUTPUT
+              ;;
+            release)
+              echo "ten_moi_truong=release"  >> $GITHUB_OUTPUT
+              echo "cong_dich=8103"          >> $GITHUB_OUTPUT
+              echo "can_duyet_tay=true"      >> $GITHUB_OUTPUT
+              echo "nhan_phien_ban=stable"   >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "::error::Nhánh '$NHANH' không thuộc 3 môi trường được hỗ trợ."
+              exit 1
+              ;;
+          esac
+
+      - name: Tóm tắt lựa chọn
+        run: |
+          echo "### Môi trường: \`${{ steps.chon.outputs.ten_moi_truong }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Thuộc tính | Giá trị |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Nhánh Git | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cổng triển khai | ${{ steps.chon.outputs.cong_dich }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Nhãn phiên bản | ${{ steps.chon.outputs.nhan_phien_ban }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cần duyệt tay | ${{ steps.chon.outputs.can_duyet_tay }} |" >> $GITHUB_STEP_SUMMARY
+
+  # ------------------------------------------------------------------
+  # JOB 2 — Test rồi đóng gói, gắn nhãn theo môi trường
+  # ------------------------------------------------------------------
+  kiem_thu_va_dong_goi:
+    name: Test và đóng gói
+    needs: [xac_dinh_moi_truong]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Cài đặt JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Cấp quyền thực thi cho Gradle Wrapper
+        run: chmod +x ./gradlew
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Chạy Unit Test
+        run: ./gradlew test
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Đóng gói JAR
+        run: ./gradlew bootJar
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Gắn nhãn phiên bản theo môi trường
+        id: dat_ten
+        run: |
+          NHAN="${{ needs.xac_dinh_moi_truong.outputs.nhan_phien_ban }}"
+          SHA_NGAN="${GITHUB_SHA:0:7}"
+          TEN_FILE="user-service-${NHAN}-${SHA_NGAN}.jar"
+          cp "${SERVICE_DIR}/build/libs/user-service.jar" "${TEN_FILE}"
+          echo "ten_file=${TEN_FILE}" >> $GITHUB_OUTPUT
+          ls -lh "${TEN_FILE}"
+
+      - name: Lưu Artifact theo môi trường
+        uses: actions/upload-artifact@v4
+        with:
+          name: jar-${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}
+          path: ${{ steps.dat_ten.outputs.ten_file }}
+          retention-days: 7
+
+  # ------------------------------------------------------------------
+  # JOB 3 — Triển khai
+  #
+  # Khối "environment" là cơ chế của GitHub: vào Settings → Environments
+  # tạo staging / uat / release, rồi bật "Required reviewers" cho uat và
+  # release. Khi đó job này sẽ DỪNG LẠI chờ người duyệt bấm Approve.
+  # ------------------------------------------------------------------
+  trien_khai:
+    name: Triển khai lên ${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}
+    needs: [xac_dinh_moi_truong, kiem_thu_va_dong_goi]
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}
+    steps:
+      - name: Tải Artifact về
+        uses: actions/download-artifact@v4
+        with:
+          name: jar-${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}
+
+      - name: Giả lập triển khai
+        run: |
+          MT="${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}"
+          CONG="${{ needs.xac_dinh_moi_truong.outputs.cong_dich }}"
+          echo "=================================================="
+          echo " TRIỂN KHAI LÊN MÔI TRƯỜNG: ${MT}"
+          echo "=================================================="
+          ls -lh *.jar
+          echo ""
+          echo "Ở dự án thật, bước này sẽ là một trong các việc sau:"
+          echo "  - scp file JAR lên máy chủ rồi systemctl restart"
+          echo "  - docker build + docker push lên registry"
+          echo "  - kubectl set image deployment/user-service ..."
+          echo ""
+          echo "Cấu hình môi trường ${MT}:"
+          echo "  Cổng dịch vụ : ${CONG}"
+          echo "  Database     : quickbite_user_db_${MT}"
+          echo ""
+          echo "Biến lấy từ GitHub Environment (Settings → Environments):"
+          echo "  API_URL = ${{ vars.API_URL || '(chưa đặt — xem hướng dẫn ở BÀI 5 file LAB)' }}"
+
+      - name: Ghi kết quả
+        run: |
+          echo "### Đã triển khai lên \`${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Nhánh: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Thời điểm: $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY

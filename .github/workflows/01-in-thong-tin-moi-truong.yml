@@ -1,0 +1,51 @@
+# ==========================================================================
+#  BÀI 1 (slide 12) — Workflow đơn giản nhất: in thông tin môi trường
+#  Mục tiêu: hiểu 4 từ khoá gốc  name / on / env / jobs
+# ==========================================================================
+name: 01 · In thông tin môi trường
+
+on:
+  # workflow_dispatch = bấm nút chạy tay trên tab Actions.
+  # Rất tiện khi dạy: không cần push code vẫn chạy được.
+  workflow_dispatch:
+  push:
+    branches: [main, staging, uat, release]
+    paths:
+      # Chỉ chạy khi file workflow này đổi, tránh tốn phút chạy vô ích
+      - '.github/workflows/01-in-thong-tin-moi-truong.yml'
+
+# env ở cấp workflow = biến dùng chung cho MỌI job bên dưới
+env:
+  PROJECT_NAME: "QuickBite-User-Service"
+
+jobs:
+  in_thong_tin:
+    # Slide dạy [self-hosted, quickbite]. Ở đây dùng runner của GitHub
+    # để chạy được ngay mà không phải cài runner agent.
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Lấy mã nguồn về máy Runner
+        uses: actions/checkout@v4
+
+      - name: Thiết lập môi trường Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: In thông tin môi trường
+        run: |
+          echo "Dự án: ${PROJECT_NAME}"
+          echo "----------------------------------------"
+          java -version
+          echo "----------------------------------------"
+          echo "Nhánh Git đang chạy : ${GITHUB_REF_NAME}"
+          echo "Người kích hoạt     : ${GITHUB_ACTOR}"
+          echo "Kho lưu trữ         : ${GITHUB_REPOSITORY}"
+          echo "Mã commit           : ${GITHUB_SHA}"
+          echo "Sự kiện kích hoạt   : ${GITHUB_EVENT_NAME}"
+          echo "Thư mục làm việc    : ${GITHUB_WORKSPACE}"
+          echo "----------------------------------------"
+          echo "Hệ điều hành Runner :"
+          uname -a

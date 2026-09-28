@@ -22,6 +22,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly   'org.postgresql:postgresql'
+
+    // Session 07: cho phep CI chay unit test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+// Bat buoc de Gradle chay duoc JUnit 5. Thieu dong nay, lenh ./gradlew test
+// bao "no tests found" du da co file test.
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
 }
 
 // QUAN TRONG: ep ten file JAR co dinh la "user-service.jar".

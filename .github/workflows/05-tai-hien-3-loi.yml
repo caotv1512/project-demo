@@ -1,0 +1,101 @@
+# ==========================================================================
+#  BÀI 5 (slide 22, 23, 24) — Tái hiện 3 lỗi CI kinh điển theo yêu cầu
+#
+#  Vào tab Actions → chọn workflow này → Run workflow → chọn loại lỗi.
+#  Dùng để dạy học sinh đọc log và nhận diện Exit code.
+# ==========================================================================
+name: 05 · Tái hiện 3 lỗi CI kinh điển
+
+on:
+  workflow_dispatch:
+    inputs:
+      loai_loi:
+        description: 'Chọn lỗi muốn tái hiện'
+        type: choice
+        options:
+          - 'khong-loi (chạy bình thường)'
+          - 'exit-126 Permission denied'
+          - 'exit-1 Compilation failed'
+          - 'exit-1 Test failed'
+        default: 'khong-loi (chạy bình thường)'
+
+env:
+  SERVICE_DIR: quickbite-backend/user-service
+
+jobs:
+  tai_hien_loi:
+    name: ${{ inputs.loai_loi }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Cài đặt JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      # ---------- LỖI 1: Permission denied (exit code 126) ----------
+      - name: 'LỖI 1 · Gỡ quyền thực thi của gradlew'
+        if: contains(inputs.loai_loi, '126')
+        run: |
+          chmod -x ./gradlew
+          echo "Đã gỡ execute bit. Quyền hiện tại:"
+          ls -l ./gradlew
+          echo "Bước sau sẽ thất bại với exit code 126."
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      # ---------- LỖI 2: Compilation failed (exit code 1) ----------
+      - name: 'LỖI 2 · Gõ sai tên lớp trong code Java'
+        if: contains(inputs.loai_loi, 'Compilation')
+        run: |
+          # Đổi UserController -> UserControler (thiếu chữ l) để trình biên dịch từ chối
+          sed -i 's/public class UserController/public class UserControler/' \
+            src/main/java/com/quickbite/user/UserController.java
+          echo "Đã sửa sai tên lớp. Trình biên dịch sẽ báo lỗi."
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      # ---------- LỖI 3: Test failed (exit code 1) ----------
+      - name: 'LỖI 3 · Sửa assertion cho sai lệch'
+        if: contains(inputs.loai_loi, 'Test failed')
+        run: |
+          # Đổi kỳ vọng 425_000 thành 999_999 để assertion thất bại
+          sed -i 's/assertEquals(425_000/assertEquals(999_999/' \
+            src/test/java/com/quickbite/user/WalletRulesTest.java
+          echo "Đã sửa assertion thành giá trị sai. Test sẽ FAILED."
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      # ---------- Bước chung: nơi lỗi bộc lộ ----------
+      - name: Cấp quyền thực thi cho Gradle Wrapper
+        # Cố tình BỎ QUA bước này khi demo lỗi 126, để lỗi thật sự xảy ra
+        if: ${{ !contains(inputs.loai_loi, '126') }}
+        run: chmod +x ./gradlew
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Chạy test
+        run: ./gradlew test
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Đóng gói JAR
+        run: ./gradlew bootJar
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Kết quả
+        run: |
+          echo "Chạy hết mọi bước mà không lỗi."
+          ls -lh build/libs/
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      # Luôn chạy, kể cả khi các bước trên thất bại
+      - name: Gợi ý cách đọc log
+        if: failure()
+        run: |
+          echo "### Workflow đã thất bại — đúng như mong đợi" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Bốn bước chẩn đoán:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Tìm job có dấu X đỏ" >> $GITHUB_STEP_SUMMARY
+          echo "2. Bấm vào job, mở rộng step bị sập" >> $GITHUB_STEP_SUMMARY
+          echo "3. Cuộn xuống cuối log xem **Exit code**, rồi lần ngược lên đọc Error Trace" >> $GITHUB_STEP_SUMMARY
+          echo "4. Sửa code, chạy thử ở máy trước khi push lại" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,87 @@
+# ==========================================================================
+#  BÀI 2 (slide 14, 16) — Jobs chạy song song, và dùng needs để ép tuần tự
+#  Mục tiêu: thấy tận mắt 2 job chạy CÙNG LÚC, job thứ 3 đợi cả hai xong
+# ==========================================================================
+name: 02 · Jobs song song và needs
+
+on:
+  workflow_dispatch:
+    inputs:
+      gay_loi_job_1:
+        description: 'Cho job_info_1 thất bại (để xem job_print bị Skipped)'
+        type: boolean
+        default: false
+
+jobs:
+  # ---- Hai job dưới đây KHÔNG khai báo needs -> tự động chạy SONG SONG ----
+  job_info_1:
+    name: Thu thập thông tin OS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ghi thời điểm bắt đầu
+        run: echo "job_info_1 bắt đầu lúc $(date +%H:%M:%S)"
+
+      - name: Thu thập thông tin OS
+        run: uname -a
+
+      - name: Cố tình gây lỗi (nếu được chọn)
+        if: ${{ inputs.gay_loi_job_1 }}
+        run: |
+          echo "Đang cố tình thoát với mã lỗi 1 để minh hoạ cơ chế chặn..."
+          exit 1
+
+      - name: Ghi thời điểm kết thúc
+        run: echo "job_info_1 kết thúc lúc $(date +%H:%M:%S)"
+
+  job_info_2:
+    name: Thu thập thông tin User
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ghi thời điểm bắt đầu
+        run: echo "job_info_2 bắt đầu lúc $(date +%H:%M:%S)"
+
+      - name: Thu thập thông tin User
+        run: |
+          whoami
+          echo "Thư mục home: $HOME"
+
+      - name: Giả lập công việc nặng 20 giây
+        run: sleep 20
+
+      - name: Ghi thời điểm kết thúc
+        run: echo "job_info_2 kết thúc lúc $(date +%H:%M:%S)"
+
+  # ---- Job này CÓ needs -> bị khoá Pending cho tới khi CẢ HAI job trên xong ----
+  job_print:
+    name: In kết quả tổng hợp
+    needs: [job_info_1, job_info_2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: In kết quả
+        run: |
+          echo "job_print bắt đầu lúc $(date +%H:%M:%S)"
+          echo "Chỉ chạy sau khi job_info_1 VÀ job_info_2 cùng thành công."
+          echo "Nếu một trong hai thất bại, job này sẽ bị Skipped — không tốn tài nguyên."
+
+  # ---- Minh hoạ cơ chế cô lập (slide 15): job này KHÔNG thấy file của job khác ----
+  job_chung_minh_co_lap:
+    name: Chứng minh Job Isolation
+    needs: [job_info_1]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tìm file mà job_info_1 đã tạo
+        run: |
+          echo "Đang tìm file /tmp/file-cua-job-1.txt do job_info_1 tạo ra..."
+          if [ -f /tmp/file-cua-job-1.txt ]; then
+            echo "TÌM THẤY — sai với lý thuyết!"
+          else
+            echo "KHÔNG tìm thấy — đúng như lý thuyết."
+            echo "Mỗi job chạy trên một máy ảo SẠCH, hoàn toàn riêng biệt."
+            echo "Muốn truyền file giữa các job, bắt buộc dùng upload/download artifact."
+          fi
+
+      - name: Chứng minh mã nguồn cũng không tự có
+        run: |
+          echo "Nội dung thư mục làm việc khi CHƯA checkout:"
+          ls -la "$GITHUB_WORKSPACE"
+          echo "→ Rỗng. Mỗi job phải tự chạy actions/checkout của riêng mình."

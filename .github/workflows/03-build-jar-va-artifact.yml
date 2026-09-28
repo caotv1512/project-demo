@@ -1,0 +1,104 @@
+# ==========================================================================
+#  BÀI 3 (slide 19) — Biên dịch Spring Boot và lưu thành phẩm lên Artifact
+#  Mục tiêu: CI tự đóng gói JAR, không còn phụ thuộc máy cá nhân
+# ==========================================================================
+name: 03 · Build JAR và lưu Artifact
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, staging, uat, release]
+    paths:
+      - 'quickbite-backend/user-service/**'
+      - '.github/workflows/03-build-jar-va-artifact.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'quickbite-backend/user-service/**'
+
+env:
+  SERVICE_DIR: quickbite-backend/user-service
+
+jobs:
+  kiem_thu:
+    name: Chạy Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Cài đặt môi trường JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          # Bật cache Gradle: lần chạy sau nhanh hơn nhiều
+          cache: gradle
+
+      - name: Cấp quyền thực thi cho Gradle Wrapper
+        # BẮT BUỘC. Thiếu bước này sẽ gặp lỗi "Permission denied" (exit code 126)
+        # vì Git không giữ execute bit khi file được tạo trên Windows.
+        run: chmod +x ./gradlew
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Chạy test
+        run: ./gradlew test
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Lưu báo cáo test (kể cả khi test hỏng)
+        # if: always() -> vẫn chạy dù bước trên thất bại, để còn xem báo cáo
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bao-cao-test
+          path: ${{ env.SERVICE_DIR }}/build/reports/tests/test/
+          retention-days: 3
+
+  dong_goi:
+    name: Đóng gói JAR
+    # Chỉ đóng gói khi test đã pass — chốt chặn chất lượng
+    needs: [kiem_thu]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mã nguồn
+        # Phải checkout LẠI: job này là máy ảo khác, không thấy gì của job trước
+        uses: actions/checkout@v4
+
+      - name: Cài đặt môi trường JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Cấp quyền thực thi cho Gradle Wrapper
+        run: chmod +x ./gradlew
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Biên dịch và đóng gói tệp JAR
+        # Chỉ chạy bootJar (không chạy build) để tiết kiệm thời gian Runner,
+        # vì test đã chạy ở job trước rồi.
+        run: ./gradlew bootJar
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Kiểm tra file JAR đã sinh ra
+        run: ls -lh build/libs/
+        working-directory: ${{ env.SERVICE_DIR }}
+
+      - name: Lưu trữ sản phẩm (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: user-service-jar
+          path: ${{ env.SERVICE_DIR }}/build/libs/*.jar
+          retention-days: 3
+
+      - name: Ghi tóm tắt lên trang kết quả
+        # $GITHUB_STEP_SUMMARY hiện markdown ngay trên giao diện Actions
+        run: |
+          echo "### Đóng gói thành công" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Mục | Giá trị |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Nhánh | \`${GITHUB_REF_NAME}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | \`${GITHUB_SHA:0:7}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Kích thước JAR | $(du -h ${SERVICE_DIR}/build/libs/*.jar | cut -f1) |" >> $GITHUB_STEP_SUMMARY
