@@ -353,6 +353,12 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#45-trien-khai-len-uat-va-release">4.5 · Triển khai lên uat và release</a></li>
 <li><a href="#46-bat-duyet-tay-cho-uat-va-release">4.6 · Bật duyệt tay cho uat và release</a></li>
 <li><a href="#47-kiem-chung-co-che-duyet">4.7 · Kiểm chứng cơ chế duyệt</a></li>
+</ul>
+</li>
+<li><a href="#bai-4b-demo-truoc-va-sau-cho-sinh-vien-xem">BÀI 4B — DEMO "TRƯỚC VÀ SAU" CHO SINH VIÊN XEM</a><ul>
+<li><a href="#4b1-bang-trang-thai-tren-github-pages">4B.1 · Bảng trạng thái trên GitHub Pages</a></li>
+<li><a href="#4b2-kich-ban-demo-tren-lop">4B.2 · Kịch bản demo trên lớp</a></li>
+<li><a href="#4b3-ba-cach-khac-e-thay-ket-qua">4B.3 · Ba cách khác để thấy kết quả</a></li>
 <li><a href="#thi-nghiem-4-push-nhanh-khong-nam-trong-danh-sach">🧪 Thí nghiệm 4 — Push nhánh không nằm trong danh sách</a></li>
 </ul>
 </li>
@@ -992,6 +998,79 @@ Cấu hình môi trường staging:
 - Không bật gì → Continuous <strong>Deployment</strong> (tự động 100%)</p>
 <p><strong>Cùng một file YAML</strong>, khác nhau ở cấu hình trên web.</p>
 </blockquote>
+<hr />
+<h1 id="bai-4b-demo-truoc-va-sau-cho-sinh-vien-xem">BÀI 4B — DEMO "TRƯỚC VÀ SAU" CHO SINH VIÊN XEM</h1>
+<p><strong>Mục tiêu:</strong> cho sinh viên <strong>nhìn thấy tận mắt</strong> CI/CD chạy thành công, không cần domain.</p>
+<h2 id="4b1-bang-trang-thai-tren-github-pages">4B.1 · Bảng trạng thái trên GitHub Pages</h2>
+<p>Địa chỉ: <strong><a href="https://caotv1512.github.io/project-demo/">https://caotv1512.github.io/project-demo/</a></strong></p>
+<p>Trang hiện 3 thẻ <code>staging</code> / <code>uat</code> / <code>release</code>. Mỗi thẻ có mã commit, phiên bản, cổng, người đẩy và thời điểm triển khai. Trang <strong>tự tải lại mỗi 15 giây</strong>.</p>
+<p>Cơ chế: job <code>cap_nhat_bang_trang_thai</code> trong workflow 04 ghi một file JSON lên nhánh <code>gh-pages</code>, trang web ở đó đọc và hiển thị.</p>
+<div class="highlight"><pre><span></span><code>push staging → CI chạy → job ghi staging.json lên gh-pages → trang tự hiện commit mới
+</code></pre></div>
+
+<blockquote>
+<p>💡 <strong>Không cần domain, không cần máy chủ, không tốn tiền.</strong> GitHub Pages miễn phí cho repo public.</p>
+</blockquote>
+<h2 id="4b2-kich-ban-demo-tren-lop">4B.2 · Kịch bản demo trên lớp</h2>
+<p><strong>Chuẩn bị:</strong> chia màn hình 2 cửa sổ
+- Cửa sổ trái: <a href="https://caotv1512.github.io/project-demo/">https://caotv1512.github.io/project-demo/</a>
+- Cửa sổ phải: <a href="https://github.com/caotv1512/project-demo/actions">https://github.com/caotv1512/project-demo/actions</a></p>
+<p><strong>Bước 1 — Chụp trạng thái TRƯỚC</strong></p>
+<p>Chiếu trang trạng thái. Đọc to mã commit của <code>staging</code>, <strong>ghi lên bảng</strong>. Ví dụ <code>60c95eb</code>.</p>
+<p><strong>Bước 2 — Sửa code thật</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Downloads/quickbite-demo<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>switch<span class="w"> </span>staging<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"// sua luc </span><span class="k">$(</span>date<span class="w"> </span>+%H:%M:%S<span class="k">)</span><span class="s2">"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>quickbite-backend/user-service/src/main/java/com/quickbite/user/WalletRules.java
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>-A<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: sua code demo tren lop"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push
+</code></pre></div>
+
+<p><strong>Bước 3 — Xem pipeline chạy</strong></p>
+<p>Chuyển sang cửa sổ Actions. Sinh viên thấy 4 job chạy lần lượt:</p>
+<div class="highlight"><pre><span></span><code>Xác định môi trường → Test và đóng gói → Triển khai lên staging → Cập nhật bảng trạng thái
+</code></pre></div>
+
+<p><strong>Bước 4 — Chụp trạng thái SAU</strong></p>
+<p>Quay lại trang trạng thái, đợi nó tự tải lại (tối đa 15 giây).</p>
+<p><strong>Phải thấy:</strong> mã commit đã đổi thành mã mới, khác hẳn con số ghi trên bảng. Dòng "Triển khai X giây trước" đếm từ 0.</p>
+<blockquote>
+<p>💡 <strong>Đây là khoảnh khắc thuyết phục nhất của buổi học.</strong> Sinh viên vừa thấy: code mình gõ → đẩy lên Git → máy chủ tự test, tự đóng gói, tự cập nhật → một trang web công khai đổi theo. Không ai chạm tay vào máy chủ.</p>
+</blockquote>
+<h2 id="4b3-ba-cach-khac-e-thay-ket-qua">4B.3 · Ba cách khác để thấy kết quả</h2>
+<table>
+<thead>
+<tr>
+<th>Cách</th>
+<th>Xem ở đâu</th>
+<th>Cần cấu hình</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bảng trạng thái</strong></td>
+<td><code>caotv1512.github.io/project-demo</code></td>
+<td>Đã dựng sẵn</td>
+</tr>
+<tr>
+<td><strong>Environments của GitHub</strong></td>
+<td>Trang chính repo → cột phải mục <strong>Environments</strong></td>
+<td><strong>Không cần gì</strong> — GitHub tự ghi nhận</td>
+</tr>
+<tr>
+<td><strong>Artifact</strong></td>
+<td>Tab Actions → lần chạy → mục <strong>Artifacts</strong></td>
+<td>Không cần gì</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cách 2 đáng chú ý:</strong> GitHub tự ghi lại mọi lần deploy kèm commit và thời gian. Bấm vào tên môi trường xem được toàn bộ lịch sử — ai deploy, lúc nào, commit nào.</p>
+<p><strong>Cách 3 chứng minh sản phẩm là thật:</strong> tải <code>jar-staging</code> về rồi chạy</p>
+<div class="highlight"><pre><span></span><code>java<span class="w"> </span>-jar<span class="w"> </span>user-service-snapshot-*.jar
+</code></pre></div>
+
+<p>File JAR này <strong>do máy chủ GitHub build</strong>, không phải máy ai cả. Đó chính là ý nghĩa của "chuẩn hoá biên dịch".</p>
 <hr />
 <h2 id="thi-nghiem-4-push-nhanh-khong-nam-trong-danh-sach">🧪 Thí nghiệm 4 — Push nhánh không nằm trong danh sách</h2>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>thu-nghiem<span class="w"> </span>main

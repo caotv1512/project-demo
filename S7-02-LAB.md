@@ -490,6 +490,81 @@ Bấm nút đó → tick `uat` → **Approve and deploy**. Job mới chạy ti�
 
 ---
 
+# BÀI 4B — DEMO "TRƯỚC VÀ SAU" CHO SINH VIÊN XEM
+
+**Mục tiêu:** cho sinh viên **nhìn thấy tận mắt** CI/CD chạy thành công, không cần domain.
+
+## 4B.1 · Bảng trạng thái trên GitHub Pages
+
+Địa chỉ: **<https://caotv1512.github.io/project-demo/>**
+
+Trang hiện 3 thẻ `staging` / `uat` / `release`. Mỗi thẻ có mã commit, phiên bản, cổng, người đẩy và thời điểm triển khai. Trang **tự tải lại mỗi 15 giây**.
+
+Cơ chế: job `cap_nhat_bang_trang_thai` trong workflow 04 ghi một file JSON lên nhánh `gh-pages`, trang web ở đó đọc và hiển thị.
+
+```
+push staging → CI chạy → job ghi staging.json lên gh-pages → trang tự hiện commit mới
+```
+
+> 💡 **Không cần domain, không cần máy chủ, không tốn tiền.** GitHub Pages miễn phí cho repo public.
+
+## 4B.2 · Kịch bản demo trên lớp
+
+**Chuẩn bị:** chia màn hình 2 cửa sổ
+- Cửa sổ trái: <https://caotv1512.github.io/project-demo/>
+- Cửa sổ phải: <https://github.com/caotv1512/project-demo/actions>
+
+**Bước 1 — Chụp trạng thái TRƯỚC**
+
+Chiếu trang trạng thái. Đọc to mã commit của `staging`, **ghi lên bảng**. Ví dụ `60c95eb`.
+
+**Bước 2 — Sửa code thật**
+
+```bash
+cd ~/Downloads/quickbite-demo && git switch staging && git pull
+```
+```bash
+echo "// sua luc $(date +%H:%M:%S)" >> quickbite-backend/user-service/src/main/java/com/quickbite/user/WalletRules.java
+```
+```bash
+git add -A && git commit -q -m "feat: sua code demo tren lop" && git push
+```
+
+**Bước 3 — Xem pipeline chạy**
+
+Chuyển sang cửa sổ Actions. Sinh viên thấy 4 job chạy lần lượt:
+```
+Xác định môi trường → Test và đóng gói → Triển khai lên staging → Cập nhật bảng trạng thái
+```
+
+**Bước 4 — Chụp trạng thái SAU**
+
+Quay lại trang trạng thái, đợi nó tự tải lại (tối đa 15 giây).
+
+**Phải thấy:** mã commit đã đổi thành mã mới, khác hẳn con số ghi trên bảng. Dòng "Triển khai X giây trước" đếm từ 0.
+
+> 💡 **Đây là khoảnh khắc thuyết phục nhất của buổi học.** Sinh viên vừa thấy: code mình gõ → đẩy lên Git → máy chủ tự test, tự đóng gói, tự cập nhật → một trang web công khai đổi theo. Không ai chạm tay vào máy chủ.
+
+## 4B.3 · Ba cách khác để thấy kết quả
+
+| Cách | Xem ở đâu | Cần cấu hình |
+|---|---|---|
+| **Bảng trạng thái** | `caotv1512.github.io/project-demo` | Đã dựng sẵn |
+| **Environments của GitHub** | Trang chính repo → cột phải mục **Environments** | **Không cần gì** — GitHub tự ghi nhận |
+| **Artifact** | Tab Actions → lần chạy → mục **Artifacts** | Không cần gì |
+
+**Cách 2 đáng chú ý:** GitHub tự ghi lại mọi lần deploy kèm commit và thời gian. Bấm vào tên môi trường xem được toàn bộ lịch sử — ai deploy, lúc nào, commit nào.
+
+**Cách 3 chứng minh sản phẩm là thật:** tải `jar-staging` về rồi chạy
+
+```bash
+java -jar user-service-snapshot-*.jar
+```
+
+File JAR này **do máy chủ GitHub build**, không phải máy ai cả. Đó chính là ý nghĩa của "chuẩn hoá biên dịch".
+
+---
+
 ## 🧪 Thí nghiệm 4 — Push nhánh không nằm trong danh sách
 
 ```bash
