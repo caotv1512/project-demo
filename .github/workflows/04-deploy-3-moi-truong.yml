@@ -21,6 +21,10 @@ on:
         options: [staging, uat, release]
         default: staging
 
+# Cho phep GITHUB_TOKEN ghi vao repo (can de day len nhanh gh-pages)
+permissions:
+  contents: write
+
 env:
   SERVICE_DIR: quickbite-backend/user-service
 
@@ -176,3 +180,64 @@ jobs:
           echo "- Nhánh: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- Thời điểm: $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+
+  # ------------------------------------------------------------------
+  # JOB 4 — Cập nhật bảng trạng thái trên GitHub Pages
+  #
+  # Không cần domain, không cần máy chủ. Job này ghi một file JSON lên
+  # nhánh gh-pages; trang web ở đó tự đọc và hiển thị.
+  #   https://caotv1512.github.io/project-demo/
+  # ------------------------------------------------------------------
+  cap_nhat_bang_trang_thai:
+    name: Cập nhật bảng trạng thái
+    needs: [xac_dinh_moi_truong, trien_khai]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lấy nhánh gh-pages về
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Ghi thông tin lần triển khai
+        env:
+          MT:   ${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}
+          CONG: ${{ needs.xac_dinh_moi_truong.outputs.cong_dich }}
+          NHAN: ${{ needs.xac_dinh_moi_truong.outputs.nhan_phien_ban }}
+        run: |
+          cat > "${MT}.json" <<JSON
+          {
+            "moi_truong":     "${MT}",
+            "nhanh":          "${GITHUB_REF_NAME}",
+            "commit":         "${GITHUB_SHA}",
+            "commit_ngan":    "${GITHUB_SHA:0:7}",
+            "nhan_phien_ban": "${NHAN}",
+            "cong":           "${CONG}",
+            "nguoi_day":      "${GITHUB_ACTOR}",
+            "thoi_diem":      "$(TZ='Asia/Ho_Chi_Minh' date '+%d/%m/%Y %H:%M:%S')",
+            "thoi_diem_iso":  "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "link_run":       "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          }
+          JSON
+          echo "Nội dung vừa ghi:"
+          cat "${MT}.json"
+
+      - name: Đẩy lên nhánh gh-pages
+        env:
+          MT: ${{ needs.xac_dinh_moi_truong.outputs.ten_moi_truong }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${MT}.json"
+          # Nếu không có gì đổi thì thoát êm, không để job đỏ
+          git diff --staged --quiet && { echo "Không có thay đổi."; exit 0; }
+          git commit -m "chore(pages): cap nhat trang thai ${MT} - ${GITHUB_SHA:0:7}"
+          git push
+
+      - name: In địa chỉ trang trạng thái
+        run: |
+          TRANG="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/"
+          echo "### Bảng trạng thái đã cập nhật" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[$TRANG]($TRANG)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Mở trang trên và làm mới để thấy commit \`${GITHUB_SHA:0:7}\` vừa xuất hiện." >> $GITHUB_STEP_SUMMARY
