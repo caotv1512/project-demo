@@ -192,6 +192,15 @@ jobs:
     name: Cập nhật bảng trạng thái
     needs: [xac_dinh_moi_truong, trien_khai]
     runs-on: ubuntu-latest
+
+    # Ba nhánh có thể deploy cùng lúc và cùng muốn ghi vào nhánh gh-pages.
+    # Khối concurrency xếp chúng vào MỘT hàng đợi chung, chạy lần lượt,
+    # nhờ vậy không còn cảnh hai job đẩy đè lên nhau.
+    # cancel-in-progress: false -> đợi cho xong, KHÔNG huỷ job đang chạy
+    concurrency:
+      group: ghi-trang-trang-thai
+      cancel-in-progress: false
+
     steps:
       - name: Lấy nhánh gh-pages về
         uses: actions/checkout@v4
@@ -231,7 +240,20 @@ jobs:
           # Nếu không có gì đổi thì thoát êm, không để job đỏ
           git diff --staged --quiet && { echo "Không có thay đổi."; exit 0; }
           git commit -m "chore(pages): cap nhat trang thai ${MT} - ${GITHUB_SHA:0:7}"
-          git push
+
+          # Lớp bảo vệ thứ hai: nếu vẫn bị từ chối (có người đẩy trước),
+          # kéo về rồi xếp commit của mình lên trên, thử lại tối đa 5 lần.
+          for lan in 1 2 3 4 5; do
+            if git push; then
+              echo "Đẩy thành công ở lần thử ${lan}."
+              exit 0
+            fi
+            echo "Lần ${lan} bị từ chối — có người đẩy trước. Đang kéo về rồi thử lại..."
+            git pull --rebase origin gh-pages
+            sleep $(( lan * 3 ))
+          done
+          echo "::error::Không đẩy được lên gh-pages sau 5 lần thử."
+          exit 1
 
       - name: In địa chỉ trang trạng thái
         run: |
