@@ -80,6 +80,35 @@ Viết lên bảng, chưa trả lời ngay:
 > Delivery = "luôn *sẵn sàng* để phát hành". Deployment = "tự động *phát hành* luôn".
 > Đa số doanh nghiệp Việt Nam dừng ở **Delivery** — và đó là lựa chọn hợp lý, không phải thiếu sót.
 
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao CI lại quan trọng đến thế?
+
+**Cách dẫn dắt trên lớp (nên hỏi trước khi giảng):**
+
+> *"Nhóm 8 người cùng làm một dự án. Mỗi người một nhánh. Cuối tuần merge hết vào `develop`. Chuyện gì xảy ra?"*
+
+Để sinh viên trả lời, rồi chốt bằng con số:
+
+| Tần suất tích hợp | Số xung đột trung bình mỗi lần | Thời gian sửa |
+|---|---|---|
+| Mỗi tuần một lần | Rất nhiều, chồng chéo | Cả ngày |
+| Mỗi ngày một lần | Vài chỗ nhỏ | Vài chục phút |
+| **Mỗi lần commit** | Gần như không có | Vài phút |
+
+**Chữ "Continuous" chính là mấu chốt.** Không phải "tự động" — mà là **"liên tục"**, tức *tích hợp thường xuyên đến mức mỗi lần chỉ có một thay đổi nhỏ để đối chiếu*. Tự động hoá chỉ là phương tiện để làm được điều đó mà không mệt.
+
+**Ẩn dụ nên dùng:** CI giống như **rửa bát ngay sau khi ăn**, thay vì dồn cả tuần. Cùng một khối lượng công việc, nhưng dồn lại thì vừa khó rửa vừa bốc mùi.
+
+**Ba điều CI *không* làm — phải nói rõ để sinh viên không kỳ vọng sai:**
+
+| CI KHÔNG làm | Vì sao |
+|---|---|
+| Không làm code bạn đúng hơn | Nó chỉ chạy đúng những test bạn viết. Không viết test thì CI xanh vô nghĩa |
+| Không thay thế code review | Máy kiểm tra được cú pháp, không kiểm tra được thiết kế tồi |
+| Không bắt được lỗi nghiệp vụ | Test chỉ so sánh kết quả với **kỳ vọng do bạn đặt ra**. Kỳ vọng sai thì test sai theo |
+
+> **Câu chốt nên viết lên bảng:** *"CI xanh không có nghĩa code đúng. CI đỏ chắc chắn có nghĩa code sai."*
+> Đây là mệnh đề một chiều — sinh viên rất hay hiểu ngược.
+
 ### 1.2. Kiến trúc điều phối Server – Runner
 
 ```
@@ -114,6 +143,64 @@ Push code → GitHub tạo Workflow → Runner lấy Jobs → Thực thi → G�
 ```
 
 > **Chi tiết quan trọng mà sơ đồ nói rõ:** Runner **chủ động polling** hỏi GitHub "có việc gì cho tôi không?", chứ GitHub **không** chủ động đẩy việc xuống. Đây là lý do một self-hosted runner đặt sau tường lửa công ty vẫn hoạt động được — nó chỉ cần gọi **ra ngoài**, không cần mở cổng vào.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Chuyện gì xảy ra trong 3 giây sau khi bạn gõ `git push`?
+
+Đây là phần sinh viên mơ hồ nhất. Hãy kể theo **trình tự thời gian**, như kể chuyện:
+
+| Giây | Việc xảy ra | Diễn ra ở đâu |
+|---|---|---|
+| 0.0 | Bạn gõ `git push` | Máy bạn |
+| 0.5 | GitHub nhận commit, ghi vào repository | Máy chủ GitHub |
+| 0.6 | GitHub đọc **mọi file** trong `.github/workflows/` | Máy chủ GitHub |
+| 0.7 | Với mỗi file, kiểm tra khối `on:` — sự kiện này có khớp không? | Máy chủ GitHub |
+| 0.8 | File nào khớp → tạo một **workflow run**, đưa các job vào **hàng đợi** | Máy chủ GitHub |
+| 1–20 | Runner rảnh polling thấy job → nhận về | Runner |
+| 20+ | Runner **tạo máy ảo mới tinh**, chạy từng step | Runner |
+| … | Sau mỗi step, Runner gửi log về GitHub theo thời gian thực | Runner → GitHub |
+
+**Ba điều rút ra từ trình tự này — nên hỏi ngược lại sinh viên:**
+
+**① "Vì sao đôi khi push xong mà chờ mãi chưa thấy chạy?"**
+→ Job đang nằm trong **hàng đợi**, chưa có Runner nào rảnh. Trạng thái `Queued`. Không phải hỏng.
+
+**② "Vì sao sửa file YAML ở nhánh A mà nhánh B không bị ảnh hưởng?"**
+→ Vì GitHub đọc file workflow **ở đúng commit vừa được push**. Mỗi nhánh có bản YAML riêng của nó.
+
+**③ "Vì sao log hiện dần từng dòng chứ không đợi xong mới hiện?"**
+→ Vì Runner **stream** log về GitHub liên tục trong lúc chạy. Bạn đang xem gần như trực tiếp.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — "Máy ảo mới tinh" nghĩa là gì?
+
+Sinh viên hay tưởng tượng Runner như một cái máy tính luôn bật, chạy hết job này tới job khác. **Không phải.**
+
+Với GitHub-hosted runner, **mỗi job** được cấp:
+- Một máy ảo **hoàn toàn mới**, vừa được tạo ra
+- Ổ đĩa trống, chỉ có hệ điều hành và vài công cụ cài sẵn
+- Chạy xong job là **máy ảo bị huỷ vĩnh viễn**
+
+**Cách chỉ cho sinh viên thấy ngay trên lớp:**
+
+```yaml
+- name: Tạo một file
+  run: echo "xin chao" > /tmp/dau-vet.txt
+
+- name: Tìm lại file đó
+  run: ls -la /tmp/dau-vet.txt    # thấy, vì cùng job
+```
+
+Nhưng đặt bước thứ hai sang **job khác** thì không thấy. Workflow `02` trong project mẫu đã làm sẵn thí nghiệm này.
+
+**Hệ quả thực tế của "máy ảo mới tinh":**
+
+| Điều này đúng | Vì sao |
+|---|---|
+| Không bị nhiễm bẩn từ lần chạy trước | Máy mới nên sạch tuyệt đối |
+| Build lần nào cũng như lần nào | Không có "máy tôi có sẵn cái này" |
+| **Nhưng phải tải lại thư viện mỗi lần** | Nên mới cần `cache: gradle` |
+| Không lưu được gì giữa các lần chạy | Nên mới cần Artifacts |
+
+> **Đây là gốc rễ của phần lớn câu hỏi trong buổi học.** Hiểu "máy ảo mới tinh mỗi job" thì tự trả lời được: vì sao phải `checkout` lại, vì sao cần artifact, vì sao cần cache, vì sao self-hosted nhanh hơn.
 
 ### 1.3. GitHub-hosted vs Self-hosted Runner
 
@@ -217,6 +304,68 @@ jobs:
           echo "Nhánh Git đang chạy workflow là ${GITHUB_REF_NAME}"
 ```
 
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Đọc file YAML theo đúng thứ tự máy đọc
+
+Sinh viên hay đọc file YAML từ trên xuống như đọc văn. **Máy không đọc như vậy.** Hãy dạy đọc theo 4 câu hỏi:
+
+| Thứ tự | Câu hỏi | Nhìn vào từ khoá |
+|---|---|---|
+| **1** | *Khi nào chạy?* | `on:` |
+| **2** | *Chạy ở đâu?* | `runs-on:` |
+| **3** | *Làm những việc gì?* | `steps:` |
+| **4** | *Có phụ thuộc gì không?* | `needs:` |
+
+Áp vào file mẫu:
+
+```yaml
+name: Print Environment Info     # (4) tên hiển thị — không ảnh hưởng gì tới việc chạy
+
+on:                              # (1) KHI NÀO
+  push:
+    branches: [main]             #     chỉ khi push lên nhánh main
+
+jobs:
+  print_env_job:                 #     tên job — bạn tự đặt, hiện trên giao diện
+    runs-on: ubuntu-latest       # (2) Ở ĐÂU — máy ảo Ubuntu của GitHub
+    steps:                       # (3) LÀM GÌ — chạy tuần tự từ trên xuống
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+      - run: java -version
+```
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — `uses` và `run` khác nhau chỗ nào?
+
+Đây là cặp khái niệm sinh viên nhầm nhiều nhất trong phần này.
+
+| | `uses` | `run` |
+|---|---|---|
+| Bản chất | Gọi **một chương trình người khác viết sẵn** | Chạy **lệnh shell** của chính bạn |
+| Ví dụ | `uses: actions/checkout@v5` | `run: ./gradlew test` |
+| Tham số truyền thế nào | Qua khối `with:` | Viết thẳng vào dòng lệnh |
+| Chạy trên gì | JavaScript hoặc Docker, do Action quy định | `bash` trên Runner |
+
+**Ẩn dụ dễ nhớ:** `uses` là **gọi hàm thư viện**, `run` là **tự viết code**.
+
+**Vì sao `actions/checkout` phải là một Action chứ không phải `run: git clone`?**
+
+Hỏi câu này để sinh viên thấy giá trị của Action. Bởi vì `checkout` phải lo rất nhiều việc:
+- Xác thực bằng token tạm thời (không lộ mật khẩu)
+- Chỉ tải đúng commit đang được build, không tải cả lịch sử (nhanh hơn nhiều)
+- Xử lý submodule, LFS, symlink
+- Dọn sạch thư mục làm việc trước khi tải
+
+Viết tay bằng `git clone` thì phải tự lo hết. Action đóng gói sẵn tất cả.
+
+**Con số sau `@` là gì?**
+
+```
+actions/checkout@v5
+   ↑        ↑     ↑
+  chủ sở   tên   phiên bản
+```
+
+> ⚠️ **Luôn ghim phiên bản.** Viết `@v5` thì hôm nay và một năm nữa đều chạy giống nhau. Không ghim (hoặc dùng `@main`) thì một ngày đẹp trời tác giả đổi code, pipeline của bạn hỏng mà bạn **không sửa gì cả**.
+
 **Hai loại biến môi trường — phân biệt rất quan trọng:**
 
 | Loại | Ví dụ | Ai tạo ra |
@@ -275,6 +424,37 @@ Job A ──(upload-artifact)──► Kho lưu trữ tạm GitHub ──(downlo
 - **Download Artifacts:** job sau kéo về không gian làm việc riêng để xử lý tiếp.
 
 > **Đây là con đường duy nhất** để duy trì tính liên tục của dữ liệu mà vẫn giữ an toàn hệ thống.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao GitHub cố tình cô lập các job?
+
+Sinh viên hay hỏi *"Sao không cho job dùng chung thư mục cho tiện?"*. Đây là câu hỏi hay, phải trả lời cho đến nơi.
+
+**Ba lý do, theo thứ tự quan trọng:**
+
+**① Để chạy song song được.** Nếu các job dùng chung thư mục, hai job ghi cùng một file cùng lúc sẽ hỏng dữ liệu. Muốn song song thì bắt buộc phải tách. Mà song song là thứ làm pipeline nhanh gấp 2–3 lần.
+
+**② Để mỗi job chọn được môi trường riêng.** Job test cần JDK 17, job build Docker cần Docker, job deploy cần `kubectl`. Cô lập thì mỗi job tự cài đúng thứ mình cần, không đụng nhau.
+
+**③ Để lỗi không lan.** Job A cài nhầm phiên bản thư viện, làm bẩn máy. Nếu dùng chung, job B kế thừa cái bẩn đó và **build ra kết quả sai mà vẫn xanh**. Cô lập chặn được chuyện này.
+
+> **Câu chốt:** cô lập **không phải giới hạn kỹ thuật** mà là **lựa chọn thiết kế có chủ đích**. Đổi lại sự bất tiện (phải checkout lại, phải dùng artifact), bạn được tốc độ và độ tin cậy.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Artifact so với Cache
+
+Hai thứ này đều "lưu file lại dùng sau" nên sinh viên nhầm liên tục. Bảng phân biệt:
+
+| | **Artifact** | **Cache** |
+|---|---|---|
+| Để làm gì | Giữ **sản phẩm** bạn muốn lấy ra | Giữ **dữ liệu tạm** để chạy nhanh hơn |
+| Ví dụ | File JAR, báo cáo test, ảnh chụp lỗi | Thư viện Gradle/npm tải về |
+| Mất đi thì sao | **Mất luôn thành phẩm** | Chỉ chậm lại, tải lại là có |
+| Tải về được không | **Có** — bấm nút trên giao diện | Không, chỉ máy dùng |
+| Khai báo bằng | `actions/upload-artifact` | `cache: gradle` trong `setup-java` |
+
+**Câu hỏi kiểm tra hiểu bài:** *"File JAR nên là artifact hay cache?"*
+→ **Artifact.** Vì đó là thành phẩm cần lấy ra để triển khai. Thư viện Gradle mới là cache.
+
+**Nếu vẫn nhầm, hỏi tiếp:** *"Xoá đi có tạo lại được không?"* Tạo lại được → cache. Mất là mất luôn → artifact.
 
 ### 3.3. Thực hành: luồng 3 jobs phụ thuộc
 
@@ -430,6 +610,68 @@ jobs:
 
 > **Nguyên tắc vàng:** code chỉ đi **một chiều**, không bao giờ nhảy cóc. Muốn lên `release` thì phải qua `uat` trước. Có lỗi ở `uat` thì sửa ở nhánh nguồn rồi đẩy lại từ đầu — **không** sửa trực tiếp trên `uat`.
 
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — `outputs` hoạt động ra sao?
+
+Phần này sinh viên bối rối vì vừa học "job không chia sẻ được gì" xong lại thấy job này đọc được giá trị của job kia.
+
+**Mấu chốt: file không chia sẻ được, nhưng *chuỗi ký tự* thì có.**
+
+GitHub giữ hộ một bảng nhỏ trong bộ nhớ của nó — không phải trên Runner:
+
+```
+Job "xac_dinh_moi_truong" chạy xong
+        │
+        │  ghi:  echo "ten_moi_truong=uat" >> $GITHUB_OUTPUT
+        ▼
+   ┌──────────────────────────────┐
+   │  GitHub giữ hộ bảng giá trị  │
+   │  xac_dinh_moi_truong:        │
+   │     ten_moi_truong = "uat"   │
+   └──────────────┬───────────────┘
+                  │  đọc: needs.xac_dinh_moi_truong.outputs.ten_moi_truong
+                  ▼
+        Job "trien_khai" (máy ảo KHÁC hoàn toàn)
+```
+
+**Ba điều kiện bắt buộc — thiếu một là không chạy:**
+
+| # | Điều kiện | Viết ở đâu |
+|---|---|---|
+| 1 | Step phải có `id` | `- id: chon` |
+| 2 | Job phải khai báo `outputs` trỏ tới step đó | `outputs: ten_moi_truong: ${{ steps.chon.outputs.ten_moi_truong }}` |
+| 3 | Job đọc phải có `needs` job ghi | `needs: [xac_dinh_moi_truong]` |
+
+> ⚠️ **Lỗi hay gặp nhất:** quên điều kiện số 3. Không khai báo `needs` thì `needs.<job>.outputs` luôn rỗng — và GitHub **không báo lỗi**, chỉ đưa chuỗi rỗng. Kết quả là job chạy với giá trị trống, sai mà không biết vì sao.
+
+**Vì sao chỉ truyền được chuỗi, không truyền được file?** Vì bảng này nằm trên máy chủ GitHub, không phải trên đĩa Runner. Nó sinh ra để mang **quyết định** (tên môi trường, số phiên bản, có nên chạy tiếp không), không phải để mang dữ liệu lớn. Dữ liệu lớn dùng artifact.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — `environment` không chỉ là cái nhãn
+
+Nhiều người tưởng `environment: name: uat` chỉ để hiển thị cho đẹp. Thực ra nó bật **bốn cơ chế** cùng lúc:
+
+**① Chặn job lại chờ duyệt.** Nếu môi trường bật *Required reviewers*, job chuyển sang trạng thái `Waiting` và **không tiêu tốn Runner** trong lúc chờ. Người duyệt nhận thông báo.
+
+**② Cấp đúng bộ biến và secret.** Cùng viết `${{ vars.API_URL }}`, nhưng job gắn `environment: staging` nhận giá trị khác job gắn `environment: release`. Code không cần biết mình đang ở đâu.
+
+**③ Giới hạn nhánh được phép triển khai.** Cấu hình *Deployment branches* để chỉ nhánh `release` mới được deploy lên môi trường `release`. Ai đó tạo nhánh `release-test` rồi push cũng không lên được.
+
+**④ Ghi lịch sử triển khai.** GitHub tự lưu: commit nào, ai đẩy, lúc nào, ai duyệt. Xem ở mục **Environments** ngoài trang chính repo. Rất hữu ích khi cần truy vết sự cố.
+
+> **Cách chỉ cho sinh viên thấy rõ nhất:** push lên `staging` (chạy thẳng) rồi push lên `uat` (dừng chờ duyệt) — **cùng một file YAML**. Sự khác biệt hoàn toàn nằm ở cấu hình trên giao diện web, không có một dòng code nào phân biệt.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao không viết 3 file YAML riêng?
+
+Sinh viên hay nghĩ cách đơn giản là copy file thành `deploy-staging.yml`, `deploy-uat.yml`, `deploy-release.yml`. Hãy để họ thấy vì sao cách đó tệ:
+
+| Tình huống | 3 file riêng | 1 file dùng chung |
+|---|---|---|
+| Sửa bước build | Sửa **3 chỗ** | Sửa **1 chỗ** |
+| Quên sửa 1 file | `release` build khác `staging` → **lỗi chỉ hiện ở production** | Không thể xảy ra |
+| Thêm môi trường thứ 4 | Copy file thứ 4 | Thêm 4 dòng vào `case` |
+| Đọc để hiểu hệ thống | Phải đọc 3 file, tự so sánh | Đọc 1 file |
+
+> **Nguyên tắc chung của CI/CD:** *môi trường khác nhau chỉ ở **dữ liệu cấu hình**, không khác ở **quy trình**.* Quy trình build phải giống hệt nhau — nếu không, thứ bạn test ở `staging` không phải thứ chạy ở production.
+
 ---
 
 ## PHẦN 6 — CHẨN ĐOÁN SỰ CỐ VÀ QUẢN TRỊ LOG (20 phút)
@@ -529,6 +771,93 @@ Error: Process completed with exit code 1.
 
 > **Phân biệt `126` và `127` rất đáng dạy:** `126` là "có file nhưng không chạy được" (lỗi quyền). `127` là "không có file đó" (sai tên hoặc chưa cài). Hai con số gần nhau nhưng nguyên nhân khác hẳn.
 
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Exit code là gì và ai sinh ra nó?
+
+Sinh viên biết "exit code 1 là lỗi" nhưng không biết **ai** quyết định con số đó. Giải thích bằng chuỗi bàn giao:
+
+```
+./gradlew test  →  thất bại, trả về  1
+        │
+        ▼
+  bash chạy step ghi nhận mã 1, kết thúc step với mã 1
+        │
+        ▼
+  Runner thấy step khác 0  →  đánh dấu step ĐỎ, dừng các step sau
+        │
+        ▼
+  Runner báo về GitHub  →  job ĐỎ  →  các job có needs bị Skipped
+```
+
+**Quy ước chung của mọi chương trình Unix:** trả về `0` là thành công, **khác 0** là thất bại. Toàn bộ CI/CD thế giới dựa trên một quy ước đơn giản như vậy.
+
+**Cách chỉ cho sinh viên thấy ngay:**
+
+```bash
+ls /thu-muc-khong-ton-tai; echo "Exit code = $?"
+```
+```bash
+ls /tmp; echo "Exit code = $?"
+```
+
+`$?` là mã thoát của lệnh vừa chạy. Sinh viên tự thấy `0` và khác `0`.
+
+> 💡 **Hệ quả quan trọng:** nếu bạn viết một step mà lệnh cuối luôn trả về 0, CI **sẽ luôn xanh** dù bên trong hỏng. Ví dụ `run: ./gradlew test || true` — dấu `|| true` nuốt mất lỗi. Đây là cách **giả mạo CI xanh** mà một số người dùng để "cho nhanh". Phải nói rõ với sinh viên đó là hành vi sai.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Cách đọc một log dài 500 dòng
+
+Sinh viên mở log ra, thấy tường chữ, rồi bỏ cuộc. Dạy họ **thứ tự đọc**, không đọc từ đầu:
+
+| Bước | Đọc chỗ nào | Tìm gì |
+|---|---|---|
+| **1** | **Dòng cuối cùng** | `Error: Process completed with exit code N` — biết loại lỗi |
+| **2** | Lần ngược lên, tìm dòng đầu tiên có `error:` hoặc `FAILED` | Đây là **nguyên nhân gốc** |
+| **3** | Đọc đường dẫn file và số dòng ngay cạnh đó | Biết sửa ở đâu |
+| **4** | Bỏ qua mọi dòng còn lại | Chúng thường là hệ quả dây chuyền |
+
+**Ví dụ áp dụng vào log thật:**
+
+```
+> Task :compileJava FAILED                                    ← (2) nguyên nhân bắt đầu ở đây
+/home/runner/.../UserService.java:24: error: cannot find symbol
+private UserReposotory userRepository;                        ← (3) file và dòng 24
+                       ^
+1 error
+FAILURE: Build failed with an exception.                      ← hệ quả, bỏ qua
+* What went wrong:                                            ← hệ quả, bỏ qua
+Execution failed for task ':compileJava'.                     ← hệ quả, bỏ qua
+Error: Process completed with exit code 1.                    ← (1) đọc dòng này TRƯỚC
+```
+
+> **Quy tắc vàng:** Java in lỗi theo kiểu "cái sai thật nằm ở trên, những dòng bên dưới chỉ là dây chuyền hệ quả". Đọc ngược từ dưới lên để biết **loại lỗi**, rồi tìm **dòng `error:` đầu tiên** để biết **chỗ sai**.
+
+### 🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao lỗi quyền chỉ xảy ra trên CI mà không xảy ra ở máy?
+
+Đây là câu hỏi sinh viên Windows nào cũng hỏi.
+
+**Nguyên nhân nằm ở chỗ Git lưu quyền file như một con số.**
+
+```bash
+git ls-files -s quickbite-backend/user-service/gradlew
+```
+
+| Kết quả | Nghĩa là |
+|---|---|
+| `100755` | Có quyền thực thi ✅ |
+| `100644` | Không có quyền thực thi ❌ |
+
+- Trên **Windows**, hệ điều hành không có khái niệm execute bit → Git ghi `100644`
+- Trên **máy Windows** vẫn chạy được `gradlew.bat`, nên không ai phát hiện
+- Đẩy lên **Runner chạy Linux**, Linux đọc đúng `100644` → **từ chối chạy** → exit 126
+
+**Hai cách sửa, nên dạy cả hai:**
+
+| Cách | Lệnh | Ưu điểm |
+|---|---|---|
+| Sửa trong YAML | `run: chmod +x ./gradlew` | Lưới an toàn, luôn đúng |
+| Sửa vĩnh viễn trong Git | `git update-index --chmod=+x gradlew` | Sửa tận gốc, một lần cho mãi mãi |
+
+> **Nên làm cả hai.** Sửa trong Git để đúng bản chất, giữ `chmod +x` trong YAML phòng khi có người vô tình làm mất quyền lần nữa.
+
 ---
 
 ## PHẦN 7 — TỔNG KẾT (10 phút)
@@ -541,7 +870,38 @@ Error: Process completed with exit code 1.
 | ② Lấy môi trường nào làm chuẩn? | **Runner** — `actions/setup-java` khai báo rõ JDK 17/21, mọi lần build đều giống nhau |
 | ③ Đưa code lên server thế nào? | **CD** — artifact được đóng gói tự động, triển khai theo nhánh, có duyệt tay ở `uat`/`release` |
 
-### 7.2. Checklist kiến thức
+### 7.2. Bản đồ 8 kiến thức cốt lõi — dùng để kiểm tra sinh viên đã hiểu chưa
+
+Mỗi dòng là một khái niệm gốc. Cột **"Hiểu rồi thì trả lời được"** là câu hỏi dùng để kiểm tra — nếu sinh viên trả lời trôi chảy nghĩa là đã nắm bản chất, không phải học vẹt.
+
+| # | Kiến thức cốt lõi | Hiểu rồi thì trả lời được | Nếu chưa hiểu, quay lại |
+|---|---|---|---|
+| **1** | **Chữ "Continuous" là tích hợp *thường xuyên*, không phải *tự động*** | "Vì sao merge mỗi ngày dễ hơn merge mỗi tuần?" | Phần 0 + Phần 1.1 |
+| **2** | **Runner chủ động polling, không phải GitHub đẩy xuống** | "Vì sao runner sau tường lửa công ty vẫn chạy được?" | Phần 1.2 |
+| **3** | **Mỗi job = một máy ảo mới tinh, bị huỷ sau khi xong** | "Vì sao mỗi job phải `checkout` lại?" | Phần 1.2 + Phần 3.2 |
+| **4** | **`uses` là gọi thư viện, `run` là tự viết lệnh** | "Vì sao `checkout` phải là Action chứ không phải `git clone`?" | Phần 2.4 |
+| **5** | **`needs` vừa xếp thứ tự vừa là chốt chặn** | "Job trước đỏ thì job sau ra sao? Còn job không phụ thuộc?" | Phần 3.1 |
+| **6** | **Artifact giữ sản phẩm, Cache chỉ để chạy nhanh** | "File JAR nên là artifact hay cache? Vì sao?" | Phần 3.2 |
+| **7** | **`environment` bật 4 cơ chế, không chỉ là cái nhãn** | "Cùng một file YAML, vì sao `staging` chạy thẳng mà `uat` phải chờ?" | Phần 5.2 |
+| **8** | **Exit code 0 là thành công, khác 0 là hỏng** | "`126` và `127` khác nhau chỗ nào?" | Phần 6.5 |
+
+> **Cách dùng bảng này trên lớp:** 10 phút cuối buổi, chiếu cột giữa lên, gọi ngẫu nhiên sinh viên trả lời. Ai trả lời được 6/8 là đạt. Chỗ nào cả lớp lúng túng thì quay lại phần tương ứng ở cột phải.
+
+### 7.2b. Ba hiểu nhầm phải phá bỏ trước khi kết thúc buổi
+
+**① "CI xanh nghĩa là code đúng."**
+→ Sai. CI chỉ chạy đúng những test **bạn viết**. Không viết test thì CI xanh chẳng chứng minh điều gì.
+→ Mệnh đề đúng là một chiều: *CI đỏ **chắc chắn** có vấn đề. CI xanh **chưa chắc** đã ổn.*
+
+**② "Các job nối tiếp nhau trên cùng một máy."**
+→ Sai. Mỗi job là một máy ảo riêng biệt, hoàn toàn mới. Ngay cả khi có `needs`.
+→ Đây là gốc rễ của hầu hết thắc mắc: vì sao phải checkout lại, vì sao cần artifact, vì sao cần cache.
+
+**③ "Muốn deploy 3 môi trường thì viết 3 file YAML."**
+→ Sai. Viết **một** file, dùng tên nhánh để phân biệt.
+→ Ba file riêng nghĩa là sửa một chỗ phải sửa ba lần — và hôm nào quên một chỗ thì quy trình build ở production **khác** với chỗ bạn đã test.
+
+### 7.3. Checklist kiến thức
 
 - ❏ Đóng gói JAR tự động trên CI
 - ❏ Kiến trúc giao tiếp giữa Server và Runner
@@ -551,7 +911,7 @@ Error: Process completed with exit code 1.
 - ❏ Triển khai theo 3 môi trường staging / uat / release
 - ❏ Phân tích lỗi và xử lý các tình huống lỗi phổ biến
 
-### 7.3. Bảng khái niệm hay nhầm
+### 7.4. Bảng khái niệm hay nhầm
 
 | Cặp | Khác nhau ở chỗ |
 |---|---|
@@ -564,7 +924,7 @@ Error: Process completed with exit code 1.
 | Artifact ↔ Cache | Sản phẩm muốn giữ lại để dùng ↔ dữ liệu tạm để tăng tốc build |
 | Exit `126` ↔ `127` | Có file nhưng thiếu quyền ↔ không tìm thấy lệnh |
 
-### 7.4. Mười lỗi thường gặp
+### 7.5. Mười lỗi thường gặp
 
 | # | Triệu chứng | Nguyên nhân | Xử lý |
 |---|---|---|---|
@@ -579,7 +939,7 @@ Error: Process completed with exit code 1.
 | 9 | Workflow không chạy khi push nhánh | `on.push.branches` không khớp | Kiểm tra danh sách nhánh trong `on` |
 | 10 | Hết phút miễn phí | Workflow chạy quá thường xuyên | Thêm bộ lọc `paths`, hoặc chuyển self-hosted |
 
-### 7.5. Bài tập về nhà
+### 7.6. Bài tập về nhà
 
 **Bài 1 (bắt buộc).** Viết workflow CI cho `restaurant-service` dùng **JDK 21**. Giải thích phải đổi những gì so với `user-service`.
 
@@ -591,7 +951,7 @@ Error: Process completed with exit code 1.
 
 **Bài 5 (nâng cao).** Thêm bước build **Docker image** và đẩy lên GitHub Container Registry (`ghcr.io`). Giải thích vì sao lưu Docker image tốt hơn lưu file JAR khi triển khai.
 
-### 7.6. Câu hỏi vấn đáp nhanh
+### 7.7. Câu hỏi vấn đáp nhanh
 
 1. Workflow phải đặt ở thư mục nào? *(`.github/workflows/` tại gốc repository)*
 2. Các job mặc định chạy thế nào? *(Song song, mỗi job một máy ảo riêng)*

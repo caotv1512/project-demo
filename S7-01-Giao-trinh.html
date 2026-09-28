@@ -322,7 +322,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </li>
 <li><a href="#phan-1-tong-quan-github-actions-kien-truc-runner-30-phut">PHẦN 1 — TỔNG QUAN GITHUB ACTIONS &amp; KIẾN TRÚC RUNNER (30 phút)</a><ul>
 <li><a href="#11-khai-niem-cot-loi-cicd">1.1. Khái niệm cốt lõi CI/CD</a></li>
+<li><a href="#giai-thich-tuong-tan-vi-sao-ci-lai-quan-trong-en-the">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao CI lại quan trọng đến thế?</a></li>
 <li><a href="#12-kien-truc-ieu-phoi-server-runner">1.2. Kiến trúc điều phối Server – Runner</a></li>
+<li><a href="#giai-thich-tuong-tan-chuyen-gi-xay-ra-trong-3-giay-sau-khi-ban-go-git-push">🔍 GIẢI THÍCH TƯỜNG TẬN — Chuyện gì xảy ra trong 3 giây sau khi bạn gõ git push?</a></li>
+<li><a href="#giai-thich-tuong-tan-may-ao-moi-tinh-nghia-la-gi">🔍 GIẢI THÍCH TƯỜNG TẬN — "Máy ảo mới tinh" nghĩa là gì?</a></li>
 <li><a href="#13-github-hosted-vs-self-hosted-runner">1.3. GitHub-hosted vs Self-hosted Runner</a></li>
 </ul>
 </li>
@@ -331,12 +334,16 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#22-phan-cap-cau-truc-workflow">2.2. Phân cấp cấu trúc Workflow</a></li>
 <li><a href="#23-cac-tu-khoa-cu-phap-nen-tang">2.3. Các từ khoá cú pháp nền tảng</a></li>
 <li><a href="#24-workflow-au-tien-in-thong-tin-moi-truong">2.4. Workflow đầu tiên — in thông tin môi trường</a></li>
+<li><a href="#giai-thich-tuong-tan-oc-file-yaml-theo-ung-thu-tu-may-oc">🔍 GIẢI THÍCH TƯỜNG TẬN — Đọc file YAML theo đúng thứ tự máy đọc</a></li>
+<li><a href="#giai-thich-tuong-tan-uses-va-run-khac-nhau-cho-nao">🔍 GIẢI THÍCH TƯỜNG TẬN — uses và run khác nhau chỗ nào?</a></li>
 </ul>
 </li>
 <li><a href="#nghi-giai-lao-10-phut">☕ NGHỈ GIẢI LAO (10 phút)</a></li>
 <li><a href="#phan-3-ieu-phoi-va-phan-tach-jobs-30-phut">PHẦN 3 — ĐIỀU PHỐI VÀ PHÂN TÁCH JOBS (30 phút)</a><ul>
 <li><a href="#31-song-song-mac-inh-tuan-tu-bang-needs">3.1. Song song mặc định, tuần tự bằng needs</a></li>
 <li><a href="#32-co-che-co-lap-cong-viec-job-isolation">3.2. Cơ chế cô lập công việc (Job Isolation)</a></li>
+<li><a href="#giai-thich-tuong-tan-vi-sao-github-co-tinh-co-lap-cac-job">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao GitHub cố tình cô lập các job?</a></li>
+<li><a href="#giai-thich-tuong-tan-artifact-so-voi-cache">🔍 GIẢI THÍCH TƯỜNG TẬN — Artifact so với Cache</a></li>
 <li><a href="#33-thuc-hanh-luong-3-jobs-phu-thuoc">3.3. Thực hành: luồng 3 jobs phụ thuộc</a></li>
 </ul>
 </li>
@@ -349,6 +356,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#51-vi-sao-can-nhieu-moi-truong">5.1. Vì sao cần nhiều môi trường?</a></li>
 <li><a href="#52-mot-workflow-phuc-vu-ca-ba-moi-truong">5.2. Một workflow phục vụ cả ba môi trường</a></li>
 <li><a href="#53-luong-thang-cap-code">5.3. Luồng thăng cấp code</a></li>
+<li><a href="#giai-thich-tuong-tan-outputs-hoat-ong-ra-sao">🔍 GIẢI THÍCH TƯỜNG TẬN — outputs hoạt động ra sao?</a></li>
+<li><a href="#giai-thich-tuong-tan-environment-khong-chi-la-cai-nhan">🔍 GIẢI THÍCH TƯỜNG TẬN — environment không chỉ là cái nhãn</a></li>
+<li><a href="#giai-thich-tuong-tan-vi-sao-khong-viet-3-file-yaml-rieng">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao không viết 3 file YAML riêng?</a></li>
 </ul>
 </li>
 <li><a href="#phan-6-chan-oan-su-co-va-quan-tri-log-20-phut">PHẦN 6 — CHẨN ĐOÁN SỰ CỐ VÀ QUẢN TRỊ LOG (20 phút)</a><ul>
@@ -357,15 +367,20 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#63-kich-ban-loi-2-compilation-failed-exit-code-1">6.3. Kịch bản lỗi 2: Compilation Failed (Exit code 1)</a></li>
 <li><a href="#64-kich-ban-loi-3-test-failed-exit-code-1">6.4. Kịch bản lỗi 3: Test Failed (Exit code 1)</a></li>
 <li><a href="#65-bang-phan-biet-exit-code">6.5. Bảng phân biệt Exit code</a></li>
+<li><a href="#giai-thich-tuong-tan-exit-code-la-gi-va-ai-sinh-ra-no">🔍 GIẢI THÍCH TƯỜNG TẬN — Exit code là gì và ai sinh ra nó?</a></li>
+<li><a href="#giai-thich-tuong-tan-cach-oc-mot-log-dai-500-dong">🔍 GIẢI THÍCH TƯỜNG TẬN — Cách đọc một log dài 500 dòng</a></li>
+<li><a href="#giai-thich-tuong-tan-vi-sao-loi-quyen-chi-xay-ra-tren-ci-ma-khong-xay-ra-o-may">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao lỗi quyền chỉ xảy ra trên CI mà không xảy ra ở máy?</a></li>
 </ul>
 </li>
 <li><a href="#phan-7-tong-ket-10-phut">PHẦN 7 — TỔNG KẾT (10 phút)</a><ul>
 <li><a href="#71-quay-lai-ba-cau-hoi-au-buoi">7.1. Quay lại ba câu hỏi đầu buổi</a></li>
-<li><a href="#72-checklist-kien-thuc">7.2. Checklist kiến thức</a></li>
-<li><a href="#73-bang-khai-niem-hay-nham">7.3. Bảng khái niệm hay nhầm</a></li>
-<li><a href="#74-muoi-loi-thuong-gap">7.4. Mười lỗi thường gặp</a></li>
-<li><a href="#75-bai-tap-ve-nha">7.5. Bài tập về nhà</a></li>
-<li><a href="#76-cau-hoi-van-ap-nhanh">7.6. Câu hỏi vấn đáp nhanh</a></li>
+<li><a href="#72-ban-o-8-kien-thuc-cot-loi-dung-e-kiem-tra-sinh-vien-a-hieu-chua">7.2. Bản đồ 8 kiến thức cốt lõi — dùng để kiểm tra sinh viên đã hiểu chưa</a></li>
+<li><a href="#72b-ba-hieu-nham-phai-pha-bo-truoc-khi-ket-thuc-buoi">7.2b. Ba hiểu nhầm phải phá bỏ trước khi kết thúc buổi</a></li>
+<li><a href="#73-checklist-kien-thuc">7.3. Checklist kiến thức</a></li>
+<li><a href="#74-bang-khai-niem-hay-nham">7.4. Bảng khái niệm hay nhầm</a></li>
+<li><a href="#75-muoi-loi-thuong-gap">7.5. Mười lỗi thường gặp</a></li>
+<li><a href="#76-bai-tap-ve-nha">7.6. Bài tập về nhà</a></li>
+<li><a href="#77-cau-hoi-van-ap-nhanh">7.7. Câu hỏi vấn đáp nhanh</a></li>
 </ul>
 </li>
 </ul>
@@ -531,6 +546,67 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 Delivery = "luôn <em>sẵn sàng</em> để phát hành". Deployment = "tự động <em>phát hành</em> luôn".
 Đa số doanh nghiệp Việt Nam dừng ở <strong>Delivery</strong> — và đó là lựa chọn hợp lý, không phải thiếu sót.</p>
 </blockquote>
+<h3 id="giai-thich-tuong-tan-vi-sao-ci-lai-quan-trong-en-the">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao CI lại quan trọng đến thế?</h3>
+<p><strong>Cách dẫn dắt trên lớp (nên hỏi trước khi giảng):</strong></p>
+<blockquote>
+<p><em>"Nhóm 8 người cùng làm một dự án. Mỗi người một nhánh. Cuối tuần merge hết vào <code>develop</code>. Chuyện gì xảy ra?"</em></p>
+</blockquote>
+<p>Để sinh viên trả lời, rồi chốt bằng con số:</p>
+<table>
+<thead>
+<tr>
+<th>Tần suất tích hợp</th>
+<th>Số xung đột trung bình mỗi lần</th>
+<th>Thời gian sửa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mỗi tuần một lần</td>
+<td>Rất nhiều, chồng chéo</td>
+<td>Cả ngày</td>
+</tr>
+<tr>
+<td>Mỗi ngày một lần</td>
+<td>Vài chỗ nhỏ</td>
+<td>Vài chục phút</td>
+</tr>
+<tr>
+<td><strong>Mỗi lần commit</strong></td>
+<td>Gần như không có</td>
+<td>Vài phút</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chữ "Continuous" chính là mấu chốt.</strong> Không phải "tự động" — mà là <strong>"liên tục"</strong>, tức <em>tích hợp thường xuyên đến mức mỗi lần chỉ có một thay đổi nhỏ để đối chiếu</em>. Tự động hoá chỉ là phương tiện để làm được điều đó mà không mệt.</p>
+<p><strong>Ẩn dụ nên dùng:</strong> CI giống như <strong>rửa bát ngay sau khi ăn</strong>, thay vì dồn cả tuần. Cùng một khối lượng công việc, nhưng dồn lại thì vừa khó rửa vừa bốc mùi.</p>
+<p><strong>Ba điều CI <em>không</em> làm — phải nói rõ để sinh viên không kỳ vọng sai:</strong></p>
+<table>
+<thead>
+<tr>
+<th>CI KHÔNG làm</th>
+<th>Vì sao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Không làm code bạn đúng hơn</td>
+<td>Nó chỉ chạy đúng những test bạn viết. Không viết test thì CI xanh vô nghĩa</td>
+</tr>
+<tr>
+<td>Không thay thế code review</td>
+<td>Máy kiểm tra được cú pháp, không kiểm tra được thiết kế tồi</td>
+</tr>
+<tr>
+<td>Không bắt được lỗi nghiệp vụ</td>
+<td>Test chỉ so sánh kết quả với <strong>kỳ vọng do bạn đặt ra</strong>. Kỳ vọng sai thì test sai theo</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Câu chốt nên viết lên bảng:</strong> <em>"CI xanh không có nghĩa code đúng. CI đỏ chắc chắn có nghĩa code sai."</em>
+Đây là mệnh đề một chiều — sinh viên rất hay hiểu ngược.</p>
+</blockquote>
 <h3 id="12-kien-truc-ieu-phoi-server-runner">1.2. Kiến trúc điều phối Server – Runner</h3>
 <div class="highlight"><pre><span></span><code>        ┌─────────────────────────────────┐
         │        GitHub Server            │
@@ -579,6 +655,111 @@ Delivery = "luôn <em>sẵn sàng</em> để phát hành". Deployment = "tự đ
 
 <blockquote>
 <p><strong>Chi tiết quan trọng mà sơ đồ nói rõ:</strong> Runner <strong>chủ động polling</strong> hỏi GitHub "có việc gì cho tôi không?", chứ GitHub <strong>không</strong> chủ động đẩy việc xuống. Đây là lý do một self-hosted runner đặt sau tường lửa công ty vẫn hoạt động được — nó chỉ cần gọi <strong>ra ngoài</strong>, không cần mở cổng vào.</p>
+</blockquote>
+<h3 id="giai-thich-tuong-tan-chuyen-gi-xay-ra-trong-3-giay-sau-khi-ban-go-git-push">🔍 GIẢI THÍCH TƯỜNG TẬN — Chuyện gì xảy ra trong 3 giây sau khi bạn gõ <code>git push</code>?</h3>
+<p>Đây là phần sinh viên mơ hồ nhất. Hãy kể theo <strong>trình tự thời gian</strong>, như kể chuyện:</p>
+<table>
+<thead>
+<tr>
+<th>Giây</th>
+<th>Việc xảy ra</th>
+<th>Diễn ra ở đâu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0</td>
+<td>Bạn gõ <code>git push</code></td>
+<td>Máy bạn</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>GitHub nhận commit, ghi vào repository</td>
+<td>Máy chủ GitHub</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>GitHub đọc <strong>mọi file</strong> trong <code>.github/workflows/</code></td>
+<td>Máy chủ GitHub</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>Với mỗi file, kiểm tra khối <code>on:</code> — sự kiện này có khớp không?</td>
+<td>Máy chủ GitHub</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>File nào khớp → tạo một <strong>workflow run</strong>, đưa các job vào <strong>hàng đợi</strong></td>
+<td>Máy chủ GitHub</td>
+</tr>
+<tr>
+<td>1–20</td>
+<td>Runner rảnh polling thấy job → nhận về</td>
+<td>Runner</td>
+</tr>
+<tr>
+<td>20+</td>
+<td>Runner <strong>tạo máy ảo mới tinh</strong>, chạy từng step</td>
+<td>Runner</td>
+</tr>
+<tr>
+<td>…</td>
+<td>Sau mỗi step, Runner gửi log về GitHub theo thời gian thực</td>
+<td>Runner → GitHub</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ba điều rút ra từ trình tự này — nên hỏi ngược lại sinh viên:</strong></p>
+<p><strong>① "Vì sao đôi khi push xong mà chờ mãi chưa thấy chạy?"</strong>
+→ Job đang nằm trong <strong>hàng đợi</strong>, chưa có Runner nào rảnh. Trạng thái <code>Queued</code>. Không phải hỏng.</p>
+<p><strong>② "Vì sao sửa file YAML ở nhánh A mà nhánh B không bị ảnh hưởng?"</strong>
+→ Vì GitHub đọc file workflow <strong>ở đúng commit vừa được push</strong>. Mỗi nhánh có bản YAML riêng của nó.</p>
+<p><strong>③ "Vì sao log hiện dần từng dòng chứ không đợi xong mới hiện?"</strong>
+→ Vì Runner <strong>stream</strong> log về GitHub liên tục trong lúc chạy. Bạn đang xem gần như trực tiếp.</p>
+<h3 id="giai-thich-tuong-tan-may-ao-moi-tinh-nghia-la-gi">🔍 GIẢI THÍCH TƯỜNG TẬN — "Máy ảo mới tinh" nghĩa là gì?</h3>
+<p>Sinh viên hay tưởng tượng Runner như một cái máy tính luôn bật, chạy hết job này tới job khác. <strong>Không phải.</strong></p>
+<p>Với GitHub-hosted runner, <strong>mỗi job</strong> được cấp:
+- Một máy ảo <strong>hoàn toàn mới</strong>, vừa được tạo ra
+- Ổ đĩa trống, chỉ có hệ điều hành và vài công cụ cài sẵn
+- Chạy xong job là <strong>máy ảo bị huỷ vĩnh viễn</strong></p>
+<p><strong>Cách chỉ cho sinh viên thấy ngay trên lớp:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tạo một file</span>
+<span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo "xin chao" &gt; /tmp/dau-vet.txt</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tìm lại file đó</span>
+<span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ls -la /tmp/dau-vet.txt</span><span class="w">    </span><span class="c1"># thấy, vì cùng job</span>
+</code></pre></div>
+
+<p>Nhưng đặt bước thứ hai sang <strong>job khác</strong> thì không thấy. Workflow <code>02</code> trong project mẫu đã làm sẵn thí nghiệm này.</p>
+<p><strong>Hệ quả thực tế của "máy ảo mới tinh":</strong></p>
+<table>
+<thead>
+<tr>
+<th>Điều này đúng</th>
+<th>Vì sao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Không bị nhiễm bẩn từ lần chạy trước</td>
+<td>Máy mới nên sạch tuyệt đối</td>
+</tr>
+<tr>
+<td>Build lần nào cũng như lần nào</td>
+<td>Không có "máy tôi có sẵn cái này"</td>
+</tr>
+<tr>
+<td><strong>Nhưng phải tải lại thư viện mỗi lần</strong></td>
+<td>Nên mới cần <code>cache: gradle</code></td>
+</tr>
+<tr>
+<td>Không lưu được gì giữa các lần chạy</td>
+<td>Nên mới cần Artifacts</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Đây là gốc rễ của phần lớn câu hỏi trong buổi học.</strong> Hiểu "máy ảo mới tinh mỗi job" thì tự trả lời được: vì sao phải <code>checkout</code> lại, vì sao cần artifact, vì sao cần cache, vì sao self-hosted nhanh hơn.</p>
 </blockquote>
 <h3 id="13-github-hosted-vs-self-hosted-runner">1.3. GitHub-hosted vs Self-hosted Runner</h3>
 <table>
@@ -748,6 +929,105 @@ Delivery = "luôn <em>sẵn sàng</em> để phát hành". Deployment = "tự đ
 <span class="w">          </span><span class="no">echo "Nhánh Git đang chạy workflow là ${GITHUB_REF_NAME}"</span>
 </code></pre></div>
 
+<h3 id="giai-thich-tuong-tan-oc-file-yaml-theo-ung-thu-tu-may-oc">🔍 GIẢI THÍCH TƯỜNG TẬN — Đọc file YAML theo đúng thứ tự máy đọc</h3>
+<p>Sinh viên hay đọc file YAML từ trên xuống như đọc văn. <strong>Máy không đọc như vậy.</strong> Hãy dạy đọc theo 4 câu hỏi:</p>
+<table>
+<thead>
+<tr>
+<th>Thứ tự</th>
+<th>Câu hỏi</th>
+<th>Nhìn vào từ khoá</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><em>Khi nào chạy?</em></td>
+<td><code>on:</code></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><em>Chạy ở đâu?</em></td>
+<td><code>runs-on:</code></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><em>Làm những việc gì?</em></td>
+<td><code>steps:</code></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><em>Có phụ thuộc gì không?</em></td>
+<td><code>needs:</code></td>
+</tr>
+</tbody>
+</table>
+<p>Áp vào file mẫu:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Print Environment Info</span><span class="w">     </span><span class="c1"># (4) tên hiển thị — không ảnh hưởng gì tới việc chạy</span>
+
+<span class="nt">on</span><span class="p">:</span><span class="w">                              </span><span class="c1"># (1) KHI NÀO</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span><span class="w">             </span><span class="c1">#     chỉ khi push lên nhánh main</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">print_env_job</span><span class="p">:</span><span class="w">                 </span><span class="c1">#     tên job — bạn tự đặt, hiện trên giao diện</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span><span class="w">       </span><span class="c1"># (2) Ở ĐÂU — máy ảo Ubuntu của GitHub</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">                       </span><span class="c1"># (3) LÀM GÌ — chạy tuần tự từ trên xuống</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v5</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-java@v5</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">java -version</span>
+</code></pre></div>
+
+<h3 id="giai-thich-tuong-tan-uses-va-run-khac-nhau-cho-nao">🔍 GIẢI THÍCH TƯỜNG TẬN — <code>uses</code> và <code>run</code> khác nhau chỗ nào?</h3>
+<p>Đây là cặp khái niệm sinh viên nhầm nhiều nhất trong phần này.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>uses</code></th>
+<th><code>run</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bản chất</td>
+<td>Gọi <strong>một chương trình người khác viết sẵn</strong></td>
+<td>Chạy <strong>lệnh shell</strong> của chính bạn</td>
+</tr>
+<tr>
+<td>Ví dụ</td>
+<td><code>uses: actions/checkout@v5</code></td>
+<td><code>run: ./gradlew test</code></td>
+</tr>
+<tr>
+<td>Tham số truyền thế nào</td>
+<td>Qua khối <code>with:</code></td>
+<td>Viết thẳng vào dòng lệnh</td>
+</tr>
+<tr>
+<td>Chạy trên gì</td>
+<td>JavaScript hoặc Docker, do Action quy định</td>
+<td><code>bash</code> trên Runner</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ẩn dụ dễ nhớ:</strong> <code>uses</code> là <strong>gọi hàm thư viện</strong>, <code>run</code> là <strong>tự viết code</strong>.</p>
+<p><strong>Vì sao <code>actions/checkout</code> phải là một Action chứ không phải <code>run: git clone</code>?</strong></p>
+<p>Hỏi câu này để sinh viên thấy giá trị của Action. Bởi vì <code>checkout</code> phải lo rất nhiều việc:
+- Xác thực bằng token tạm thời (không lộ mật khẩu)
+- Chỉ tải đúng commit đang được build, không tải cả lịch sử (nhanh hơn nhiều)
+- Xử lý submodule, LFS, symlink
+- Dọn sạch thư mục làm việc trước khi tải</p>
+<p>Viết tay bằng <code>git clone</code> thì phải tự lo hết. Action đóng gói sẵn tất cả.</p>
+<p><strong>Con số sau <code>@</code> là gì?</strong></p>
+<div class="highlight"><pre><span></span><code>actions/checkout@v5
+   ↑        ↑     ↑
+  chủ sở   tên   phiên bản
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ <strong>Luôn ghim phiên bản.</strong> Viết <code>@v5</code> thì hôm nay và một năm nữa đều chạy giống nhau. Không ghim (hoặc dùng <code>@main</code>) thì một ngày đẹp trời tác giả đổi code, pipeline của bạn hỏng mà bạn <strong>không sửa gì cả</strong>.</p>
+</blockquote>
 <p><strong>Hai loại biến môi trường — phân biệt rất quan trọng:</strong></p>
 <table>
 <thead>
@@ -817,6 +1097,56 @@ Job C ─┘
 <blockquote>
 <p><strong>Đây là con đường duy nhất</strong> để duy trì tính liên tục của dữ liệu mà vẫn giữ an toàn hệ thống.</p>
 </blockquote>
+<h3 id="giai-thich-tuong-tan-vi-sao-github-co-tinh-co-lap-cac-job">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao GitHub cố tình cô lập các job?</h3>
+<p>Sinh viên hay hỏi <em>"Sao không cho job dùng chung thư mục cho tiện?"</em>. Đây là câu hỏi hay, phải trả lời cho đến nơi.</p>
+<p><strong>Ba lý do, theo thứ tự quan trọng:</strong></p>
+<p><strong>① Để chạy song song được.</strong> Nếu các job dùng chung thư mục, hai job ghi cùng một file cùng lúc sẽ hỏng dữ liệu. Muốn song song thì bắt buộc phải tách. Mà song song là thứ làm pipeline nhanh gấp 2–3 lần.</p>
+<p><strong>② Để mỗi job chọn được môi trường riêng.</strong> Job test cần JDK 17, job build Docker cần Docker, job deploy cần <code>kubectl</code>. Cô lập thì mỗi job tự cài đúng thứ mình cần, không đụng nhau.</p>
+<p><strong>③ Để lỗi không lan.</strong> Job A cài nhầm phiên bản thư viện, làm bẩn máy. Nếu dùng chung, job B kế thừa cái bẩn đó và <strong>build ra kết quả sai mà vẫn xanh</strong>. Cô lập chặn được chuyện này.</p>
+<blockquote>
+<p><strong>Câu chốt:</strong> cô lập <strong>không phải giới hạn kỹ thuật</strong> mà là <strong>lựa chọn thiết kế có chủ đích</strong>. Đổi lại sự bất tiện (phải checkout lại, phải dùng artifact), bạn được tốc độ và độ tin cậy.</p>
+</blockquote>
+<h3 id="giai-thich-tuong-tan-artifact-so-voi-cache">🔍 GIẢI THÍCH TƯỜNG TẬN — Artifact so với Cache</h3>
+<p>Hai thứ này đều "lưu file lại dùng sau" nên sinh viên nhầm liên tục. Bảng phân biệt:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Artifact</strong></th>
+<th><strong>Cache</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Để làm gì</td>
+<td>Giữ <strong>sản phẩm</strong> bạn muốn lấy ra</td>
+<td>Giữ <strong>dữ liệu tạm</strong> để chạy nhanh hơn</td>
+</tr>
+<tr>
+<td>Ví dụ</td>
+<td>File JAR, báo cáo test, ảnh chụp lỗi</td>
+<td>Thư viện Gradle/npm tải về</td>
+</tr>
+<tr>
+<td>Mất đi thì sao</td>
+<td><strong>Mất luôn thành phẩm</strong></td>
+<td>Chỉ chậm lại, tải lại là có</td>
+</tr>
+<tr>
+<td>Tải về được không</td>
+<td><strong>Có</strong> — bấm nút trên giao diện</td>
+<td>Không, chỉ máy dùng</td>
+</tr>
+<tr>
+<td>Khai báo bằng</td>
+<td><code>actions/upload-artifact</code></td>
+<td><code>cache: gradle</code> trong <code>setup-java</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Câu hỏi kiểm tra hiểu bài:</strong> <em>"File JAR nên là artifact hay cache?"</em>
+→ <strong>Artifact.</strong> Vì đó là thành phẩm cần lấy ra để triển khai. Thư viện Gradle mới là cache.</p>
+<p><strong>Nếu vẫn nhầm, hỏi tiếp:</strong> <em>"Xoá đi có tạo lại được không?"</em> Tạo lại được → cache. Mất là mất luôn → artifact.</p>
 <h3 id="33-thuc-hanh-luong-3-jobs-phu-thuoc">3.3. Thực hành: luồng 3 jobs phụ thuộc</h3>
 <div class="highlight"><pre><span></span><code><span class="nt">jobs</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">job_info_1</span><span class="p">:</span>
@@ -1004,6 +1334,100 @@ Job C ─┘
 <blockquote>
 <p><strong>Nguyên tắc vàng:</strong> code chỉ đi <strong>một chiều</strong>, không bao giờ nhảy cóc. Muốn lên <code>release</code> thì phải qua <code>uat</code> trước. Có lỗi ở <code>uat</code> thì sửa ở nhánh nguồn rồi đẩy lại từ đầu — <strong>không</strong> sửa trực tiếp trên <code>uat</code>.</p>
 </blockquote>
+<h3 id="giai-thich-tuong-tan-outputs-hoat-ong-ra-sao">🔍 GIẢI THÍCH TƯỜNG TẬN — <code>outputs</code> hoạt động ra sao?</h3>
+<p>Phần này sinh viên bối rối vì vừa học "job không chia sẻ được gì" xong lại thấy job này đọc được giá trị của job kia.</p>
+<p><strong>Mấu chốt: file không chia sẻ được, nhưng <em>chuỗi ký tự</em> thì có.</strong></p>
+<p>GitHub giữ hộ một bảng nhỏ trong bộ nhớ của nó — không phải trên Runner:</p>
+<div class="highlight"><pre><span></span><code>Job "xac_dinh_moi_truong" chạy xong
+        │
+        │  ghi:  echo "ten_moi_truong=uat" &gt;&gt; $GITHUB_OUTPUT
+        ▼
+   ┌──────────────────────────────┐
+   │  GitHub giữ hộ bảng giá trị  │
+   │  xac_dinh_moi_truong:        │
+   │     ten_moi_truong = "uat"   │
+   └──────────────┬───────────────┘
+                  │  đọc: needs.xac_dinh_moi_truong.outputs.ten_moi_truong
+                  ▼
+        Job "trien_khai" (máy ảo KHÁC hoàn toàn)
+</code></pre></div>
+
+<p><strong>Ba điều kiện bắt buộc — thiếu một là không chạy:</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Điều kiện</th>
+<th>Viết ở đâu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Step phải có <code>id</code></td>
+<td><code>- id: chon</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Job phải khai báo <code>outputs</code> trỏ tới step đó</td>
+<td><code>outputs: ten_moi_truong: ${{ steps.chon.outputs.ten_moi_truong }}</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Job đọc phải có <code>needs</code> job ghi</td>
+<td><code>needs: [xac_dinh_moi_truong]</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Lỗi hay gặp nhất:</strong> quên điều kiện số 3. Không khai báo <code>needs</code> thì <code>needs.&lt;job&gt;.outputs</code> luôn rỗng — và GitHub <strong>không báo lỗi</strong>, chỉ đưa chuỗi rỗng. Kết quả là job chạy với giá trị trống, sai mà không biết vì sao.</p>
+</blockquote>
+<p><strong>Vì sao chỉ truyền được chuỗi, không truyền được file?</strong> Vì bảng này nằm trên máy chủ GitHub, không phải trên đĩa Runner. Nó sinh ra để mang <strong>quyết định</strong> (tên môi trường, số phiên bản, có nên chạy tiếp không), không phải để mang dữ liệu lớn. Dữ liệu lớn dùng artifact.</p>
+<h3 id="giai-thich-tuong-tan-environment-khong-chi-la-cai-nhan">🔍 GIẢI THÍCH TƯỜNG TẬN — <code>environment</code> không chỉ là cái nhãn</h3>
+<p>Nhiều người tưởng <code>environment: name: uat</code> chỉ để hiển thị cho đẹp. Thực ra nó bật <strong>bốn cơ chế</strong> cùng lúc:</p>
+<p><strong>① Chặn job lại chờ duyệt.</strong> Nếu môi trường bật <em>Required reviewers</em>, job chuyển sang trạng thái <code>Waiting</code> và <strong>không tiêu tốn Runner</strong> trong lúc chờ. Người duyệt nhận thông báo.</p>
+<p><strong>② Cấp đúng bộ biến và secret.</strong> Cùng viết <code>${{ vars.API_URL }}</code>, nhưng job gắn <code>environment: staging</code> nhận giá trị khác job gắn <code>environment: release</code>. Code không cần biết mình đang ở đâu.</p>
+<p><strong>③ Giới hạn nhánh được phép triển khai.</strong> Cấu hình <em>Deployment branches</em> để chỉ nhánh <code>release</code> mới được deploy lên môi trường <code>release</code>. Ai đó tạo nhánh <code>release-test</code> rồi push cũng không lên được.</p>
+<p><strong>④ Ghi lịch sử triển khai.</strong> GitHub tự lưu: commit nào, ai đẩy, lúc nào, ai duyệt. Xem ở mục <strong>Environments</strong> ngoài trang chính repo. Rất hữu ích khi cần truy vết sự cố.</p>
+<blockquote>
+<p><strong>Cách chỉ cho sinh viên thấy rõ nhất:</strong> push lên <code>staging</code> (chạy thẳng) rồi push lên <code>uat</code> (dừng chờ duyệt) — <strong>cùng một file YAML</strong>. Sự khác biệt hoàn toàn nằm ở cấu hình trên giao diện web, không có một dòng code nào phân biệt.</p>
+</blockquote>
+<h3 id="giai-thich-tuong-tan-vi-sao-khong-viet-3-file-yaml-rieng">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao không viết 3 file YAML riêng?</h3>
+<p>Sinh viên hay nghĩ cách đơn giản là copy file thành <code>deploy-staging.yml</code>, <code>deploy-uat.yml</code>, <code>deploy-release.yml</code>. Hãy để họ thấy vì sao cách đó tệ:</p>
+<table>
+<thead>
+<tr>
+<th>Tình huống</th>
+<th>3 file riêng</th>
+<th>1 file dùng chung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sửa bước build</td>
+<td>Sửa <strong>3 chỗ</strong></td>
+<td>Sửa <strong>1 chỗ</strong></td>
+</tr>
+<tr>
+<td>Quên sửa 1 file</td>
+<td><code>release</code> build khác <code>staging</code> → <strong>lỗi chỉ hiện ở production</strong></td>
+<td>Không thể xảy ra</td>
+</tr>
+<tr>
+<td>Thêm môi trường thứ 4</td>
+<td>Copy file thứ 4</td>
+<td>Thêm 4 dòng vào <code>case</code></td>
+</tr>
+<tr>
+<td>Đọc để hiểu hệ thống</td>
+<td>Phải đọc 3 file, tự so sánh</td>
+<td>Đọc 1 file</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nguyên tắc chung của CI/CD:</strong> <em>môi trường khác nhau chỉ ở </em><em>dữ liệu cấu hình</em><em>, không khác ở </em><em>quy trình</em><em>.</em> Quy trình build phải giống hệt nhau — nếu không, thứ bạn test ở <code>staging</code> không phải thứ chạy ở production.</p>
+</blockquote>
 <hr />
 <h2 id="phan-6-chan-oan-su-co-va-quan-tri-log-20-phut">PHẦN 6 — CHẨN ĐOÁN SỰ CỐ VÀ QUẢN TRỊ LOG (20 phút)</h2>
 <h3 id="61-quy-trinh-4-buoc-chan-oan">6.1. Quy trình 4 bước chẩn đoán</h3>
@@ -1137,6 +1561,134 @@ Error: Process completed with exit code 1.
 <blockquote>
 <p><strong>Phân biệt <code>126</code> và <code>127</code> rất đáng dạy:</strong> <code>126</code> là "có file nhưng không chạy được" (lỗi quyền). <code>127</code> là "không có file đó" (sai tên hoặc chưa cài). Hai con số gần nhau nhưng nguyên nhân khác hẳn.</p>
 </blockquote>
+<h3 id="giai-thich-tuong-tan-exit-code-la-gi-va-ai-sinh-ra-no">🔍 GIẢI THÍCH TƯỜNG TẬN — Exit code là gì và ai sinh ra nó?</h3>
+<p>Sinh viên biết "exit code 1 là lỗi" nhưng không biết <strong>ai</strong> quyết định con số đó. Giải thích bằng chuỗi bàn giao:</p>
+<div class="highlight"><pre><span></span><code>./gradlew test  →  thất bại, trả về  1
+        │
+        ▼
+  bash chạy step ghi nhận mã 1, kết thúc step với mã 1
+        │
+        ▼
+  Runner thấy step khác 0  →  đánh dấu step ĐỎ, dừng các step sau
+        │
+        ▼
+  Runner báo về GitHub  →  job ĐỎ  →  các job có needs bị Skipped
+</code></pre></div>
+
+<p><strong>Quy ước chung của mọi chương trình Unix:</strong> trả về <code>0</code> là thành công, <strong>khác 0</strong> là thất bại. Toàn bộ CI/CD thế giới dựa trên một quy ước đơn giản như vậy.</p>
+<p><strong>Cách chỉ cho sinh viên thấy ngay:</strong></p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/thu-muc-khong-ton-tai<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Exit code = </span><span class="nv">$?</span><span class="s2">"</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/tmp<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Exit code = </span><span class="nv">$?</span><span class="s2">"</span>
+</code></pre></div>
+
+<p><code>$?</code> là mã thoát của lệnh vừa chạy. Sinh viên tự thấy <code>0</code> và khác <code>0</code>.</p>
+<blockquote>
+<p>💡 <strong>Hệ quả quan trọng:</strong> nếu bạn viết một step mà lệnh cuối luôn trả về 0, CI <strong>sẽ luôn xanh</strong> dù bên trong hỏng. Ví dụ <code>run: ./gradlew test || true</code> — dấu <code>|| true</code> nuốt mất lỗi. Đây là cách <strong>giả mạo CI xanh</strong> mà một số người dùng để "cho nhanh". Phải nói rõ với sinh viên đó là hành vi sai.</p>
+</blockquote>
+<h3 id="giai-thich-tuong-tan-cach-oc-mot-log-dai-500-dong">🔍 GIẢI THÍCH TƯỜNG TẬN — Cách đọc một log dài 500 dòng</h3>
+<p>Sinh viên mở log ra, thấy tường chữ, rồi bỏ cuộc. Dạy họ <strong>thứ tự đọc</strong>, không đọc từ đầu:</p>
+<table>
+<thead>
+<tr>
+<th>Bước</th>
+<th>Đọc chỗ nào</th>
+<th>Tìm gì</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Dòng cuối cùng</strong></td>
+<td><code>Error: Process completed with exit code N</code> — biết loại lỗi</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Lần ngược lên, tìm dòng đầu tiên có <code>error:</code> hoặc <code>FAILED</code></td>
+<td>Đây là <strong>nguyên nhân gốc</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Đọc đường dẫn file và số dòng ngay cạnh đó</td>
+<td>Biết sửa ở đâu</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Bỏ qua mọi dòng còn lại</td>
+<td>Chúng thường là hệ quả dây chuyền</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ví dụ áp dụng vào log thật:</strong></p>
+<div class="highlight"><pre><span></span><code>&gt; Task :compileJava FAILED                                    ← (2) nguyên nhân bắt đầu ở đây
+/home/runner/.../UserService.java:24: error: cannot find symbol
+private UserReposotory userRepository;                        ← (3) file và dòng 24
+                       ^
+1 error
+FAILURE: Build failed with an exception.                      ← hệ quả, bỏ qua
+* What went wrong:                                            ← hệ quả, bỏ qua
+Execution failed for task ':compileJava'.                     ← hệ quả, bỏ qua
+Error: Process completed with exit code 1.                    ← (1) đọc dòng này TRƯỚC
+</code></pre></div>
+
+<blockquote>
+<p><strong>Quy tắc vàng:</strong> Java in lỗi theo kiểu "cái sai thật nằm ở trên, những dòng bên dưới chỉ là dây chuyền hệ quả". Đọc ngược từ dưới lên để biết <strong>loại lỗi</strong>, rồi tìm <strong>dòng <code>error:</code> đầu tiên</strong> để biết <strong>chỗ sai</strong>.</p>
+</blockquote>
+<h3 id="giai-thich-tuong-tan-vi-sao-loi-quyen-chi-xay-ra-tren-ci-ma-khong-xay-ra-o-may">🔍 GIẢI THÍCH TƯỜNG TẬN — Vì sao lỗi quyền chỉ xảy ra trên CI mà không xảy ra ở máy?</h3>
+<p>Đây là câu hỏi sinh viên Windows nào cũng hỏi.</p>
+<p><strong>Nguyên nhân nằm ở chỗ Git lưu quyền file như một con số.</strong></p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>ls-files<span class="w"> </span>-s<span class="w"> </span>quickbite-backend/user-service/gradlew
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Kết quả</th>
+<th>Nghĩa là</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>100755</code></td>
+<td>Có quyền thực thi ✅</td>
+</tr>
+<tr>
+<td><code>100644</code></td>
+<td>Không có quyền thực thi ❌</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Trên <strong>Windows</strong>, hệ điều hành không có khái niệm execute bit → Git ghi <code>100644</code></li>
+<li>Trên <strong>máy Windows</strong> vẫn chạy được <code>gradlew.bat</code>, nên không ai phát hiện</li>
+<li>Đẩy lên <strong>Runner chạy Linux</strong>, Linux đọc đúng <code>100644</code> → <strong>từ chối chạy</strong> → exit 126</li>
+</ul>
+<p><strong>Hai cách sửa, nên dạy cả hai:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cách</th>
+<th>Lệnh</th>
+<th>Ưu điểm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sửa trong YAML</td>
+<td><code>run: chmod +x ./gradlew</code></td>
+<td>Lưới an toàn, luôn đúng</td>
+</tr>
+<tr>
+<td>Sửa vĩnh viễn trong Git</td>
+<td><code>git update-index --chmod=+x gradlew</code></td>
+<td>Sửa tận gốc, một lần cho mãi mãi</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nên làm cả hai.</strong> Sửa trong Git để đúng bản chất, giữ <code>chmod +x</code> trong YAML phòng khi có người vô tình làm mất quyền lần nữa.</p>
+</blockquote>
 <hr />
 <h2 id="phan-7-tong-ket-10-phut">PHẦN 7 — TỔNG KẾT (10 phút)</h2>
 <h3 id="71-quay-lai-ba-cau-hoi-au-buoi">7.1. Quay lại ba câu hỏi đầu buổi</h3>
@@ -1162,7 +1714,82 @@ Error: Process completed with exit code 1.
 </tr>
 </tbody>
 </table>
-<h3 id="72-checklist-kien-thuc">7.2. Checklist kiến thức</h3>
+<h3 id="72-ban-o-8-kien-thuc-cot-loi-dung-e-kiem-tra-sinh-vien-a-hieu-chua">7.2. Bản đồ 8 kiến thức cốt lõi — dùng để kiểm tra sinh viên đã hiểu chưa</h3>
+<p>Mỗi dòng là một khái niệm gốc. Cột <strong>"Hiểu rồi thì trả lời được"</strong> là câu hỏi dùng để kiểm tra — nếu sinh viên trả lời trôi chảy nghĩa là đã nắm bản chất, không phải học vẹt.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Kiến thức cốt lõi</th>
+<th>Hiểu rồi thì trả lời được</th>
+<th>Nếu chưa hiểu, quay lại</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Chữ "Continuous" là tích hợp <em>thường xuyên<em>, không phải </em>tự động</em></strong></td>
+<td>"Vì sao merge mỗi ngày dễ hơn merge mỗi tuần?"</td>
+<td>Phần 0 + Phần 1.1</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Runner chủ động polling, không phải GitHub đẩy xuống</strong></td>
+<td>"Vì sao runner sau tường lửa công ty vẫn chạy được?"</td>
+<td>Phần 1.2</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Mỗi job = một máy ảo mới tinh, bị huỷ sau khi xong</strong></td>
+<td>"Vì sao mỗi job phải <code>checkout</code> lại?"</td>
+<td>Phần 1.2 + Phần 3.2</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong><code>uses</code> là gọi thư viện, <code>run</code> là tự viết lệnh</strong></td>
+<td>"Vì sao <code>checkout</code> phải là Action chứ không phải <code>git clone</code>?"</td>
+<td>Phần 2.4</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong><code>needs</code> vừa xếp thứ tự vừa là chốt chặn</strong></td>
+<td>"Job trước đỏ thì job sau ra sao? Còn job không phụ thuộc?"</td>
+<td>Phần 3.1</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Artifact giữ sản phẩm, Cache chỉ để chạy nhanh</strong></td>
+<td>"File JAR nên là artifact hay cache? Vì sao?"</td>
+<td>Phần 3.2</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong><code>environment</code> bật 4 cơ chế, không chỉ là cái nhãn</strong></td>
+<td>"Cùng một file YAML, vì sao <code>staging</code> chạy thẳng mà <code>uat</code> phải chờ?"</td>
+<td>Phần 5.2</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>Exit code 0 là thành công, khác 0 là hỏng</strong></td>
+<td>"<code>126</code> và <code>127</code> khác nhau chỗ nào?"</td>
+<td>Phần 6.5</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Cách dùng bảng này trên lớp:</strong> 10 phút cuối buổi, chiếu cột giữa lên, gọi ngẫu nhiên sinh viên trả lời. Ai trả lời được 6/8 là đạt. Chỗ nào cả lớp lúng túng thì quay lại phần tương ứng ở cột phải.</p>
+</blockquote>
+<h3 id="72b-ba-hieu-nham-phai-pha-bo-truoc-khi-ket-thuc-buoi">7.2b. Ba hiểu nhầm phải phá bỏ trước khi kết thúc buổi</h3>
+<p><strong>① "CI xanh nghĩa là code đúng."</strong>
+→ Sai. CI chỉ chạy đúng những test <strong>bạn viết</strong>. Không viết test thì CI xanh chẳng chứng minh điều gì.
+→ Mệnh đề đúng là một chiều: <em>CI đỏ </em><em>chắc chắn</em><em> có vấn đề. CI xanh </em><em>chưa chắc</em><em> đã ổn.</em></p>
+<p><strong>② "Các job nối tiếp nhau trên cùng một máy."</strong>
+→ Sai. Mỗi job là một máy ảo riêng biệt, hoàn toàn mới. Ngay cả khi có <code>needs</code>.
+→ Đây là gốc rễ của hầu hết thắc mắc: vì sao phải checkout lại, vì sao cần artifact, vì sao cần cache.</p>
+<p><strong>③ "Muốn deploy 3 môi trường thì viết 3 file YAML."</strong>
+→ Sai. Viết <strong>một</strong> file, dùng tên nhánh để phân biệt.
+→ Ba file riêng nghĩa là sửa một chỗ phải sửa ba lần — và hôm nào quên một chỗ thì quy trình build ở production <strong>khác</strong> với chỗ bạn đã test.</p>
+<h3 id="73-checklist-kien-thuc">7.3. Checklist kiến thức</h3>
 <ul>
 <li>❏ Đóng gói JAR tự động trên CI</li>
 <li>❏ Kiến trúc giao tiếp giữa Server và Runner</li>
@@ -1172,7 +1799,7 @@ Error: Process completed with exit code 1.
 <li>❏ Triển khai theo 3 môi trường staging / uat / release</li>
 <li>❏ Phân tích lỗi và xử lý các tình huống lỗi phổ biến</li>
 </ul>
-<h3 id="73-bang-khai-niem-hay-nham">7.3. Bảng khái niệm hay nhầm</h3>
+<h3 id="74-bang-khai-niem-hay-nham">7.4. Bảng khái niệm hay nhầm</h3>
 <table>
 <thead>
 <tr>
@@ -1215,7 +1842,7 @@ Error: Process completed with exit code 1.
 </tr>
 </tbody>
 </table>
-<h3 id="74-muoi-loi-thuong-gap">7.4. Mười lỗi thường gặp</h3>
+<h3 id="75-muoi-loi-thuong-gap">7.5. Mười lỗi thường gặp</h3>
 <table>
 <thead>
 <tr>
@@ -1288,13 +1915,13 @@ Error: Process completed with exit code 1.
 </tr>
 </tbody>
 </table>
-<h3 id="75-bai-tap-ve-nha">7.5. Bài tập về nhà</h3>
+<h3 id="76-bai-tap-ve-nha">7.6. Bài tập về nhà</h3>
 <p><strong>Bài 1 (bắt buộc).</strong> Viết workflow CI cho <code>restaurant-service</code> dùng <strong>JDK 21</strong>. Giải thích phải đổi những gì so với <code>user-service</code>.</p>
 <p><strong>Bài 2 (bắt buộc).</strong> Thêm một job <code>kiem_tra_dinh_dang</code> chạy <strong>song song</strong> với job test, và một job <code>tong_ket</code> dùng <code>needs</code> đợi cả hai. Vẽ sơ đồ luồng trước khi viết YAML.</p>
 <p><strong>Bài 3 (bắt buộc).</strong> Cấu hình GitHub Environments cho <code>uat</code> và <code>release</code> với <strong>Required reviewers</strong>. Chụp màn hình lúc job dừng chờ duyệt, giải thích đây là Delivery hay Deployment.</p>
 <p><strong>Bài 4 (nâng cao).</strong> Dùng <code>matrix</code> để chạy test trên <strong>cả JDK 17 và 21</strong> cùng lúc. Giải thích vì sao việc này hữu ích khi nâng cấp phiên bản Java.</p>
 <p><strong>Bài 5 (nâng cao).</strong> Thêm bước build <strong>Docker image</strong> và đẩy lên GitHub Container Registry (<code>ghcr.io</code>). Giải thích vì sao lưu Docker image tốt hơn lưu file JAR khi triển khai.</p>
-<h3 id="76-cau-hoi-van-ap-nhanh">7.6. Câu hỏi vấn đáp nhanh</h3>
+<h3 id="77-cau-hoi-van-ap-nhanh">7.7. Câu hỏi vấn đáp nhanh</h3>
 <ol>
 <li>Workflow phải đặt ở thư mục nào? <em>(<code>.github/workflows/</code> tại gốc repository)</em></li>
 <li>Các job mặc định chạy thế nào? <em>(Song song, mỗi job một máy ảo riêng)</em></li>
