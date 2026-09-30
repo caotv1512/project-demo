@@ -1,12 +1,12 @@
 {
   "moi_truong":     "staging",
   "nhanh":          "staging",
-  "commit":         "3c1c106150a95fc047f195c923e99338fc4e8ab9",
-  "commit_ngan":    "3c1c106",
+  "commit":         "25984899c2d0f7720046623b59f4a9608c03f98a",
+  "commit_ngan":    "2598489",
   "nhan_phien_ban": "snapshot",
   "cong":           "8101",
   "nguoi_day":      "caotv1512",
-  "thoi_diem":      "28/09/2026 20:20:39",
-  "thoi_diem_iso":  "2026-09-28T13:20:39Z",
-  "link_run":       "https://github.com/caotv1512/project-demo/actions/runs/36427786291"
+  "thoi_diem":      "30/09/2026 19:21:09",
+  "thoi_diem_iso":  "2026-09-30T12:21:09Z",
+  "link_run":       "https://github.com/caotv1512/project-demo/actions/runs/36714048572"
 }
