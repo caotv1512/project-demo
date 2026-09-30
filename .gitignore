@@ -1,1 +1,8 @@
 .env
+
+# ==========================================================
+#  Giao trinh danh cho GIANG VIEN - khong day len repo
+#  (van giu tren may, chi khong chia se qua Git)
+# ==========================================================
+*01-GIAO-TRINH*.md
+*01-Giao-trinh*.html
