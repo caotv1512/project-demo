@@ -1,6 +1,13 @@
 # Giữ build context gọn và không rò rỉ dữ liệu nhạy cảm vào image
 .git/
 .gradle/
-build/
 *.md
 .env
+
+# Bỏ thư mục build, NHƯNG giữ lại file JAR.
+# Lý do: Dockerfile multi-stage tự biên dịch nên không cần JAR,
+# còn Dockerfile.single (bản đối chiếu ở Thí nghiệm 1) thì BẮT BUỘC có.
+# Thiếu dòng "!build/libs/*.jar" sẽ gặp lỗi:
+#   "/build/libs/user-service.jar": not found
+build/
+!build/libs/*.jar

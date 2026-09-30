@@ -238,14 +238,20 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 **Tự chứng minh trên máy:**
 
 ```bash
-docker run --rm user-service:1.0.0 sh -c "ls -la /app"
+docker run --rm --platform linux/amd64 --entrypoint sh user-service:1.0.0 -c "ls -la /app"
 ```
 Chỉ có `app.jar` — không có `src/`, không có `gradlew`.
 
 ```bash
-docker run --rm user-service:1.0.0 sh -c "which javac || echo 'KHONG co javac'"
+docker run --rm --platform linux/amd64 --entrypoint sh user-service:1.0.0 -c "which javac || echo 'KHONG co javac'"
 ```
 Không có `javac` → image chỉ có JRE.
+
+> ⚠️ **Hai cờ trong lệnh trên đều bắt buộc, đừng bỏ bớt:**
+>
+> **`--entrypoint sh`** — Dockerfile của ta kết thúc bằng `ENTRYPOINT ["java", "-jar", "app.jar"]`. Nếu viết `docker run user-service:1.0.0 sh -c "..."` thì Docker **không** chạy `sh`, mà nối chuỗi đó vào sau `java -jar app.jar` như đối số → **Spring Boot khởi động** thay vì mở shell cho bạn xem. Phải `--entrypoint sh` để **thay** lệnh mặc định, rồi `-c "..."` đặt **sau** tên image.
+>
+> **`--platform linux/amd64`** — image nền `eclipse-temurin:17-jre-alpine` **không có bản ARM**, nên trên Mac Apple Silicon (M1–M4) thiếu cờ này là lỗi ngay `no match for platform in manifest`. Trên Ubuntu / Windows / Mac Intel thì cờ này **vô hại** (máy vốn đã là amd64), nên cứ để nguyên — cả lớp dùng chung một lệnh.
 
 <div class="keybox">
 <span class="lbl">Lợi ích lớn nhất không phải dung lượng</span>
@@ -462,17 +468,18 @@ Pull được **chỉ chứng minh tải về được**. Image có thể tải 
 
 | Việc | Lệnh |
 |---|---|
-| Build image multi-stage | `docker build -t user-service:1.0.0 .` |
-| Build trên Mac Apple Silicon | `docker build --platform linux/amd64 -t user-service:1.0.0 .` |
+| Build image multi-stage | `docker build --platform linux/amd64 -t user-service:1.0.0 .` |
 | Xem lịch sử layer | `docker history user-service:1.0.0` |
-| Xem bên trong image | `docker run --rm user-service:1.0.0 sh -c "ls -la /app"` |
+| Xem bên trong image | `docker run --rm --platform linux/amd64 --entrypoint sh user-service:1.0.0 -c "ls -la /app"` |
 | Đăng nhập GHCR | `printf '%s' "$CR_PAT" \| docker login ghcr.io -u <user> --password-stdin` |
 | Gắn tag | `docker tag user-service:1.0.0 ghcr.io/<ns>/user-service:1.0.0` |
 | Đẩy lên | `docker push ghcr.io/<ns>/user-service:1.0.0` |
-| Kéo về | `docker pull ghcr.io/<ns>/user-service:1.0.0` |
+| Kéo về | `docker pull --platform linux/amd64 ghcr.io/<ns>/user-service:1.0.0` |
 | Xem digest | `docker image inspect <image> --format '{{index .RepoDigests 0}}'` |
 
-> 💡 Bảng lệnh **đầy đủ** kèm 7 thí nghiệm gây lỗi nằm ở file **`S8-02-Lab-thuc-hanh.html`**.
+> 💡 **Vì sao lệnh nào cũng có `--platform linux/amd64`?** Vì image nền chỉ có bản amd64. Trên Mac Apple Silicon cờ này **bắt buộc**; trên Ubuntu/Windows/Mac Intel nó **vô hại**. Để nguyên thì lệnh chạy được ở **mọi máy**.
+>
+> 💡 Bảng lệnh **đầy đủ** kèm 8 thí nghiệm gây lỗi nằm ở file **`S8-02-Lab-thuc-hanh.html`**.
 
 ---
 

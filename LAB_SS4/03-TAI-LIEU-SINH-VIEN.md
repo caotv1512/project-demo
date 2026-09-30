@@ -92,6 +92,14 @@ docker run -d --name user-service -p 8081:8081 \
   eclipse-temurin:17-jre-alpine java -jar user-service.jar
 ```
 
+> 💻 **Nếu bạn dùng Mac Apple Silicon (M1–M4)** và muốn tự gõ thử các đoạn lệnh trong tài liệu này: image nền `eclipse-temurin:17-jre-alpine` **chỉ có bản amd64, không có bản ARM**, nên thiếu cờ `--platform linux/amd64` là lỗi ngay:
+>
+> ```
+> no match for platform in manifest: not found
+> ```
+>
+> Thêm `--platform linux/amd64` vào **mọi** lệnh `docker build` và `docker run`. Máy Ubuntu / Windows / Mac Intel thì không cần, nhưng để nguyên cờ cũng **vô hại**. Bảng lệnh đầy đủ đã có sẵn cờ này ở file **`02-Lab-Cac-lenh-thuc-hanh.html`**.
+
 Nhìn có vẻ chạy được. Nhưng có **3 vấn đề nghiêm trọng**:
 
 <div class="grid3">
@@ -225,8 +233,10 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ```bash
 ./gradlew bootJar                                    # 1. Java → file JAR
-docker build -t quickbite-user-service:v1 .          # 2. JAR → image
-docker run -d -p 8081:8081 --name user-service \
+docker build --platform linux/amd64 \
+  -t quickbite-user-service:v1 .                     # 2. JAR → image
+docker run -d --platform linux/amd64 \
+  -p 8081:8081 --name user-service \
   quickbite-user-service:v1                          # 3. image → container
 docker logs -f user-service                          # 4. kiểm tra đã chạy chưa
 ```

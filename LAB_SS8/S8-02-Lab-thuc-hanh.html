@@ -292,6 +292,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <ul>
 <li><a href="#a-chuan-bi">A · CHUẨN BỊ</a><ul>
 <li><a href="#a1-buoi-nay-khac-buoi-truoc-o-cho-nao">A1. Buổi này khác buổi trước ở chỗ nào</a></li>
+<li><a href="#a1b-cam-ket-cua-buoi-hoc-oc-to-cho-ca-lop-nghe">A1b. 🎯 CAM KẾT CỦA BUỔI HỌC — đọc to cho cả lớp nghe</a></li>
 <li><a href="#a2-can-gi-truoc-khi-bat-au">A2. Cần gì trước khi bắt đầu</a></li>
 <li><a href="#a3-cau-truc-thu-muc-lien-quan">A3. Cấu trúc thư mục liên quan</a></li>
 <li><a href="#a4-tao-personal-access-token-lam-mot-lan">A4. Tạo Personal Access Token (làm một lần)</a></li>
@@ -304,6 +305,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#13-chung-minh-image-cuoi-sach">1.3 · Chứng minh image cuối sạch</a></li>
 <li><a href="#thi-nghiem-1-so-sanh-dung-luong-hai-ban">🧪 Thí nghiệm 1 — So sánh dung lượng hai bản</a></li>
 <li><a href="#thi-nghiem-2-thu-tu-layer-quyet-inh-toc-o-build">🧪 Thí nghiệm 2 — Thứ tự layer quyết định tốc độ build</a></li>
+<li><a href="#giai-thich-tuong-tan-bai-1">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 1</a><ul>
+<li><a href="#multi-stage-thuc-chat-la-gi">Multi-stage thực chất là gì?</a></li>
+<li><a href="#vi-sao-khong-giu-luon-jdk-cho-tien">Vì sao không giữ luôn JDK cho tiện?</a></li>
+<li><a href="#tang-layer-va-vi-sao-thu-tu-copy-quyet-inh-toc-o">"Tầng" (layer) và vì sao thứ tự COPY quyết định tốc độ</a></li>
+<li><a href="#bai-nay-ong-gop-gi-cho-cam-ket-au-buoi">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#bai-2-ay-image-len-ghcr-tu-may">BÀI 2 — ĐẨY IMAGE LÊN GHCR TỪ MÁY</a><ul>
@@ -313,6 +321,14 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#24-xac-nhan-tren-github">2.4 · Xác nhận trên GitHub</a></li>
 <li><a href="#thi-nghiem-3-ten-image-co-chu-hoa">🧪 Thí nghiệm 3 — Tên image có chữ hoa</a></li>
 <li><a href="#thi-nghiem-4-latest-bi-ghi-e-lang-le">🧪 Thí nghiệm 4 — latest bị ghi đè lặng lẽ</a></li>
+<li><a href="#giai-thich-tuong-tan-bai-2">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 2</a><ul>
+<li><a href="#oc-ten-image-nhu-oc-mot-ia-chi">Đọc tên image như đọc một địa chỉ</a></li>
+<li><a href="#vi-sao-ten-phai-chu-thuong">Vì sao tên phải chữ thường?</a></li>
+<li><a href="#-password-stdin-khong-chi-la-cho-gon">--password-stdin — không chỉ là cho gọn</a></li>
+<li><a href="#docker-push-that-su-gui-nhung-gi">docker push thật sự gửi những gì?</a></li>
+<li><a href="#bai-nay-ong-gop-gi-cho-cam-ket-au-buoi_1">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#bai-3-build-image-trong-ci">BÀI 3 — BUILD IMAGE TRONG CI</a><ul>
@@ -320,6 +336,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#32-chay-workflow">3.2 · Chạy workflow</a></li>
 <li><a href="#33-kiem-tra-bang-dong-lenh">3.3 · Kiểm tra bằng dòng lệnh</a></li>
 <li><a href="#thi-nghiem-5-thieu-quyen-packages-write">🧪 Thí nghiệm 5 — Thiếu quyền packages: write</a></li>
+<li><a href="#giai-thich-tuong-tan-bai-3">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 3</a><ul>
+<li><a href="#vi-sao-phai-build-tren-ci-khi-may-minh-build-uoc-roi">Vì sao phải build trên CI khi máy mình build được rồi?</a></li>
+<li><a href="#github_token-va-khoi-permissions">GITHUB_TOKEN và khối permissions</a></li>
+<li><a href="#setup-buildx-action-e-lam-gi">setup-buildx-action để làm gì?</a></li>
+<li><a href="#bai-nay-ong-gop-gi-cho-cam-ket-au-buoi_2">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#bai-4-pull-image-ve-va-kiem-chung">BÀI 4 — PULL IMAGE VỀ VÀ KIỂM CHỨNG</a><ul>
@@ -328,15 +351,48 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#43-chay-thu-o-may-e-oi-chieu">4.3 · Chạy thử ở máy để đối chiếu</a></li>
 <li><a href="#thi-nghiem-6-goi-health-check-ngay-sau-docker-run-d">🧪 Thí nghiệm 6 — Gọi health check ngay sau docker run -d</a></li>
 <li><a href="#thi-nghiem-7-quen-if-always-thi-rac-o-lai">🧪 Thí nghiệm 7 — Quên if: always() thì rác ở lại</a></li>
+<li><a href="#giai-thich-tuong-tan-bai-4">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 4</a><ul>
+<li><a href="#build-thanh-cong-khong-ong-nghia-chay-uoc">"Build thành công" không đồng nghĩa "chạy được"</a></li>
+<li><a href="#runner-moi-la-may-trang-hoan-hao">Runner mới là "máy trắng" hoàn hảo</a></li>
+<li><a href="#vi-sao-can-vong-lap-cho-khong-dung-sleep">Vì sao cần vòng lặp chờ, không dùng sleep?</a></li>
+<li><a href="#if-always-vi-sao-mot-dong-nho-lai-quan-trong">if: always() — vì sao một dòng nhỏ lại quan trọng</a></li>
+<li><a href="#bai-nay-ong-gop-gi-cho-cam-ket-au-buoi_3">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#bai-5-tag-va-digest">BÀI 5 — TAG VÀ DIGEST</a><ul>
 <li><a href="#51-xem-digest-cua-image">5.1 · Xem digest của image</a></li>
 <li><a href="#52-chung-minh-nhieu-tag-cung-tro-mot-digest">5.2 · Chứng minh nhiều tag cùng trỏ một digest</a></li>
 <li><a href="#53-pull-bang-digest">5.3 · Pull bằng digest</a></li>
+<li><a href="#giai-thich-tuong-tan-bai-5">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 5</a><ul>
+<li><a href="#tag-la-cai-nhan-dan-digest-la-van-tay">Tag là cái nhãn dán, digest là vân tay</a></li>
+<li><a href="#kich-ban-that-khien-nguoi-ta-mat-ngu">Kịch bản thật khiến người ta mất ngủ</a></li>
+<li><a href="#vi-sao-digest-moi-hoan-thien-cam-ket-au-buoi">Vì sao digest mới hoàn thiện cam kết đầu buổi?</a></li>
+<li><a href="#a-u-manh-ghep-gio-i-chung-minh">🎯 Đã đủ mảnh ghép — giờ đi chứng minh</a></li>
 </ul>
 </li>
-<li><a href="#bai-6-tim-loi">BÀI 6 — TÌM LỖI</a><ul>
+</ul>
+</li>
+<li><a href="#bai-6-chung-minh-loi-hua-may-nao-cung-chay-uoc">BÀI 6 — CHỨNG MINH LỜI HỨA: MÁY NÀO CŨNG CHẠY ĐƯỢC</a><ul>
+<li><a href="#61-loi-hua-la-gi">6.1 · Lời hứa là gì?</a></li>
+<li><a href="#62-gia-lap-mot-may-hoan-toan-moi">6.2 · Giả lập "một máy hoàn toàn mới"</a><ul>
+<li><a href="#ba-chi-tiet-trong-lenh-xoa-eu-co-ly-do">🔍 Ba chi tiết trong lệnh xoá — đều có lý do</a></li>
+</ul>
+</li>
+<li><a href="#63-keo-image-ve-khong-can-ang-nhap">6.3 · Kéo image về — không cần đăng nhập</a></li>
+<li><a href="#64-dung-database-roi-chay-image">6.4 · Dựng database rồi chạy image</a></li>
+<li><a href="#65-kiem-chung-ay-u">6.5 · Kiểm chứng đầy đủ</a></li>
+<li><a href="#66-chot-lai-voi-lop">6.6 · Chốt lại với lớp</a><ul>
+<li><a href="#quay-lai-khung-o-phan-a1b-tick-tung-dong">Quay lại khung ở phần A1b — tick từng dòng</a></li>
+<li><a href="#ba-cau-hoi-e-biet-sinh-vien-co-that-su-hieu">Ba câu hỏi để biết sinh viên có thật sự hiểu</a></li>
+</ul>
+</li>
+<li><a href="#67-don-dep">6.7 · Dọn dẹp</a></li>
+<li><a href="#thi-nghiem-8-ua-image-sang-may-ban-cung-lop">🧪 Thí nghiệm 8 — Đưa image sang máy bạn cùng lớp</a></li>
+</ul>
+</li>
+<li><a href="#bai-7-tim-loi">BÀI 7 — TÌM LỖI</a><ul>
 <li><a href="#buoc-1-image-co-tren-registry-chua">Bước 1 — Image có trên Registry chưa?</a></li>
 <li><a href="#buoc-2-ang-ang-nhap-bang-tai-khoan-nao">Bước 2 — Đang đăng nhập bằng tài khoản nào?</a></li>
 <li><a href="#buoc-3-image-build-ra-co-ung-khong">Bước 3 — Image build ra có đúng không?</a></li>
@@ -352,7 +408,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </ul>
 </li>
 <li><a href="#phu-luc-2-bang-loi">PHỤ LỤC 2 · BẢNG LỖI</a><ul>
-<li><a href="#7-thi-nghiem-trong-tai-lieu-nay">7 thí nghiệm trong tài liệu này</a></li>
+<li><a href="#8-thi-nghiem-trong-tai-lieu-nay">8 thí nghiệm trong tài liệu này</a></li>
 <li><a href="#loi-khac">Lỗi khác</a></li>
 </ul>
 </li>
@@ -407,6 +463,93 @@ Workflow <code>06</code> (build + push image) và <code>07</code> (pull + verify
 </table>
 <blockquote>
 <p><strong>Câu chốt:</strong> Session 07 trả lời <em>"code có chạy được không?"</em>. Session 08 trả lời <em>"làm sao giao thứ chạy được đó cho người khác?"</em></p>
+</blockquote>
+<h2 id="a1b-cam-ket-cua-buoi-hoc-oc-to-cho-ca-lop-nghe">A1b. 🎯 CAM KẾT CỦA BUỔI HỌC — đọc to cho cả lớp nghe</h2>
+<blockquote>
+<p><strong>Hết buổi hôm nay, bạn sẽ làm được điều này:</strong></p>
+<p>Bạn build ứng dụng <strong>một lần</strong> trên máy bạn (hoặc trên CI). Sau đó <strong>bất kỳ máy nào</strong> — máy bạn cùng lớp, máy chưa từng cài Java, máy chưa từng thấy mã nguồn — chỉ cần chạy <strong>hai lệnh</strong> là ứng dụng lên:</p>
+<p><code>docker pull  ...
+docker run   ...</code></p>
+</blockquote>
+<p><strong>Vì sao cam kết này quan trọng?</strong> Hãy nhớ lại nỗi đau quen thuộc:</p>
+<table>
+<thead>
+<tr>
+<th>Tình huống thật</th>
+<th>Không có image</th>
+<th>Có image</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bạn gửi code cho bạn cùng nhóm</td>
+<td>"Máy tao báo lỗi Java version"</td>
+<td><code>docker run</code> — xong</td>
+</tr>
+<tr>
+<td>Bàn giao cho đội vận hành</td>
+<td>Gửi kèm 3 trang hướng dẫn cài đặt</td>
+<td>Gửi <strong>một dòng tên image</strong></td>
+</tr>
+<tr>
+<td>Máy chủ mới cần chạy app</td>
+<td>Cài JDK, cài Gradle, build 5 phút</td>
+<td><code>docker pull</code> rồi chạy</td>
+</tr>
+<tr>
+<td>Sáu tháng sau cần chạy lại <strong>đúng</strong> bản đó</td>
+<td>Gần như không thể</td>
+<td>Pull theo <strong>digest</strong> — chính xác từng byte</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Câu nói kinh điển:</strong> <em>"Máy tao chạy được mà"</em> — Docker image tồn tại để câu này không còn là lý do.</p>
+</blockquote>
+<p><strong>Con đường của buổi học, và mỗi bài trả lời câu gì:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Bài</th>
+<th>Câu hỏi bài đó trả lời</th>
+<th>Đóng góp gì cho cam kết</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Đóng gói app vào image thế nào cho gọn và sạch?</td>
+<td>Có <strong>thứ</strong> để giao</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Làm sao đưa image ra khỏi máy mình?</td>
+<td>Có <strong>chỗ</strong> để người khác lấy</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Ai build? Máy cá nhân hay máy chung?</td>
+<td>Build <strong>không phụ thuộc máy ai</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Làm sao biết image thật sự chạy được?</td>
+<td>Có <strong>bằng chứng</strong>, không phải niềm tin</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Làm sao chỉ đúng <strong>một</strong> bản không nhầm lẫn?</td>
+<td>Giao đúng thứ <strong>đã kiểm duyệt</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Chứng minh cam kết trên máy trắng</strong></td>
+<td>✅ <strong>Kết luận</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>📌 <strong>Cuối BÀI 6 chúng ta sẽ quay lại đúng khung này và tick từng dòng.</strong></p>
 </blockquote>
 <h2 id="a2-can-gi-truoc-khi-bat-au">A2. Cần gì trước khi bắt đầu</h2>
 <table>
@@ -564,14 +707,21 @@ Workflow <code>06</code> (build + push image) và <code>07</code> (pull + verify
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Downloads/quickbite-demo/quickbite-backend/user-service
 </code></pre></div>
 
+<p><strong>Máy Windows · Linux · Mac Intel:</strong></p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>user-service:1.0.0<span class="w"> </span>.
 </code></pre></div>
 
+<p><strong>Mac Apple Silicon (M1/M2/M3/M4) — BẮT BUỘC dùng dòng này:</strong></p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-t<span class="w"> </span>user-service:1.0.0<span class="w"> </span>.
 </code></pre></div>
 
-<blockquote>
-<p>🍎 Dòng thứ hai dành cho Mac Apple Silicon — base image <code>eclipse-temurin:17-*-alpine</code> không có bản ARM.</p>
+<blockquote class="warn">
+<p>⚠️ <strong>Trên Mac Apple Silicon, dòng đầu KHÔNG chạy được</strong> — nó dừng ngay với lỗi:
+<code>ERROR: failed to solve: eclipse-temurin:17-jre-alpine:
+no match for platform in manifest: not found</code>
+Vì <code>eclipse-temurin:17-jdk-alpine</code> và <code>17-jre-alpine</code> <strong>không có bản ARM</strong>. Cờ <code>--platform linux/amd64</code> buộc Docker lấy bản amd64 và chạy qua Rosetta.</p>
+<p><strong>Từ đây trở đi, mọi lệnh trong tài liệu đã có sẵn <code>--platform linux/amd64</code>.</strong> Cứ chép nguyên, không cần sửa gì.</p>
+<p><strong>Máy Ubuntu / Windows / Mac Intel có cần cờ này không?</strong> Không cần — nhưng <strong>để nguyên vẫn đúng</strong>, vì các máy đó <em>vốn đã là</em> amd64, cờ này chỉ nói lại điều máy đang có nên nó không làm gì cả. Nhờ vậy cả lớp dùng <strong>chung một bảng lệnh</strong>, không ai phải nhớ mình thuộc loại máy nào.</p>
 </blockquote>
 <p><strong>Phải thấy:</strong> các bước <code>[builder 1/7]</code> … <code>[runtime 2/2]</code> rồi <code>naming to docker.io/library/user-service:1.0.0 done</code></p>
 <blockquote>
@@ -586,15 +736,25 @@ Workflow <code>06</code> (build + push image) và <code>07</code> (pull + verify
 
 <p><strong>Phải thấy:</strong> lịch sử layer <strong>không hề có</strong> bước <code>./gradlew bootJar</code> hay <code>COPY src</code>. Chúng nằm ở tầng builder đã bị vứt.</p>
 <p>Vào hẳn trong image xem:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>user-service:1.0.0<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">"ls -la /app"</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--entrypoint<span class="w"> </span>sh<span class="w"> </span>user-service:1.0.0<span class="w"> </span>-c<span class="w"> </span><span class="s2">"ls -la /app"</span>
 </code></pre></div>
 
 <p><strong>Phải thấy:</strong> chỉ có <code>app.jar</code> — không có <code>src/</code>, không có <code>gradlew</code>, không có <code>build.gradle</code></p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>user-service:1.0.0<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">"which javac || echo 'KHONG co javac - dung nhu mong doi'"</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--entrypoint<span class="w"> </span>sh<span class="w"> </span>user-service:1.0.0<span class="w"> </span>-c<span class="w"> </span><span class="s2">"which javac || echo 'KHONG co javac - dung nhu mong doi'"</span>
 </code></pre></div>
 
 <p><strong>Phải thấy:</strong> <code>KHONG co javac</code> → image chỉ có JRE, không có trình biên dịch</p>
-<blockquote>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--entrypoint<span class="w"> </span>sh<span class="w"> </span>user-service:1.0.0<span class="w"> </span>-c<span class="w"> </span><span class="s2">"ls /app/gradlew /app/src 2&gt;/dev/null || echo 'KHONG co gradlew, KHONG co src'"</span>
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> <code>KHONG co gradlew, KHONG co src</code></p>
+<blockquote class="warn">
+<p>⚠️ <strong>Vì sao bắt buộc có <code>--entrypoint sh</code>?</strong>
+Dockerfile kết thúc bằng <code>ENTRYPOINT ["java", "-jar", "app.jar"]</code>. Mọi thứ bạn gõ sau tên image sẽ trở thành <strong>tham số truyền cho <code>java -jar</code></strong>, chứ không phải lệnh mới.</p>
+<p>Viết <code>docker run user-service:1.0.0 sh -c "ls /app"</code> thì Docker chạy:
+<code>java -jar app.jar sh -c "ls /app"</code>
+→ Spring Boot khởi động, <code>sh -c</code> bị bỏ qua. Bạn sẽ thấy logo Spring Boot chứ không thấy danh sách file.</p>
+<p>Cờ <code>--entrypoint sh</code> <strong>thay thế</strong> lệnh mặc định, khi đó <code>-c "..."</code> mới đến được shell.</p>
 <p>💡 <strong>Đây mới là lợi ích lớn nhất của multi-stage</strong> — không phải dung lượng, mà là <strong>bề mặt tấn công</strong>. Kẻ xâm nhập được vào container cũng không có công cụ gì để biên dịch thêm.</p>
 </blockquote>
 <hr />
@@ -606,9 +766,16 @@ Workflow <code>06</code> (build + push image) và <code>07</code> (pull + verify
 <div class="highlight"><pre><span></span><code>./gradlew<span class="w"> </span>bootJar
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile.single<span class="w"> </span>-t<span class="w"> </span>user-service:single<span class="w"> </span>.
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-f<span class="w"> </span>Dockerfile.single<span class="w"> </span>-t<span class="w"> </span>user-service:single<span class="w"> </span>.
 </code></pre></div>
 
+<blockquote class="warn">
+<p>⚠️ <strong>Nếu gặp lỗi <code>"/build/libs/user-service.jar": not found</code></strong> dù <code>bootJar</code> đã thành công, hãy mở <code>.dockerignore</code> kiểm tra. File đó phải có dòng cho phép JAR lọt qua:
+<code>gitignore
+build/
+!build/libs/*.jar</code>
+Chặn cả <code>build/</code> thì Docker <strong>không nhìn thấy</strong> file JAR, dù nó nằm ngay trên đĩa. Đây là lỗi rất khó đoán vì <code>ls</code> thấy file mà Docker thì không.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>images<span class="w"> </span>user-service
 </code></pre></div>
 
@@ -643,7 +810,7 @@ Workflow <code>06</code> (build + push image) và <code>07</code> (pull + verify
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"// thu </span><span class="k">$(</span>date<span class="w"> </span>+%H:%M:%S<span class="k">)</span><span class="s2">"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>src/main/java/com/quickbite/user/WalletRules.java
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="nb">time</span><span class="w"> </span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>user-service:1.0.0<span class="w"> </span>.
+<div class="highlight"><pre><span></span><code><span class="nb">time</span><span class="w"> </span>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-t<span class="w"> </span>user-service:1.0.0<span class="w"> </span>.
 </code></pre></div>
 
 <p><strong>Phải thấy:</strong> các bước <code>COPY gradlew</code>, <code>COPY build.gradle</code>, <code>RUN ./gradlew dependencies</code> đều hiện <strong><code>CACHED</code></strong> — chỉ <code>COPY src</code> và <code>bootJar</code> chạy lại.</p>
@@ -658,24 +825,135 @@ Workflow <code>06</code> (build + push image) và <code>07</code> (pull + verify
 <div class="highlight"><pre><span></span><code>sed<span class="w"> </span><span class="s1">'s|COPY gradlew ./|COPY . .|; /COPY gradle \.\/gradle/d; /COPY build.gradle settings.gradle/d; /COPY src \.\/src/d'</span><span class="w"> </span>Dockerfile<span class="w"> </span>&gt;<span class="w"> </span>Dockerfile.sai
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile.sai<span class="w"> </span>-t<span class="w"> </span>user-service:sai<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"--- lan 2 ---"</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-f<span class="w"> </span>Dockerfile.sai<span class="w"> </span>-t<span class="w"> </span>user-service:sai<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"--- lan 2 ---"</span>
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"// thu lai </span><span class="k">$(</span>date<span class="w"> </span>+%H:%M:%S<span class="k">)</span><span class="s2">"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>src/main/java/com/quickbite/user/WalletRules.java
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="nb">time</span><span class="w"> </span>docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile.sai<span class="w"> </span>-t<span class="w"> </span>user-service:sai<span class="w"> </span>.
+<div class="highlight"><pre><span></span><code><span class="nb">time</span><span class="w"> </span>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-f<span class="w"> </span>Dockerfile.sai<span class="w"> </span>-t<span class="w"> </span>user-service:sai<span class="w"> </span>.
 </code></pre></div>
 
 <p><strong>Sẽ thấy:</strong> bước <code>./gradlew dependencies</code> <strong>không</strong> hiện <code>CACHED</code> — phải tải lại toàn bộ thư viện.</p>
 <p><strong>Vì sao:</strong> <code>COPY . .</code> gộp hết vào một layer. Sửa một dấu chấm phẩy trong Java cũng làm layer đó đổi → <strong>mọi layer phía sau phải làm lại</strong>.</p>
-<p><strong>Dọn dẹp:</strong></p>
+<p><strong>Dọn dẹp</strong> — xoá Dockerfile tạm, xoá image tạm, <strong>và trả lại file nguồn như ban đầu:</strong></p>
 <div class="highlight"><pre><span></span><code>rm<span class="w"> </span>Dockerfile.sai<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>rmi<span class="w"> </span>-f<span class="w"> </span>user-service:sai
 </code></pre></div>
 
-<blockquote>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>--<span class="w"> </span>src/main/java/com/quickbite/user/WalletRules.java<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Da hoan tac file nguon"</span>
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ <strong>Đừng bỏ bước này.</strong> Hai lệnh <code>echo ... &gt;&gt;</code> ở trên <strong>ghi thêm dòng vào file nguồn thật</strong>. Nếu không hoàn tác, mỗi lần dạy lại file lại dài thêm vài dòng rác, và <code>git status</code> luôn báo bẩn.</p>
+<p>Không dùng git? Mở file rồi xoá tay các dòng bắt đầu bằng <code>// thu</code> ở cuối file.</p>
 <p>💡 <strong>Nguyên tắc áp dụng cho mọi ngôn ngữ:</strong> chép file ít thay đổi trước, file thay đổi nhiều sau. Node.js thì <code>package.json</code> trước <code>src/</code>. Python thì <code>requirements.txt</code> trước code.</p>
 </blockquote>
+<hr />
+<h2 id="giai-thich-tuong-tan-bai-1">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 1</h2>
+<h3 id="multi-stage-thuc-chat-la-gi">Multi-stage thực chất là gì?</h3>
+<p>Một Dockerfile bình thường có <strong>một</strong> <code>FROM</code>. Multi-stage có <strong>nhiều</strong> <code>FROM</code>, và <strong>chỉ tầng cuối cùng trở thành image</strong>. Các tầng trước chỉ là <strong>xưởng gia công tạm</strong> — dùng xong bỏ.</p>
+<table>
+<thead>
+<tr>
+<th>Tầng</th>
+<th>Base image</th>
+<th>Nhiệm vụ</th>
+<th>Có vào image cuối?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>builder</code></td>
+<td><code>17-jdk-alpine</code> (có <code>javac</code>, có Gradle)</td>
+<td>Biên dịch <code>src/</code> thành <code>user-service.jar</code></td>
+<td>❌ <strong>Không</strong></td>
+</tr>
+<tr>
+<td><code>runtime</code></td>
+<td><code>17-jre-alpine</code> (chỉ có <code>java</code>)</td>
+<td>Nhận cái JAR, chạy nó</td>
+<td>✅ <strong>Có</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Cây cầu duy nhất giữa hai tầng là <strong>một dòng</strong>:</p>
+<div class="highlight"><pre><span></span><code>COPY --from=builder /app/build/libs/user-service.jar app.jar
+</code></pre></div>
+
+<p>Dòng này nói: <em>"lấy đúng một file từ xưởng, đem sang nhà mới"</em>. Mọi thứ khác ở xưởng — mã nguồn, Gradle, <code>javac</code>, thư mục <code>.gradle</code> vài trăm MB — <strong>bị bỏ lại</strong> vì không ai chép sang.</p>
+<h3 id="vi-sao-khong-giu-luon-jdk-cho-tien">Vì sao không giữ luôn JDK cho tiện?</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Giữ JDK trong image</th>
+<th>Chỉ có JRE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chạy app được</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Có <code>javac</code> để biên dịch code lạ</td>
+<td>✅ <strong>Đây là vấn đề</strong></td>
+<td>❌ <strong>Đây là điều tốt</strong></td>
+</tr>
+<tr>
+<td>Có mã nguồn để người khác đọc</td>
+<td>✅ <strong>Vấn đề</strong></td>
+<td>❌ <strong>Tốt</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Nếu ai đó chiếm được container, JDK cho họ khả năng <strong>biên dịch và chạy mã mới ngay bên trong</strong>. JRE thì không. Đây gọi là <strong>giảm bề mặt tấn công</strong> — mỗi công cụ bạn không cài là một cửa bạn không phải khoá.</p>
+<blockquote class="warn">
+<p>⚠️ <strong>Đừng chỉ nhìn con số MB.</strong> Ở Thí nghiệm 1 bạn sẽ thấy bản single-stage và multi-stage <strong>dung lượng gần như nhau</strong>, vì cả hai đều kết thúc ở <code>jre-alpine</code>. Giá trị thật của multi-stage <strong>không phải</strong> dung lượng, mà là:
+1. <strong>Máy đích không cần cài Gradle/JDK</strong> — build diễn ra bên trong Docker
+2. <strong>Image cuối không chứa mã nguồn</strong> — bạn giao sản phẩm, không giao công thức
+3. <strong>Build giống nhau ở mọi máy</strong> — không còn phụ thuộc phiên bản Java của từng người</p>
+</blockquote>
+<h3 id="tang-layer-va-vi-sao-thu-tu-copy-quyet-inh-toc-o">"Tầng" (layer) và vì sao thứ tự <code>COPY</code> quyết định tốc độ</h3>
+<p>Mỗi dòng lệnh trong Dockerfile tạo ra <strong>một tầng</strong>, và Docker <strong>nhớ lại</strong> tầng đã build. Khi build lần sau, Docker đi từ trên xuống và hỏi từng tầng: <em>"đầu vào của mày có thay đổi không?"</em></p>
+<ul>
+<li><strong>Không đổi</strong> → dùng lại tầng cũ, <strong>0 giây</strong></li>
+<li><strong>Đổi</strong> → build lại tầng này <strong>và mọi tầng bên dưới</strong></li>
+</ul>
+<p>Chính chữ <strong>"và mọi tầng bên dưới"</strong> là lý do thứ tự quan trọng. So sánh:</p>
+<table>
+<thead>
+<tr>
+<th>Dockerfile của chúng ta</th>
+<th>Bản sai ở Thí nghiệm 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COPY build.gradle settings.gradle</code></td>
+<td><code>COPY . .</code> ← <strong>chép hết cùng lúc</strong></td>
+</tr>
+<tr>
+<td><code>RUN ./gradlew dependencies</code> ← tải thư viện</td>
+<td><code>RUN ./gradlew bootJar</code></td>
+</tr>
+<tr>
+<td><code>COPY src ./src</code> ← code đổi ở đây</td>
+<td></td>
+</tr>
+<tr>
+<td><code>RUN ./gradlew bootJar</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Bạn sửa một dòng Java. Ở bản của chúng ta, tầng <code>dependencies</code> <strong>không bị ảnh hưởng</strong> vì <code>build.gradle</code> không đổi → thư viện dùng lại, build nhanh. Ở bản sai, <code>COPY . .</code> thấy có file đổi → <strong>tải lại toàn bộ thư viện từ đầu</strong>.</p>
+<blockquote>
+<p>💡 <strong>Quy tắc nhớ đời:</strong> trong Dockerfile, đặt thứ <strong>ít thay đổi</strong> lên trên, thứ <strong>hay thay đổi</strong> xuống dưới. File cấu hình đổi vài tháng một lần; code đổi vài phút một lần.</p>
+</blockquote>
+<h3 id="bai-nay-ong-gop-gi-cho-cam-ket-au-buoi">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</h3>
+<p>Bây giờ bạn có <strong>một thứ duy nhất, tự chứa, có thể giao đi</strong>: một image mang sẵn Java bên trong. Máy nhận <strong>không cần Java, không cần Gradle, không cần mã nguồn</strong>. Nhưng image này còn nằm trên máy bạn — <strong>BÀI 2</strong> sẽ đưa nó ra ngoài.</p>
 <hr />
 <h1 id="bai-2-ay-image-len-ghcr-tu-may">BÀI 2 — ĐẨY IMAGE LÊN GHCR TỪ MÁY</h1>
 <p><strong>Mục tiêu:</strong> hiểu quy trình login → tag → push bằng tay, trước khi để CI làm hộ.</p>
@@ -720,7 +998,7 @@ registry   namespace    tên image     tag
 <h2 id="24-xac-nhan-tren-github">2.4 · Xác nhận trên GitHub</h2>
 <p>Vào <a href="https://github.com/caotv1512?tab=packages">https://github.com/caotv1512?tab=packages</a></p>
 <p><strong>Phải thấy:</strong> package <code>user-service</code> với tag <code>1.0.0</code></p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/caotv1512/user-service:1.0.0
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>ghcr.io/caotv1512/user-service:1.0.0
 </code></pre></div>
 
 <p><strong>Phải thấy:</strong> <code>Status: Image is up to date</code> → image thật sự nằm trên Registry</p>
@@ -753,7 +1031,7 @@ Vì <code>github.repository_owner</code> giữ nguyên chữ hoa như bạn đă
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"// ban moi </span><span class="k">$(</span>date<span class="w"> </span>+%H:%M:%S<span class="k">)</span><span class="s2">"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>src/main/java/com/quickbite/user/WalletRules.java
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>.
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>-t<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>.
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
@@ -786,6 +1064,81 @@ Vì <code>github.repository_owner</code> giữ nguyên chữ hoa như bạn đă
 <blockquote class="warn">
 <p>⚠️ <strong>Quy tắc bắt buộc:</strong> production <strong>luôn</strong> dùng tag cố định (<code>1.0.0</code>) hoặc digest. <code>latest</code> chỉ dùng cho dev.</p>
 </blockquote>
+<p><strong>Dọn dẹp — trả lại file nguồn như ban đầu:</strong></p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>--<span class="w"> </span>src/main/java/com/quickbite/user/WalletRules.java<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Da hoan tac file nguon"</span>
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ Thí nghiệm này cũng <code>echo ... &gt;&gt;</code> vào file nguồn thật. Hoàn tác ngay để repo sạch. Không dùng git thì xoá tay dòng bắt đầu bằng <code>// ban moi</code> ở cuối file.</p>
+</blockquote>
+<hr />
+<h2 id="giai-thich-tuong-tan-bai-2">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 2</h2>
+<h3 id="oc-ten-image-nhu-oc-mot-ia-chi">Đọc tên image như đọc một địa chỉ</h3>
+<p>Tên image không phải chuỗi tuỳ ý — nó là <strong>địa chỉ đầy đủ</strong> để Docker biết đi đâu lấy:</p>
+<div class="highlight"><pre><span></span><code>ghcr.io / caotv1512 / user-service : 1.0.0
+   │          │            │           │
+   │          │            │           └── TAG · nhãn bạn tự đặt cho một bản
+   │          │            └────────────── TÊN · tên image
+   │          └─────────────────────────── NAMESPACE · chủ sở hữu (user/org GitHub)
+   └────────────────────────────────────── HOST · máy chủ registry
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Nếu thiếu phần nào</th>
+<th>Docker hiểu thành</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thiếu host</td>
+<td><code>docker.io</code> (Docker Hub) — <strong>không phải</strong> GHCR</td>
+</tr>
+<tr>
+<td>Thiếu tag</td>
+<td><code>:latest</code></td>
+</tr>
+<tr>
+<td>Thiếu namespace</td>
+<td>Thư viện chính thức (<code>postgres</code>, <code>nginx</code>…)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Đây là lý do <code>docker tag</code> <strong>bắt buộc</strong> trước khi push: image tên <code>user-service:1.0.0</code> không có địa chỉ, Docker không biết đẩy đi đâu. <code>docker tag</code> <strong>không tạo bản sao</strong> — nó chỉ <strong>dán thêm một nhãn</strong> lên cùng một image.</p>
+</blockquote>
+<h3 id="vi-sao-ten-phai-chu-thuong">Vì sao tên phải chữ thường?</h3>
+<p>Chuẩn OCI quy định phần đường dẫn của tên image chỉ nhận <strong>chữ thường</strong>. Tên GitHub của bạn có thể là <code>CaoTV1512</code> (có chữ hoa) — nhưng tên image <strong>phải</strong> là <code>caotv1512</code>. Thí nghiệm 3 cho bạn thấy lỗi này, vì nó là lỗi rất hay gặp khi viết CI (biến <code>${{ github.actor }}</code> giữ nguyên chữ hoa).</p>
+<h3 id="-password-stdin-khong-chi-la-cho-gon"><code>--password-stdin</code> — không chỉ là cho gọn</h3>
+<div class="highlight"><pre><span></span><code>printf '%s' "$CR_PAT" | docker login ghcr.io -u caotv1512 --password-stdin
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Cách viết</th>
+<th>Hậu quả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker login -p &lt;token&gt;</code></td>
+<td>Token <strong>nằm trong lịch sử shell</strong> (<code>~/.zsh_history</code>), hiện trong <code>ps</code> cho user khác thấy, Docker cảnh báo</td>
+</tr>
+<tr>
+<td><code>--password-stdin</code></td>
+<td>Token đi qua đường ống, <strong>không lưu vào đâu</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🔒 <strong>Ba điều tuyệt đối:</strong> (1) Dùng <strong>PAT</strong>, <strong>không bao giờ</strong> dùng mật khẩu GitHub. (2) <strong>Không</strong> commit token vào repo. (3) PAT chỉ cần đúng 2 quyền <code>write:packages</code> + <code>read:packages</code> — cấp thừa quyền là tự tạo rủi ro.</p>
+</blockquote>
+<h3 id="docker-push-that-su-gui-nhung-gi"><code>docker push</code> thật sự gửi những gì?</h3>
+<p>Không phải cả image. Docker gửi <strong>từng tầng</strong>, và <strong>bỏ qua tầng registry đã có</strong>. Lần push đầu chậm; lần sau bạn chỉ sửa code, tầng <code>jre-alpine</code> và tầng thư viện đã nằm trên registry → chỉ tầng chứa JAR được gửi. Đó là lý do bạn thấy dòng <code>Layer already exists</code>.</p>
+<h3 id="bai-nay-ong-gop-gi-cho-cam-ket-au-buoi_1">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</h3>
+<p>Image đã <strong>ra khỏi máy bạn</strong>. Từ giờ nó có một địa chỉ mà cả thế giới gõ được. Nhưng nó vẫn được build <strong>bằng máy bạn</strong> — nếu máy bạn cài sai phiên bản gì đó, cả lớp lãnh đủ. <strong>BÀI 3</strong> chuyển việc build sang một máy trung lập.</p>
 <hr />
 <h1 id="bai-3-build-image-trong-ci">BÀI 3 — BUILD IMAGE TRONG CI</h1>
 <p><strong>Mục tiêu:</strong> để CI build thay vì build ở máy — đảm bảo image khớp đúng commit.</p>
@@ -826,7 +1179,7 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://api.github.com/repos/caotv1512/project-demo/actions/runs?per_page=5"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'"name"|"conclusion"'</span>
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>image<span class="w"> </span>inspect<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Created}} | {{.Architecture}}'</span>
@@ -861,6 +1214,99 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>-A<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">"revert: tra lai quyen ghi packages"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push
 </code></pre></div>
 
+<hr />
+<h2 id="giai-thich-tuong-tan-bai-3">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 3</h2>
+<h3 id="vi-sao-phai-build-tren-ci-khi-may-minh-build-uoc-roi">Vì sao phải build trên CI khi máy mình build được rồi?</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Build ở máy cá nhân</th>
+<th>Build trên CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phiên bản JDK</td>
+<td>Của riêng máy đó</td>
+<td><strong>Ghi rõ trong workflow</strong></td>
+</tr>
+<tr>
+<td>File lạc trong thư mục</td>
+<td>Có thể lọt vào image</td>
+<td>Runner <strong>luôn mới sạch</strong></td>
+</tr>
+<tr>
+<td>Ai build được</td>
+<td>Chỉ người đó</td>
+<td><strong>Bất kỳ ai</strong> push code</td>
+</tr>
+<tr>
+<td>Khi người đó nghỉ phép</td>
+<td>Tắc</td>
+<td>Không ảnh hưởng</td>
+</tr>
+<tr>
+<td>Bằng chứng ai build, từ commit nào</td>
+<td>Không có</td>
+<td><strong>Log lưu vĩnh viễn</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Câu chốt:</strong> build ở máy cá nhân là <em>"tin vào máy một người"</em>. Build trên CI là <em>"tin vào một công thức viết ra giấy"</em>. Cam kết "máy nào cũng chạy được" chỉ vững nếu bản thân việc build cũng không phụ thuộc máy nào.</p>
+</blockquote>
+<h3 id="github_token-va-khoi-permissions"><code>GITHUB_TOKEN</code> và khối <code>permissions</code></h3>
+<p>Mỗi lần workflow chạy, GitHub <strong>tự sinh</strong> một token tạm — <code>GITHUB_TOKEN</code> — rồi <strong>xoá khi job xong</strong>. Bạn không phải tạo, không phải lưu, không lo hết hạn.</p>
+<p>Mặc định token này <strong>không có</strong> quyền ghi package. Bạn phải xin rõ ràng:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">permissions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">read</span><span class="w">      </span><span class="c1"># đọc code</span>
+<span class="w">  </span><span class="nt">packages</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span><span class="w">     </span><span class="c1"># ghi image lên GHCR</span>
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>GITHUB_TOKEN</code></th>
+<th>PAT cá nhân</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ai tạo</td>
+<td>GitHub tự</td>
+<td>Bạn tự tạo</td>
+</tr>
+<tr>
+<td>Sống bao lâu</td>
+<td><strong>Hết job là chết</strong></td>
+<td>Tới ngày hết hạn (có thể hàng tháng)</td>
+</tr>
+<tr>
+<td>Lộ ra ngoài thì sao</td>
+<td>Hết job là vô dụng</td>
+<td><strong>Kẻ khác dùng được ngay</strong></td>
+</tr>
+<tr>
+<td>Nên dùng khi</td>
+<td><strong>Mặc định</strong></td>
+<td>Chỉ khi cần với sang repo khác</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🔒 <strong>Nguyên tắc đặc quyền tối thiểu:</strong> khai đúng quyền cần, không khai <code>write-all</code>. Thí nghiệm 5 cho bạn thấy chuyện gì xảy ra khi thiếu quyền — và quan trọng hơn: <strong>lỗi đó đọc là biết ngay</strong>, <code>denied: permission_denied: write_package</code>.</p>
+</blockquote>
+<h3 id="setup-buildx-action-e-lam-gi"><code>setup-buildx-action</code> để làm gì?</h3>
+<p>Driver Docker mặc định <strong>không</strong> biết dùng cache của GitHub Actions. Nếu bạn viết <code>cache-to: type=gha</code> mà không bật Buildx trước, workflow sẽ chết với <code>buildx failed with: ... build-cache-backends</code>. Vì vậy thứ tự trong workflow luôn là:</p>
+<ol>
+<li><code>docker/setup-buildx-action@v3</code> ← bật driver hiểu cache</li>
+<li><code>docker/login-action@v3</code> ← đăng nhập registry</li>
+<li><code>docker/build-push-action@v5</code> ← build và push</li>
+</ol>
+<h3 id="bai-nay-ong-gop-gi-cho-cam-ket-au-buoi_2">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</h3>
+<p>Việc build giờ <strong>không phụ thuộc máy của ai</strong>. Bất kỳ ai push code cũng ra được image giống nhau, và log chứng minh nó ra từ commit nào. Nhưng "build xong" chưa có nghĩa "chạy được" — <strong>BÀI 4</strong> đi tìm bằng chứng.</p>
 <hr />
 <h1 id="bai-4-pull-image-ve-va-kiem-chung">BÀI 4 — PULL IMAGE VỀ VÀ KIỂM CHỨNG</h1>
 <p><strong>Mục tiêu:</strong> chứng minh image <strong>dùng được</strong>, không chỉ tải về được.</p>
@@ -908,7 +1354,7 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 <p>💡 <strong>Đây mới là bằng chứng đầy đủ:</strong> image pull về được, chạy được, kết nối được database, và trả về dữ liệu thật.</p>
 </blockquote>
 <h2 id="43-chay-thu-o-may-e-oi-chieu">4.3 · Chạy thử ở máy để đối chiếu</h2>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>thu-image<span class="w"> </span>-p<span class="w"> </span><span class="m">8091</span>:8081<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--name<span class="w"> </span>thu-image<span class="w"> </span>-p<span class="w"> </span><span class="m">8091</span>:8081<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">DB_HOST</span><span class="o">=</span>host.docker.internal<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>ghcr.io/caotv1512/user-service:latest
 </code></pre></div>
@@ -924,7 +1370,7 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 </blockquote>
 <hr />
 <h2 id="thi-nghiem-6-goi-health-check-ngay-sau-docker-run-d">🧪 Thí nghiệm 6 — Gọi health check ngay sau <code>docker run -d</code></h2>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>thu-voi<span class="w"> </span>-p<span class="w"> </span><span class="m">8092</span>:8081<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--name<span class="w"> </span>thu-voi<span class="w"> </span>-p<span class="w"> </span><span class="m">8092</span>:8081<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-m<span class="w"> </span><span class="m">3</span><span class="w"> </span>http://localhost:8092/actuator/health
@@ -951,7 +1397,7 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 <hr />
 <h2 id="thi-nghiem-7-quen-if-always-thi-rac-o-lai">🧪 Thí nghiệm 7 — Quên <code>if: always()</code> thì rác ở lại</h2>
 <p>Mô phỏng ở máy: chạy container rồi cố tình để lệnh sau thất bại.</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>rac-lai<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>&gt;/dev/null
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--name<span class="w"> </span>rac-lai<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>&gt;/dev/null
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--fail<span class="w"> </span>-m<span class="w"> </span><span class="m">3</span><span class="w"> </span>http://localhost:9999/khong-ton-tai<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>rac-lai
@@ -973,10 +1419,86 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 </code></pre></div>
 
 <hr />
+<h2 id="giai-thich-tuong-tan-bai-4">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 4</h2>
+<h3 id="build-thanh-cong-khong-ong-nghia-chay-uoc">"Build thành công" <strong>không</strong> đồng nghĩa "chạy được"</h3>
+<p>Đây là chỗ nhiều người ngã. <code>docker build</code> xanh chỉ chứng minh <strong>các lệnh trong Dockerfile không lỗi</strong>. Nó <strong>không</strong> chứng minh:</p>
+<table>
+<thead>
+<tr>
+<th>Build xanh vẫn có thể</th>
+<th>Ví dụ thật</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sai đường dẫn JAR</td>
+<td><code>COPY --from=builder</code> chép file rỗng, app không khởi động</td>
+</tr>
+<tr>
+<td>Thiếu biến môi trường</td>
+<td>App bật lên rồi tắt vì không có <code>DB_HOST</code></td>
+</tr>
+<tr>
+<td>Sai <code>ENTRYPOINT</code></td>
+<td>Container tạo xong tắt ngay</td>
+</tr>
+<tr>
+<td>Sai kiến trúc CPU</td>
+<td><code>no match for platform in manifest</code> khi chạy ở máy khác</td>
+</tr>
+</tbody>
+</table>
+<p>Vì vậy workflow 07 làm một việc khác hẳn workflow 06: nó <strong>pull image về một Runner mới</strong> rồi <strong>thật sự chạy</strong>, rồi <strong>gọi health check</strong>. Chỉ khi health check trả về <code>UP</code> mới coi là đạt.</p>
+<h3 id="runner-moi-la-may-trang-hoan-hao">Runner mới là "máy trắng" hoàn hảo</h3>
+<p>Điểm quan trọng nhất của BÀI 4: mỗi job GitHub Actions chạy trên một máy ảo <strong>vừa được tạo, sẽ bị xoá</strong>. Nó <strong>không có</strong> mã nguồn của bạn (trừ khi bạn <code>checkout</code>), <strong>không có</strong> image bạn vừa build ở job trước, <strong>không có</strong> gì cả.</p>
+<blockquote>
+<p>Nên khi Runner đó <code>docker pull</code> rồi <code>docker run</code> mà app lên <code>UP</code>, bạn có <strong>bằng chứng máy móc</strong> cho cam kết đầu buổi — không phải lời hứa của thầy, mà là log ai cũng mở xem được.</p>
+</blockquote>
+<h3 id="vi-sao-can-vong-lap-cho-khong-dung-sleep">Vì sao cần vòng lặp chờ, không dùng <code>sleep</code>?</h3>
+<p><code>docker run -d</code> trả về <strong>ngay khi container được tạo</strong> — không phải khi app sẵn sàng. Spring Boot còn cần 10–20 giây nữa để nạp context và kết nối database.</p>
+<table>
+<thead>
+<tr>
+<th>Cách chờ</th>
+<th>Vấn đề</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>curl</code> ngay</td>
+<td><strong>Luôn fail</strong> — Thí nghiệm 6 cho thấy</td>
+</tr>
+<tr>
+<td><code>sleep 30</code> rồi <code>curl</code></td>
+<td>Máy nhanh <strong>phí 20 giây</strong>; máy chậm <strong>vẫn fail</strong></td>
+</tr>
+<tr>
+<td><strong>Lặp 12 lần × 5 giây, thoát khi <code>UP</code></strong></td>
+<td>✅ Sẵn sàng lúc nào đi tiếp lúc đó</td>
+</tr>
+<tr>
+<td><code>HEALTHCHECK</code> trong Dockerfile</td>
+<td>Tốt nhất — để bài nâng cao</td>
+</tr>
+</tbody>
+</table>
+<h3 id="if-always-vi-sao-mot-dong-nho-lai-quan-trong"><code>if: always()</code> — vì sao một dòng nhỏ lại quan trọng</h3>
+<p>Mặc định, một bước trong job <strong>bị bỏ qua</strong> nếu bước trước thất bại. Nghĩa là khi health check fail, bước <code>docker rm</code> <strong>không chạy</strong> → container rác ở lại. Trên Runner dùng một lần thì không sao, nhưng trên <strong>self-hosted runner</strong> hoặc máy chủ thật, rác tích lại cho tới khi hết cổng hoặc hết đĩa.</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dọn container</span>
+<span class="w">  </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always()</span><span class="w">        </span><span class="c1"># chạy kể cả khi bước trước fail</span>
+<span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker rm -f thu-image || true</span>
+</code></pre></div>
+
+<blockquote>
+<p>💡 Quy tắc: <strong>bước dọn dẹp luôn có <code>if: always()</code></strong>. Thí nghiệm 7 mô phỏng đúng tình huống này ở máy bạn.</p>
+</blockquote>
+<h3 id="bai-nay-ong-gop-gi-cho-cam-ket-au-buoi_3">🎯 Bài này đóng góp gì cho cam kết đầu buổi?</h3>
+<p>Bạn đã có <strong>bằng chứng tự động</strong>: một máy trắng pull image về và chạy được. Còn một lỗ hổng cuối: bạn đang gọi image bằng <strong>tag</strong>, mà tag thì <strong>đổi được</strong>. <strong>BÀI 5</strong> bịt lỗ hổng đó.</p>
+<hr />
 <h1 id="bai-5-tag-va-digest">BÀI 5 — TAG VÀ DIGEST</h1>
 <p><strong>Mục tiêu:</strong> hiểu vì sao production không dùng <code>latest</code>.</p>
 <h2 id="51-xem-digest-cua-image">5.1 · Xem digest của image</h2>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>image<span class="w"> </span>inspect<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{index .RepoDigests 0}}'</span>
@@ -984,7 +1506,7 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 
 <p><strong>Phải thấy:</strong> <code>ghcr.io/caotv1512/user-service@sha256:...</code></p>
 <h2 id="52-chung-minh-nhieu-tag-cung-tro-mot-digest">5.2 · Chứng minh nhiều tag cùng trỏ một digest</h2>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/caotv1512/user-service:1.0.0
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>ghcr.io/caotv1512/user-service:1.0.0
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>images<span class="w"> </span>--digests<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>user-service
@@ -998,7 +1520,7 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DIGEST</span><span class="s2">"</span>
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span><span class="s2">"</span><span class="nv">$DIGEST</span><span class="s2">"</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span><span class="s2">"</span><span class="nv">$DIGEST</span><span class="s2">"</span>
 </code></pre></div>
 
 <p><strong>Vì sao dùng digest:</strong> tag có thể bị ghi đè bất cứ lúc nào. Digest là <strong>vân tay của nội dung</strong> — pull bằng digest thì chắc chắn lấy đúng thứ đã kiểm duyệt, không ai đổi được.</p>
@@ -1029,9 +1551,383 @@ latest         → tiện nhưng nguy hiểm (xem Thí nghiệm 4)
 </tbody>
 </table>
 <hr />
-<h1 id="bai-6-tim-loi">BÀI 6 — TÌM LỖI</h1>
+<h2 id="giai-thich-tuong-tan-bai-5">🔍 GIẢI THÍCH TƯỜNG TẬN — BÀI 5</h2>
+<h3 id="tag-la-cai-nhan-dan-digest-la-van-tay">Tag là cái nhãn dán, digest là vân tay</h3>
+<p>Hãy tưởng tượng registry là một kho hàng:</p>
+<ul>
+<li><strong>Digest</strong> = <strong>vân tay của thùng hàng</strong>, máy tự tính từ <strong>nội dung</strong> (<code>sha256:a1b2c3...</code>). Nội dung đổi một byte → vân tay khác hoàn toàn. <strong>Không ai sửa được</strong> vân tay mà giữ nguyên nội dung.</li>
+<li><strong>Tag</strong> = <strong>mảnh giấy dán bên ngoài</strong> ghi "bản mới nhất". Người dán được, người <strong>bóc ra dán sang thùng khác</strong> cũng được.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Tag</th>
+<th>Digest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ai đặt</td>
+<td>Con người</td>
+<td>Máy tính từ nội dung</td>
+</tr>
+<tr>
+<td>Đổi được không</td>
+<td>✅ <strong>Có — đây là nguy hiểm</strong></td>
+<td>❌ <strong>Không</strong></td>
+</tr>
+<tr>
+<td>Đọc có hiểu không</td>
+<td><code>1.0.0</code> — dễ hiểu</td>
+<td><code>sha256:9f8e...</code> — không</td>
+</tr>
+<tr>
+<td>Dùng để</td>
+<td><strong>Chọn</strong> bản muốn triển khai</td>
+<td><strong>Chứng minh</strong> đúng nội dung</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kich-ban-that-khien-nguoi-ta-mat-ngu">Kịch bản thật khiến người ta mất ngủ</h3>
+<ol>
+<li>Thứ Hai: bạn test <code>latest</code> rất kỹ, mọi thứ hoàn hảo, bạn triển khai.</li>
+<li>Thứ Ba: đồng nghiệp push một bản lỗi, CI gắn <code>latest</code> cho bản mới.</li>
+<li>Thứ Tư: một máy chủ khởi động lại, <code>docker pull ... :latest</code> → <strong>nhận bản lỗi</strong>.</li>
+<li>Không một dòng cấu hình nào của bạn thay đổi. Nhưng hệ thống đã khác.</li>
+</ol>
+<p>Thí nghiệm 4 tái hiện đúng chuyện này ở máy bạn: bạn push hai lần và thấy <code>latest</code> <strong>âm thầm</strong> trỏ sang bản mới.</p>
+<blockquote>
+<p>✅ <strong>Cách làm đúng trong thực tế:</strong> dùng <strong>tag</strong> khi nói chuyện với người (<code>1.0.0</code>, <code>2.3.1</code>), dùng <strong>digest</strong> khi nói chuyện với máy (file triển khai, Kubernetes manifest). Tag để chọn, digest để khoá.</p>
+</blockquote>
+<h3 id="vi-sao-digest-moi-hoan-thien-cam-ket-au-buoi">Vì sao digest mới hoàn thiện cam kết đầu buổi?</h3>
+<p>Cam kết là <em>"máy nào cũng chạy được"</em>. Nhưng chạy <strong>cái gì</strong>? Nếu mỗi máy pull <code>:latest</code> vào thời điểm khác nhau, chúng có thể đang chạy <strong>những bản khác nhau</strong> — và bạn không có cách nào biết.</p>
+<p>Pull bằng digest thì <strong>mọi máy chắc chắn có cùng từng byte</strong>. Lúc đó cam kết mới đầy đủ:</p>
+<blockquote>
+<p><strong>"Build một lần, chạy mọi nơi — và mọi nơi chạy đúng cùng một thứ."</strong></p>
+</blockquote>
+<h3 id="a-u-manh-ghep-gio-i-chung-minh">🎯 Đã đủ mảnh ghép — giờ đi chứng minh</h3>
+<table>
+<thead>
+<tr>
+<th>Bài</th>
+<th>Đã có gì</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Image tự chứa, sạch, không cần Java ở máy đích</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Địa chỉ công khai để mọi máy lấy về</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Build không phụ thuộc máy của ai</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Bằng chứng tự động: máy trắng pull về chạy được</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Cách chỉ đúng một bản, không ai đổi được</td>
+</tr>
+</tbody>
+</table>
+<p><strong>BÀI 6</strong> làm việc cuối cùng: <strong>xoá sạch máy bạn</strong>, pull lại từ Registry, và chạy. Không Java, không Gradle, không mã nguồn.</p>
+<hr />
+<h1 id="bai-6-chung-minh-loi-hua-may-nao-cung-chay-uoc">BÀI 6 — CHỨNG MINH LỜI HỨA: MÁY NÀO CŨNG CHẠY ĐƯỢC</h1>
+<blockquote>
+<p><strong>Đây là bài quan trọng nhất của buổi học.</strong> Đầu buổi ta đặt câu hỏi: <em>"Đưa file JAR lên máy chủ khách hàng, chuyện gì có thể sai?"</em> Bài này trả lời dứt điểm.</p>
+</blockquote>
+<h2 id="61-loi-hua-la-gi">6.1 · Lời hứa là gì?</h2>
+<p>Ba buổi vừa qua ta đi dần tới một điều:</p>
+<table>
+<thead>
+<tr>
+<th>Buổi</th>
+<th>Giao cho người khác cái gì</th>
+<th>Họ phải tự lo gì</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>04–05</strong></td>
+<td>Mã nguồn + hướng dẫn</td>
+<td>Cài Java, cài Docker, tự build, tự cấu hình</td>
+</tr>
+<tr>
+<td><strong>07</strong></td>
+<td>File JAR</td>
+<td><strong>Cài đúng Java 17</strong>, tự cấu hình biến, tự chạy</td>
+</tr>
+<tr>
+<td><strong>08</strong></td>
+<td><strong>Docker image trên Registry</strong></td>
+<td><strong>Không gì cả</strong> — <code>docker pull</code> rồi <code>docker run</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lời hứa của Session 08:</strong></p>
+<blockquote>
+<p>Sau khi đẩy image lên Registry, <strong>bất kỳ máy nào</strong> — Windows, Linux, Mac, máy chủ đám mây — chỉ cần có Docker là <strong>pull về chạy được ngay</strong>. Không cài Java. Không cài Gradle. Không build lại. Không "máy tôi chạy được mà".</p>
+</blockquote>
+<h2 id="62-gia-lap-mot-may-hoan-toan-moi">6.2 · Giả lập "một máy hoàn toàn mới"</h2>
+<p>Xoá sạch mọi image của buổi này để chắc chắn không còn dấu vết gì của lần build trước.</p>
+<p><strong>Bước 1 — xem trước sẽ xoá những gì</strong> (bước này chưa xoá gì cả):</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>images<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Repository}}:{{.Tag}}'</span><span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=user-service:*'</span><span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=ghcr.io/caotv1512/user-service:*'</span>
+</code></pre></div>
+
+<p><strong>Phải thấy</strong> các bản đã tạo trong buổi: <code>user-service:1.0.0</code>, <code>user-service:single</code>, và các bản đã pull ở BÀI 5: <code>ghcr.io/caotv1512/user-service:1.0.0</code>, <code>:latest</code>.</p>
+<p><strong>Bước 2 — xoá từng bản một:</strong></p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>images<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Repository}}:{{.Tag}}'</span><span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=user-service:*'</span><span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=ghcr.io/caotv1512/user-service:*'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>r<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>docker<span class="w"> </span>rmi<span class="w"> </span>-f<span class="w"> </span><span class="s2">"</span><span class="nv">$r</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>images<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Repository}}:{{.Tag}}'</span><span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=user-service:*'</span><span class="w"> </span>--filter<span class="w"> </span><span class="s1">'reference=ghcr.io/caotv1512/user-service:*'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>.<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Sach - khong con image nao cua buoi nay"</span>
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> <code>Sach - khong con image nao cua buoi nay</code></p>
+<p><em>(Dùng lại đúng bộ lọc ở Bước 1 nên kết quả dứt khoát. Nếu máy bạn còn image của buổi trước như <code>quickbite-user-service:v1</code> thì nó </em><em>vẫn ở đó và không sao cả</em><em> — xem giải thích #2 bên dưới.)</em></p>
+<blockquote>
+<p>💡 Từ giờ trở đi, <strong>mọi thứ chạy được đều đến từ Registry</strong>, không phải từ máy bạn.</p>
+</blockquote>
+<h3 id="ba-chi-tiet-trong-lenh-xoa-eu-co-ly-do">🔍 Ba chi tiết trong lệnh xoá — đều có lý do</h3>
+<p><strong>1. Vì sao không gõ tay danh sách tên?</strong>
+Ở BÀI 5 bạn đã pull cả tag <code>:1.0.0</code>, cả <code>:latest</code>, <strong>và</strong> pull bằng digest. Nếu chỉ xoá vài tên bạn còn nhớ, máy vẫn giữ image cũ — và khi <code>docker run</code> ở bước sau, <strong>Docker dùng bản có sẵn, không tải từ Registry</strong>. Cả lập luận "mọi thứ đến từ Registry" sụp ngay tại đó mà <strong>không ai nhận ra</strong>. Để bộ lọc tự liệt kê thì không sót bản nào.</p>
+<p><strong>2. Vì sao dùng <code>--filter reference=...</code> chứ không <code>grep user-service</code>?</strong>
+Máy bạn có thể còn image của các buổi trước — <code>quickbite-user-service:v1</code> (Session 04), <code>stack-user-service:latest</code> (Session 05). Lọc bằng <code>grep user-service</code> sẽ <strong>bắt luôn những image đó và xoá mất demo của buổi khác</strong>. Bộ lọc <code>reference</code> chỉ khớp đúng hai kho ta muốn:</p>
+<table>
+<thead>
+<tr>
+<th>Bộ lọc</th>
+<th>Khớp</th>
+<th>Không khớp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reference=user-service:*</code></td>
+<td><code>user-service:1.0.0</code>, <code>user-service:single</code></td>
+<td><code>quickbite-user-service:v1</code></td>
+</tr>
+<tr>
+<td><code>reference=ghcr.io/caotv1512/user-service:*</code></td>
+<td><code>ghcr.io/caotv1512/user-service:latest</code></td>
+<td>image của người khác</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Hai cờ <code>--filter reference=</code> đi cùng nhau mang nghĩa <strong>HOẶC</strong> — khớp kho này <em>hoặc</em> kho kia.</p>
+</blockquote>
+<p><strong>3. Vì sao phải <code>while read</code> xoá từng cái, không truyền hết một lượt?</strong>
+Đây là chỗ dễ vấp. <code>:latest</code> và <code>:1.0.0</code> thường là <strong>cùng một image, hai nhãn</strong>. Nếu truyền cả danh sách cho một lệnh <code>docker rmi</code> duy nhất, nhãn đầu bị xoá làm image biến mất, các nhãn sau trở thành tham chiếu không còn tồn tại, và Docker trả về lỗi rất khó hiểu:</p>
+<div class="highlight"><pre><span></span><code>Error response from daemon: 404 page not found
+</code></pre></div>
+
+<p>Xoá <strong>từng tên một</strong> thì Docker xử lý đúng: những nhãn đầu chỉ <code>Untagged</code>, tới nhãn cuối cùng mới thật sự <code>Deleted</code>. Bạn sẽ thấy rõ điều đó trong kết quả:</p>
+<div class="highlight"><pre><span></span><code>Untagged: ghcr.io/caotv1512/user-service:1.0.0
+Untagged: ghcr.io/caotv1512/user-service:latest
+Deleted:  sha256:826eafe331cab428...
+</code></pre></div>
+
+<blockquote class="warn">
+<p>💡 <strong>Rút ra:</strong> <code>Untagged</code> = bóc nhãn, image vẫn còn. <code>Deleted</code> = nhãn cuối đã bóc, <strong>giờ mới thật sự mất image</strong>. Đúng ý tưởng của BÀI 5: nhãn và image là hai thứ khác nhau.</p>
+<p>⚠️ Lệnh này chạy lại nhiều lần <strong>không lỗi</strong> — danh sách rỗng thì vòng lặp không chạy lần nào.</p>
+</blockquote>
+<h2 id="63-keo-image-ve-khong-can-ang-nhap">6.3 · Kéo image về — không cần đăng nhập</h2>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> các layer tải về, kết thúc bằng <code>Status: Downloaded newer image</code></p>
+<blockquote>
+<p>💡 <strong>Không cần <code>docker login</code></strong> vì package này để chế độ public. Với package private thì phải login trước — nhưng luồng còn lại y hệt.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>image<span class="w"> </span>inspect<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Created}} | {{.Architecture}} | {{.Os}}'</span>
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> thời điểm tạo là lúc <strong>CI chạy trên máy chủ GitHub</strong>, không phải lúc bạn build.</p>
+<h2 id="64-dung-database-roi-chay-image">6.4 · Dựng database rồi chạy image</h2>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>network<span class="w"> </span>create<span class="w"> </span>qb-demo-net
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--name<span class="w"> </span>qb-pg<span class="w"> </span>--network<span class="w"> </span>qb-demo-net<span class="w">   </span>-e<span class="w"> </span><span class="nv">POSTGRES_USER</span><span class="o">=</span>quickbite_user<span class="w">   </span>-e<span class="w"> </span><span class="nv">POSTGRES_PASSWORD</span><span class="o">=</span>quickbite_user<span class="w">   </span>-e<span class="w"> </span><span class="nv">POSTGRES_DB</span><span class="o">=</span>quickbite_user_db<span class="w">   </span>postgres:15-alpine
+</code></pre></div>
+
+<p>Đợi PostgreSQL sẵn sàng:</p>
+<div class="highlight"><pre><span></span><code><span class="k">until</span><span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>qb-pg<span class="w"> </span>pg_isready<span class="w"> </span>-U<span class="w"> </span>quickbite_user<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>sleep<span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</code></pre></div>
+
+<p>Giờ chạy image <strong>kéo từ Registry</strong>:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--name<span class="w"> </span>qb-app<span class="w"> </span>--network<span class="w"> </span>qb-demo-net<span class="w"> </span>-p<span class="w"> </span><span class="m">8099</span>:8081<span class="w">   </span>-e<span class="w"> </span><span class="nv">DB_HOST</span><span class="o">=</span>qb-pg<span class="w"> </span>-e<span class="w"> </span><span class="nv">DB_PORT</span><span class="o">=</span><span class="m">5432</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">DB_NAME</span><span class="o">=</span>quickbite_user_db<span class="w">   </span>-e<span class="w"> </span><span class="nv">DB_USERNAME</span><span class="o">=</span>quickbite_user<span class="w"> </span>-e<span class="w"> </span><span class="nv">DB_PASSWORD</span><span class="o">=</span>quickbite_user<span class="w">   </span>ghcr.io/caotv1512/user-service:latest
+</code></pre></div>
+
+<p>Đợi ứng dụng khởi động:</p>
+<div class="highlight"><pre><span></span><code><span class="k">until</span><span class="w"> </span>curl<span class="w"> </span>-fsS<span class="w"> </span>http://localhost:8099/actuator/health<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>sleep<span class="w"> </span><span class="m">3</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> <code>{"status":"UP","components":{"db":{"status":"UP"...</code> — thường sau khoảng 10 giây</p>
+<h2 id="65-kiem-chung-ay-u">6.5 · Kiểm chứng đầy đủ</h2>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8099/api/users<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">300</span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> 3 bản ghi thật đọc từ PostgreSQL</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--entrypoint<span class="w"> </span>sh<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>-c<span class="w"> </span><span class="s2">"java -version 2&gt;&amp;1 &amp;&amp; ls /app"</span>
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> Java 17 và <code>app.jar</code> — <strong>Java nằm sẵn trong image</strong>, máy bạn không cần cài</p>
+<div class="highlight"><pre><span></span><code>java<span class="w"> </span>-version
+</code></pre></div>
+
+<blockquote>
+<p>Máy bạn có Java hay không <strong>cũng không ảnh hưởng gì</strong>. Ứng dụng đang chạy bằng Java bên trong container.</p>
+</blockquote>
+<h2 id="66-chot-lai-voi-lop">6.6 · Chốt lại với lớp</h2>
+<p>Dừng lại đây và hỏi sinh viên:</p>
+<blockquote>
+<p><em>"Vừa rồi ta đã làm gì trên máy này?"</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Việc</th>
+<th>Có làm không</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cài Java 17</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>Cài Gradle</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>Tải mã nguồn về</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>Chạy <code>./gradlew bootJar</code></td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>Sửa cấu hình gì đó cho hợp máy</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td><strong><code>docker pull</code> rồi <code>docker run</code></strong></td>
+<td>✅ <strong>Chỉ có vậy</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Đó chính là lời hứa được thực hiện.</strong> Image này do máy chủ GitHub build từ một commit đã qua kiểm tra. Nó chạy y hệt trên máy CI, trên Mac này, và sẽ chạy y hệt trên máy chủ production.</p>
+</blockquote>
+<div class="keybox">
+<span class="lbl">Câu chốt viết lên bảng</span>
+<p><strong>"Build một lần, chạy mọi nơi."</strong></p>
+<p>Không phải khẩu hiệu — đó là thứ các em vừa tự tay chứng minh.</p>
+</div>
+
+<h3 id="quay-lai-khung-o-phan-a1b-tick-tung-dong">Quay lại khung ở phần A1b — tick từng dòng</h3>
+<p>Mở lại <strong>A1b</strong> đầu tài liệu. Đây là bảng ta đã vẽ trước khi học. Giờ tick:</p>
+<table>
+<thead>
+<tr>
+<th>Bài</th>
+<th>Câu hỏi</th>
+<th>Đã trả lời bằng gì</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Đóng gói app cho gọn và sạch?</td>
+<td>Multi-stage — image cuối <strong>không có <code>javac</code>, không có <code>src/</code></strong></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Đưa image ra khỏi máy mình?</td>
+<td>Đã push lên <code>ghcr.io</code>, xem được trên trang Packages</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Ai build?</td>
+<td><strong>Máy chủ GitHub</strong> build, không phải máy cá nhân ai</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Sao biết image chạy được?</td>
+<td>Workflow 07 pull về <strong>Runner trắng</strong> và health check <code>UP</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Chỉ đúng một bản?</td>
+<td>Pull được bằng <strong>digest</strong> — không ai đổi được</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Máy trắng chạy được không?</td>
+<td><strong>Vừa xoá sạch image, pull lại, app lên <code>UP</code></strong></td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ba-cau-hoi-e-biet-sinh-vien-co-that-su-hieu">Ba câu hỏi để biết sinh viên có thật sự hiểu</h3>
+<p>Hỏi lần lượt, đừng đưa đáp án ngay:</p>
+<blockquote>
+<p><strong>1. "Máy này không cài Java. Vậy <code>java -jar</code> chạy bằng Java nào?"</strong>
+→ Java <strong>nằm trong image</strong>, ở tầng <code>jre-alpine</code>. Container dùng Java của chính nó, hoàn toàn không liên quan tới máy chủ. Đây là điểm khác biệt cốt tử so với file JAR ở Session 07.</p>
+<p><strong>2. "Nếu bạn cùng lớp pull image này, có chạy được ngay không?"</strong>
+→ Chạy được ứng dụng, <strong>nhưng cần database riêng</strong>. Image chứa <em>ứng dụng</em>, không chứa <em>dữ liệu</em>. Đó là lý do ở 6.4 ta phải dựng <code>qb-pg</code> trước. Thí nghiệm 8 cho các em tự làm chuyện này với nhau.</p>
+<p><strong>3. "Vậy Docker Compose ở Session 04 giờ còn dùng làm gì?"</strong>
+→ Session 04 dùng Compose để <strong>build và chạy tại máy</strong>. Giờ Compose chỉ cần <code>image: ghcr.io/...</code> thay cho <code>build: .</code> — <strong>không ai phải build nữa</strong>, chỉ pull rồi chạy. Đó là bước tiến của cả buổi học.</p>
+</blockquote>
+<h2 id="67-don-dep">6.7 · Dọn dẹp</h2>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>qb-app<span class="w"> </span>qb-pg
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>network<span class="w"> </span>rm<span class="w"> </span>qb-demo-net
+</code></pre></div>
+
+<hr />
+<h2 id="thi-nghiem-8-ua-image-sang-may-ban-cung-lop">🧪 Thí nghiệm 8 — Đưa image sang máy bạn cùng lớp</h2>
+<p>Đây là bài chứng minh thuyết phục nhất — <strong>làm theo cặp</strong>.</p>
+<p><strong>Bạn A</strong> (đã push image lên GHCR) đọc to tên image của mình:</p>
+<div class="highlight"><pre><span></span><code>ghcr.io/&lt;username-cua-A&gt;/user-service:latest
+</code></pre></div>
+
+<p><strong>Bạn B</strong> — máy chưa từng đụng tới dự án này — gõ đúng 2 lệnh:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>ghcr.io/&lt;username-cua-A&gt;/user-service:latest
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--entrypoint<span class="w"> </span>sh<span class="w"> </span>ghcr.io/&lt;username-cua-A&gt;/user-service:latest<span class="w"> </span>-c<span class="w"> </span><span class="s2">"java -version 2&gt;&amp;1 &amp;&amp; ls -la /app"</span>
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> Java 17 và <code>app.jar</code> — trên máy chưa hề cài Java, chưa hề có mã nguồn.</p>
+<blockquote class="warn">
+<p>⚠️ <strong>Điều kiện:</strong> package của A phải để <strong>Public</strong>. Vào <code>github.com/&lt;username&gt;?tab=packages</code> → chọn package → <em>Package settings</em> → <em>Change visibility</em> → <strong>Public</strong>.</p>
+<p>Nếu để Private, B phải <code>docker login ghcr.io</code> bằng PAT có quyền <code>read:packages</code> và được A cấp quyền truy cập.</p>
+</blockquote>
+<p><strong>Câu hỏi cho cả lớp sau thí nghiệm:</strong></p>
+<blockquote>
+<p><em>"Nếu thay máy bạn B bằng một máy chủ ở Singapore, có gì khác không?"</em>
+→ <strong>Không có gì khác.</strong> Cùng 2 lệnh đó. Đây chính là cách các hệ thống thật triển khai phần mềm.</p>
+</blockquote>
+<hr />
+<h1 id="bai-7-tim-loi">BÀI 7 — TÌM LỖI</h1>
 <h2 id="buoc-1-image-co-tren-registry-chua">Bước 1 — Image có trên Registry chưa?</h2>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
 </code></pre></div>
 
 <p>Lỗi <code>unauthorized</code> → chưa login hoặc thiếu quyền <code>read:packages</code>
@@ -1040,6 +1936,9 @@ Lỗi <code>manifest unknown</code> → tag không tồn tại, kiểm tra lại
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>~/.docker/config.json<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A2<span class="w"> </span>ghcr
 </code></pre></div>
 
+<blockquote>
+<p><strong>Không in ra gì</strong> = chưa từng <code>docker login ghcr.io</code> trên máy này. Với image <strong>công khai</strong> thì vẫn <code>pull</code> được bình thường; chỉ khi image <strong>riêng tư</strong> mới bắt buộc phải login.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">logout</span><span class="w"> </span>ghcr.io<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s1">'%s'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CR_PAT</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>login<span class="w"> </span>ghcr.io<span class="w"> </span>-u<span class="w"> </span>caotv1512<span class="w"> </span>--password-stdin
 </code></pre></div>
 
@@ -1047,11 +1946,11 @@ Lỗi <code>manifest unknown</code> → tag không tồn tại, kiểm tra lại
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>--no-trunc<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-8
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">"ls -la /app &amp;&amp; java -version"</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--entrypoint<span class="w"> </span>sh<span class="w"> </span>ghcr.io/caotv1512/user-service:latest<span class="w"> </span>-c<span class="w"> </span><span class="s2">"ls -la /app &amp;&amp; java -version"</span>
 </code></pre></div>
 
 <h2 id="buoc-4-container-chay-uoc-khong">Bước 4 — Container chạy được không?</h2>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>debug-img<span class="w"> </span>-p<span class="w"> </span><span class="m">8093</span>:8081<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--platform<span class="w"> </span>linux/amd64<span class="w"> </span>--name<span class="w"> </span>debug-img<span class="w"> </span>-p<span class="w"> </span><span class="m">8093</span>:8081<span class="w"> </span>ghcr.io/caotv1512/user-service:latest
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>sleep<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>logs<span class="w"> </span>debug-img<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"Started|Caused by"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-3
@@ -1094,7 +1993,7 @@ Lỗi <code>manifest unknown</code> → tag không tồn tại, kiểm tra lại
 </tr>
 <tr>
 <td>Xem bên trong image</td>
-<td><code>docker run --rm user-service:1.0.0 sh -c "ls -la /app"</code></td>
+<td><code>docker run --rm --entrypoint sh user-service:1.0.0 -c "ls -la /app"</code></td>
 </tr>
 <tr>
 <td>Xem digest</td>
@@ -1185,7 +2084,7 @@ Lỗi <code>manifest unknown</code> → tag không tồn tại, kiểm tra lại
 </table>
 <hr />
 <h1 id="phu-luc-2-bang-loi">PHỤ LỤC 2 · BẢNG LỖI</h1>
-<h2 id="7-thi-nghiem-trong-tai-lieu-nay">7 thí nghiệm trong tài liệu này</h2>
+<h2 id="8-thi-nghiem-trong-tai-lieu-nay">8 thí nghiệm trong tài liệu này</h2>
 <table>
 <thead>
 <tr>
@@ -1238,6 +2137,12 @@ Lỗi <code>manifest unknown</code> → tag không tồn tại, kiểm tra lại
 <td>Thiếu <code>if: always()</code></td>
 <td>Thêm bước dọn có <code>if: always()</code></td>
 </tr>
+<tr>
+<td>8</td>
+<td>Máy bạn pull về nhưng <code>docker run</code> lại khởi động Spring Boot thay vì mở shell</td>
+<td><code>ENTRYPOINT</code> biến tham số thành đối số của <code>java</code></td>
+<td>Dùng <code>--entrypoint sh</code> rồi mới <code>-c "..."</code></td>
+</tr>
 </tbody>
 </table>
 <h2 id="loi-khac">Lỗi khác</h2>
@@ -1264,6 +2169,10 @@ Lỗi <code>manifest unknown</code> → tag không tồn tại, kiểm tra lại
 <tr>
 <td><code>no matching manifest for linux/arm64</code></td>
 <td>Mac Apple Silicon — thêm <code>--platform linux/amd64</code></td>
+</tr>
+<tr>
+<td><code>404 page not found</code> khi <code>docker rmi</code></td>
+<td>Truyền nhiều nhãn cùng lúc — xoá <strong>từng nhãn một</strong> (xem 6.2)</td>
 </tr>
 <tr>
 <td><code>Cannot connect to the Docker daemon</code></td>
@@ -1297,6 +2206,10 @@ Lỗi <code>manifest unknown</code> → tag không tồn tại, kiểm tra lại
 <li><input type="checkbox"> <strong>Thí nghiệm 6:</strong> giải thích được vì sao cần vòng lặp chờ</li>
 <li><input type="checkbox"> <strong>Thí nghiệm 7:</strong> hiểu tác dụng của <code>if: always()</code></li>
 <li><input type="checkbox"> Phân biệt được tag và digest, biết pull bằng digest</li>
+<li><input type="checkbox"> <strong>BÀI 6:</strong> xoá sạch image rồi pull lại từ Registry và chạy được</li>
+<li><input type="checkbox"> <strong>BÀI 6:</strong> giải thích được vì sao máy không cần cài Java mà app vẫn chạy</li>
+<li><input type="checkbox"> <strong>Thí nghiệm 8:</strong> đưa image sang máy bạn khác và chạy được ở đó</li>
+<li><input type="checkbox"> Trả lời được: <em>"Ta đã cài gì lên máy này? — Không gì cả, chỉ pull và run"</em></li>
 </ul>
     <div class="foot"><div class="tri"></div>
       <div><strong>Rikkei Academy</strong> — Học viện đào tạo lập trình chất lượng Nhật Bản</div>
