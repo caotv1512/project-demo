@@ -1,0 +1,95 @@
+# ==========================================================================
+#  BÀI 6 (Session 08) — Build Docker image trong CI và đẩy lên Registry
+#
+#  Khác Session 07 ở chỗ: sản phẩm cuối KHÔNG còn là file JAR nằm trong
+#  Artifact (tạm bợ, 3–7 ngày) mà là DOCKER IMAGE nằm trên Registry
+#  (lâu dài, có phiên bản, máy nào cũng pull về chạy được).
+# ==========================================================================
+name: 06 · Build image và đẩy lên GHCR
+
+on:
+  workflow_dispatch:
+    inputs:
+      phien_ban:
+        description: 'Số phiên bản gắn cho image (ví dụ 1.0.0)'
+        type: string
+        default: '1.0.0'
+  push:
+    branches: [main]
+    paths:
+      - 'quickbite-backend/user-service/**'
+      - '.github/workflows/06-build-va-push-image.yml'
+
+env:
+  SERVICE_DIR: quickbite-backend/user-service
+  # ghcr.io = GitHub Container Registry. Tên image phải viết thường toàn bộ.
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/user-service
+
+jobs:
+  build_va_push:
+    name: Build image và push
+    runs-on: ubuntu-latest
+
+    # Quyền tối thiểu cần thiết:
+    #   contents: read   -> để checkout mã nguồn
+    #   packages: write  -> để đẩy image lên GHCR
+    # KHÔNG cần Personal Access Token: GITHUB_TOKEN được sinh tự động theo job.
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v5
+
+      # BẮT BUỘC khi dùng cache-to: type=gha.
+      # Trình build mặc định của Docker KHÔNG hỗ trợ cache backend của GitHub.
+      # Thiếu bước này sẽ gặp lỗi: "buildx failed with: ...build-cache-backends"
+      - name: Thiết lập Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Đăng nhập GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Chuẩn bị các nhãn phiên bản
+        id: tags
+        run: |
+          # Tên image bắt buộc viết thường, nếu không GHCR từ chối
+          TEN=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+          PB="${{ inputs.phien_ban || '1.0.0' }}"
+          SHA="${GITHUB_SHA:0:7}"
+
+          # Ba nhãn cho cùng MỘT image:
+          #   1.0.0       -> nhãn phát hành, người đọc hiểu ngay
+          #   sha-a1b2c3d -> truy vết chính xác commit nào, KHÔNG bao giờ bị ghi đè
+          #   latest      -> tiện nhưng nguy hiểm, xem cảnh báo trong tài liệu
+          echo "ten=${TEN}" >> $GITHUB_OUTPUT
+          echo "danh_sach=${TEN}:${PB},${TEN}:sha-${SHA},${TEN}:latest" >> $GITHUB_OUTPUT
+          echo "Sẽ gắn 3 nhãn: ${PB} · sha-${SHA} · latest"
+
+      - name: Build image multi-stage và push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ env.SERVICE_DIR }}
+          push: true
+          tags: ${{ steps.tags.outputs.danh_sach }}
+          # Cache layer giữa các lần chạy — máy ảo mới tinh mỗi lần nên rất cần
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Ghi lại digest — bằng chứng duy nhất của nội dung image
+        run: |
+          echo "### Đã đẩy image lên GHCR" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Mục | Giá trị |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Tên image | \`${{ steps.tags.outputs.ten }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Các nhãn | \`${{ inputs.phien_ban || '1.0.0' }}\`, \`sha-${GITHUB_SHA:0:7}\`, \`latest\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Digest | \`${{ steps.build.outputs.digest }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Tag có thể bị ghi đè, **digest thì không**. Ghi lại digest này để tái lập chính xác." >> $GITHUB_STEP_SUMMARY
