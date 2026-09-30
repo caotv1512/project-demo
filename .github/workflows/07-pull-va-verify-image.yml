@@ -1,0 +1,126 @@
+# ==========================================================================
+#  BÀI 7 (Session 08) — Kéo image từ Registry về, chạy thử và kiểm tra
+#
+#  Đây là bước chứng minh image thật sự DÙNG ĐƯỢC, không chỉ build xong là thôi.
+#  Job dựng sẵn một PostgreSQL bằng "service container", chạy image vừa pull,
+#  rồi gọi /actuator/health cho tới khi ứng dụng sẵn sàng.
+# ==========================================================================
+name: 07 · Pull image và kiểm tra
+
+on:
+  workflow_dispatch:
+    inputs:
+      nhan:
+        description: 'Nhãn image muốn kiểm tra'
+        type: string
+        default: 'latest'
+  workflow_run:
+    # Tự chạy ngay sau khi workflow 06 đẩy image lên thành công
+    workflows: ["06 · Build image và đẩy lên GHCR"]
+    types: [completed]
+
+jobs:
+  pull_va_verify:
+    name: Pull và kiểm tra image
+    runs-on: ubuntu-latest
+    # Nếu được kích hoạt bởi workflow 06 thì chỉ chạy khi 06 thành công
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    permissions:
+      contents: read
+      packages: read      # chỉ ĐỌC — quyền tối thiểu để pull image
+
+    # Service container: GitHub dựng sẵn PostgreSQL trước khi các step chạy.
+    # Từ trong step, gọi tới nó bằng localhost vì cổng đã được ánh xạ ra.
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: quickbite_user
+          POSTGRES_PASSWORD: quickbite_user
+          POSTGRES_DB: quickbite_user_db
+        ports:
+          - 5432:5432
+        # Đợi tới khi Postgres thật sự nhận kết nối rồi mới chạy step đầu tiên
+        options: >-
+          --health-cmd "pg_isready -U quickbite_user"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Đăng nhập GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Xác định image cần kéo
+        id: ref
+        run: |
+          TEN=$(echo "ghcr.io/${{ github.repository_owner }}/user-service" | tr '[:upper:]' '[:lower:]')
+          NHAN="${{ inputs.nhan || 'latest' }}"
+          echo "image=${TEN}:${NHAN}" >> $GITHUB_OUTPUT
+          echo "Sẽ kéo: ${TEN}:${NHAN}"
+
+      - name: Kéo image về Runner
+        run: docker pull "${{ steps.ref.outputs.image }}"
+
+      - name: Xem image có gì bên trong
+        run: |
+          echo "--- Thông tin image ---"
+          docker image inspect "${{ steps.ref.outputs.image }}" \
+            --format 'Kích thước: {{.Size}} bytes | Kiến trúc: {{.Architecture}} | Tạo lúc: {{.Created}}'
+          echo ""
+          echo "--- Lịch sử layer (chứng minh multi-stage đã bỏ JDK và mã nguồn) ---"
+          docker history "${{ steps.ref.outputs.image }}" --no-trunc --format '{{.Size}}\t{{.CreatedBy}}' | head -12
+
+      - name: Chạy container và đợi ứng dụng sẵn sàng
+        run: |
+          # --network host để container gọi thẳng tới Postgres qua localhost:5432
+          docker run -d --name kiem_tra_user_service \
+            --network host \
+            -e DB_HOST=localhost \
+            -e DB_PORT=5432 \
+            -e DB_NAME=quickbite_user_db \
+            -e DB_USERNAME=quickbite_user \
+            -e DB_PASSWORD=quickbite_user \
+            -e SERVER_PORT=8081 \
+            "${{ steps.ref.outputs.image }}"
+
+          echo "Đợi tối đa 60 giây cho Spring Boot khởi động..."
+          for i in $(seq 1 12); do
+            if curl --silent --fail http://localhost:8081/actuator/health > /tmp/health.json; then
+              echo ""
+              echo "✅ Ứng dụng đã sẵn sàng sau $(( i * 5 )) giây"
+              cat /tmp/health.json
+              exit 0
+            fi
+            echo "  lần $i/12 — chưa sẵn sàng, đợi 5 giây..."
+            sleep 5
+          done
+
+          echo "❌ Ứng dụng không khởi động được. Log của container:"
+          docker logs kiem_tra_user_service
+          exit 1
+
+      - name: Gọi thử API thật
+        run: |
+          echo "--- GET /api/users ---"
+          curl --silent --fail http://localhost:8081/api/users | head -c 300
+          echo ""
+
+      - name: Dọn dẹp
+        # if: always() -> chạy kể cả khi bước trên thất bại, để không bỏ rác lại
+        if: always()
+        run: docker rm -f kiem_tra_user_service || true
+
+      - name: Ghi kết quả
+        if: success()
+        run: |
+          echo "### Image đã được kiểm chứng" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Image: \`${{ steps.ref.outputs.image }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Kéo về Runner, chạy được, \`/actuator/health\` trả về UP" >> $GITHUB_STEP_SUMMARY
+          echo "- Kết nối được PostgreSQL và đọc được dữ liệu qua \`/api/users\`" >> $GITHUB_STEP_SUMMARY

@@ -1,8 +1,6 @@
-# Giam kich thuoc build context => build nhanh hon.
-# Luu y: KHONG duoc ignore build/libs vi Dockerfile can COPY file JAR tu do.
+# Giữ build context gọn và không rò rỉ dữ liệu nhạy cảm vào image
+.git/
 .gradle/
-build/classes/
-build/tmp/
-build/resources/
-src/
+build/
 *.md
+.env
