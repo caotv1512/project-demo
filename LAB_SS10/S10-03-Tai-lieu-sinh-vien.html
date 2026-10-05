@@ -290,40 +290,119 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="shell">
   <nav class="sidebar"><div class="toc-head">Mục lục</div><div class="toc">
 <ul>
-<li><a href="#buoi-nay-la-buoi-gi">Buổi này là buổi gì?</a><ul>
-<li><a href="#session-08-session-10">Session 08 → Session 10</a></li>
+<li><a href="#ban-o-slide-tai-lieu-bai-lab">Bản đồ: slide ↔ tài liệu ↔ bài lab</a></li>
+<li><a href="#truoc-khi-vao-bai-buoi-nay-noi-tiep-session-08-the-nao">Trước khi vào bài: buổi này nối tiếp Session 08 thế nào</a></li>
+<li><a href="#lesson-01-khoi-tao-vps-va-thiet-lap-ket-noi-quan-tri">LESSON 01 · KHỞI TẠO VPS VÀ THIẾT LẬP KẾT NỐI QUẢN TRỊ</a><ul>
+<li><a href="#11-mot-may-chu-public-i-kem-toan-bo-trach-nhiem-van-hanh">1.1 · Một máy chủ public đi kèm toàn bộ trách nhiệm vận hành</a><ul>
+<li><a href="#pham-vi-thuc-hanh-cua-quickbite">Phạm vi thực hành của QuickBite</a></li>
+<li><a href="#mo-hinh-luong-ket-noi-cua-du-an">Mô hình luồng kết nối của dự án</a></li>
 <li><a href="#vi-sao-vps-khac-moi-thu-ta-tung-dung">Vì sao VPS khác mọi thứ ta từng dùng</a></li>
 </ul>
 </li>
-<li><a href="#phan-1-may-chu-moi-ve-thi-lam-gi">Phần 1 — Máy chủ mới về thì làm gì</a><ul>
+<li><a href="#12-cong-cu-ho-tro-thao-tac-khong-thay-the-co-che-bao-mat-ssh">1.2 · Công cụ hỗ trợ thao tác, không thay thế cơ chế bảo mật SSH</a><ul>
+<li><a href="#profile-ket-noi">Profile kết nối</a></li>
+<li><a href="#hai-cua-so-lam-viec">Hai cửa sổ làm việc</a></li>
+<li><a href="#hai-gioi-han-can-hieu-ro">Hai giới hạn cần hiểu rõ</a></li>
+</ul>
+</li>
+<li><a href="#13-cap-nhat-goi-kiem-tra-reboot-va-ghi-lai-trang-thai-ban-au">1.3 · Cập nhật gói, kiểm tra reboot và ghi lại trạng thái ban đầu</a><ul>
 <li><a href="#apt-update-va-apt-upgrade-khac-nhau-the-nao">apt update và apt upgrade khác nhau thế nào</a></li>
 <li><a href="#vi-sao-phai-kiem-tra-reboot-required">Vì sao phải kiểm tra reboot-required</a></li>
-<li><a href="#oc-tai-nguyen-may-chu-e-lam-gi">Đọc tài nguyên máy chủ để làm gì</a></li>
+<li><a href="#ghi-lai-bang-chung-baseline">Ghi lại bằng chứng: baseline</a></li>
+<li><a href="#ket-qua-at-uoc-sau-lesson-01">Kết quả đạt được sau Lesson 01</a></li>
 </ul>
 </li>
-<li><a href="#phan-2-chi-minh-ban-vao-uoc-may-chu">Phần 2 — Chỉ mình bạn vào được máy chủ</a><ul>
-<li><a href="#khoa-cong-khai-va-khoa-rieng-hieu-bang-mot-hinh-anh">Khoá công khai và khoá riêng — hiểu bằng một hình ảnh</a></li>
+</ul>
+</li>
+<li><a href="#lesson-02-tao-user-trien-khai-va-bao-mat-truy-cap-ssh">LESSON 02 · TẠO USER TRIỂN KHAI VÀ BẢO MẬT TRUY CẬP SSH</a><ul>
+<li><a href="#21-ssh-hardening-phai-giam-ca-be-mat-tan-cong-va-hau-qua-thao-tac-sai">2.1 · SSH hardening phải giảm cả bề mặt tấn công và hậu quả thao tác sai</a><ul>
+<li><a href="#mo-hinh-phan-ra-ac-quyen">Mô hình phân rã đặc quyền</a></li>
+<li><a href="#bon-nguyen-tac-thiet-lap-an-toan">Bốn nguyên tắc thiết lập an toàn</a></li>
 <li><a href="#vi-sao-khong-dung-thang-root">Vì sao không dùng thẳng root</a></li>
-<li><a href="#nguyen-tac-quan-trong-nhat-thu-truoc-khoa-sau">Nguyên tắc quan trọng nhất: thử trước, khoá sau</a></li>
-<li><a href="#sshd-t-oc-cau-hinh-ang-that-su-chay">sshd -T — đọc cấu hình đang thật sự chạy</a></li>
-<li><a href="#oc-ung-thong-bao-loi-cua-ssh">Đọc đúng thông báo lỗi của SSH</a></li>
 </ul>
 </li>
-<li><a href="#phan-3-ong-het-chi-mo-thu-can">Phần 3 — Đóng hết, chỉ mở thứ cần</a><ul>
+<li><a href="#22-thiet-lap-ssh-key-va-phan-quyen-tai-khoan-deployer">2.2 · Thiết lập SSH key và phân quyền tài khoản deployer</a><ul>
+<li><a href="#khoa-cong-khai-va-khoa-rieng-hieu-bang-mot-hinh-anh">Khoá công khai và khoá riêng — hiểu bằng một hình ảnh</a></li>
+<li><a href="#viec-lam-tren-hai-may-khong-tron-lan">Việc làm trên hai máy, không trộn lẫn</a></li>
+</ul>
+</li>
+<li><a href="#23-hardening-ssh-theo-quy-trinh-thu-truoc-khoa-sau">2.3 · Hardening SSH theo quy trình thử trước, khoá sau</a><ul>
+<li><a href="#giu-session-cu-mo-cho-en-khi-session-moi-hoat-ong">Giữ session cũ mở cho đến khi session mới hoạt động</a></li>
+<li><a href="#vi-sao-thu-tu-nay-khong-uoc-ao">Vì sao thứ tự này không được đảo</a></li>
+<li><a href="#sshd-t-va-sshd-t-hai-lenh-khac-nhau-mot-chu">sshd -t và sshd -T — hai lệnh khác nhau một chữ</a></li>
+<li><a href="#bang-chung-cua-a-khoa-ung">Bằng chứng cửa đã khoá đúng</a></li>
+</ul>
+</li>
+<li><a href="#24-khi-ssh-key-khong-hoat-ong-kiem-tra-tu-quyen-file-en-log">2.4 · Khi SSH key không hoạt động, kiểm tra từ quyền file đến log</a><ul>
+<li><a href="#oc-ung-thong-bao-loi-buoc-khoanh-vung-au-tien">Đọc đúng thông báo lỗi — bước khoanh vùng đầu tiên</a></li>
+<li><a href="#ba-nhom-loi-cau-hinh-pho-bien-nhat">Ba nhóm lỗi cấu hình phổ biến nhất</a></li>
+<li><a href="#uong-phuc-hoi-khan-cap">Đường phục hồi khẩn cấp</a></li>
+<li><a href="#ket-qua-at-uoc-sau-lesson-02">Kết quả đạt được sau Lesson 02</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#lesson-03-cai-at-docker-cau-hinh-ufw-va-kiem-soat-cong-public">LESSON 03 · CÀI ĐẶT DOCKER, CẤU HÌNH UFW VÀ KIỂM SOÁT CỔNG PUBLIC</a><ul>
+<li><a href="#31-cai-docker-engine-tu-repository-chinh-thuc">3.1 · Cài Docker Engine từ repository chính thức</a><ul>
+<li><a href="#kiem-chung-moi-la-phan-quan-trong">Kiểm chứng mới là phần quan trọng</a></li>
+</ul>
+</li>
+<li><a href="#32-nhom-docker-tien-loi-nhung-mang-quyen-rat-cao">3.2 · Nhóm docker tiện lợi nhưng mang quyền rất cao</a><ul>
+<li><a href="#co-che-hoat-ong-va-rui-ro">Cơ chế hoạt động và rủi ro</a></li>
+</ul>
+</li>
+<li><a href="#33-ufw-giu-an-toan-ket-noi-va-kiem-soat-cong-public">3.3 · UFW: giữ an toàn kết nối và kiểm soát cổng public</a><ul>
+<li><a href="#default-deny-incoming-chi-mo-ung-dich-vu-public">Default deny incoming, chỉ mở đúng dịch vụ public</a></li>
 <li><a href="#vi-sao-danh-sach-cho-phep-thang-danh-sach-cam">Vì sao "danh sách cho phép" thắng "danh sách cấm"</a></li>
-<li><a href="#cai-bay-lon-nhat-cua-ca-buoi-hoc">Cái bẫy lớn nhất của cả buổi học</a></li>
-<li><a href="#ba-lop-bao-ve-moi-lop-chan-mot-thu-khac-nhau">Ba lớp bảo vệ, mỗi lớp chặn một thứ khác nhau</a></li>
-<li><a href="#nhom-docker-mang-quyen-rat-lon">Nhóm docker mang quyền rất lớn</a></li>
 </ul>
 </li>
-<li><a href="#phan-4-dung-he-thong-len-va-chung-minh-no-song">Phần 4 — Dựng hệ thống lên và chứng minh nó sống</a><ul>
-<li><a href="#env-song-tren-may-chu-khong-song-trong-git">.env sống trên máy chủ, không sống trong Git</a></li>
-<li><a href="#vi-sao-pull-roi-moi-up-d">Vì sao pull rồi mới up -d</a></li>
-<li><a href="#bon-lenh-kiem-tra-moi-lenh-tra-loi-mot-cau-khac-nhau">Bốn lệnh kiểm tra, mỗi lệnh trả lời một câu khác nhau</a></li>
+<li><a href="#34-ports-la-quyet-inh-public-network-khong-chi-la-cau-hinh-compose">3.4 · ports là quyết định public network, không chỉ là cấu hình Compose</a><ul>
+<li><a href="#ba-cach-khai-ports-va-hau-qua">Ba cách khai ports và hậu quả</a></li>
+<li><a href="#bon-nguyen-tac-thiet-lap-network">Bốn nguyên tắc thiết lập network</a></li>
+<li><a href="#ba-lop-bao-ve-moi-lop-chan-mot-thu-khac-nhau">Ba lớp bảo vệ, mỗi lớp chặn một thứ khác nhau</a></li>
+<li><a href="#ket-qua-at-uoc-sau-lesson-03">Kết quả đạt được sau Lesson 03</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#lesson-04-ong-bo-cau-hinh-va-van-hanh-quickbite-bang-docker-compose">LESSON 04 · ĐỒNG BỘ CẤU HÌNH VÀ VẬN HÀNH QUICKBITE BẰNG DOCKER COMPOSE</a><ul>
+<li><a href="#41-hai-ssh-key-phuc-vu-hai-quan-he-tin-cay-khac-nhau">4.1 · Hai SSH key phục vụ hai quan hệ tin cậy khác nhau</a><ul>
+<li><a href="#ban-o-phan-phoi-khoa">Bản đồ phân phối khoá</a></li>
+<li><a href="#hai-nguyen-tac-thiet-lap-tin-cay">Hai nguyên tắc thiết lập tin cậy</a></li>
+</ul>
+</li>
+<li><a href="#42-env-production-ton-tai-tren-vps-khong-ton-tai-trong-git">4.2 · .env production tồn tại trên VPS, không tồn tại trong Git</a><ul>
+<li><a href="#phan-tach-moi-truong">Phân tách môi trường</a></li>
+<li><a href="#kiem-tra-git-co-that-su-bo-qua-env-khong">Kiểm tra Git có thật sự bỏ qua .env không</a></li>
+<li><a href="#kiem-tra-cau-truc-truoc-khi-chay">Kiểm tra cấu trúc trước khi chạy</a></li>
+</ul>
+</li>
+<li><a href="#43-pull-image-truoc-sau-o-moi-tao-hoac-cap-nhat-container">4.3 · Pull image trước, sau đó mới tạo hoặc cập nhật container</a><ul>
+<li><a href="#ba-nguyen-tac-van-hanh">Ba nguyên tắc vận hành</a></li>
+</ul>
+</li>
+<li><a href="#44-chi-ket-luan-thanh-cong-sau-khi-kiem-tra-toan-dien">4.4 · Chỉ kết luận thành công sau khi kiểm tra toàn diện</a><ul>
 <li><a href="#oc-cot-ports-noi-nhin-ra-lo-hong-bang-mat-thuong">Đọc cột PORTS — nơi nhìn ra lỗ hổng bằng mắt thường</a></li>
 </ul>
 </li>
-<li><a href="#tong-ket-buoi-hoc">Tổng kết buổi học</a><ul>
+</ul>
+</li>
+<li><a href="#lesson-05-thuc-chien-ua-quickbite-len-server-va-goi-qua-api-gateway-bang-ip">LESSON 05 (THỰC CHIẾN) · ĐƯA QUICKBITE LÊN SERVER VÀ GỌI QUA API GATEWAY BẰNG IP</a><ul>
+<li><a href="#51-toan-canh-cai-gi-chay-o-au">5.1 · Toàn cảnh: cái gì chạy ở đâu</a></li>
+<li><a href="#52-server-can-gi-va-khong-can-gi">5.2 · Server cần gì — và không cần gì</a></li>
+<li><a href="#53-lay-code-ve-server">5.3 · Lấy code về server</a></li>
+<li><a href="#54-tao-env-ap-dung-ngay-lesson-04">5.4 · Tạo .env — áp dụng ngay Lesson 04</a></li>
+<li><a href="#55-build-5-jar-ben-trong-docker">5.5 · Build 5 JAR — bên trong Docker</a></li>
+<li><a href="#56-khoi-chay-he-thong">5.6 · Khởi chạy hệ thống</a></li>
+<li><a href="#57-mo-ung-mot-cong-cho-gateway">5.7 · Mở đúng một cổng cho Gateway</a></li>
+<li><a href="#58-goi-api-bang-ip-bang-chung-deploy-thanh-cong">5.8 · Gọi API bằng IP — bằng chứng deploy thành công</a></li>
+<li><a href="#59-kiem-tra-bao-mat-va-sua-mot-lo-hong-co-that">5.9 · Kiểm tra bảo mật — và sửa một lỗ hổng có thật</a></li>
+<li><a href="#510-checklist-chay-uoc-ngay-sau-buoi-hoc">5.10 · Checklist "chạy được ngay sau buổi học"</a></li>
+<li><a href="#511-khi-hong-thi-tim-o-au">5.11 · Khi hỏng thì tìm ở đâu</a></li>
+<li><a href="#512-buoc-tiep-theo-sau-buoi-hoc">5.12 · Bước tiếp theo sau buổi học</a></li>
+</ul>
+</li>
+<li><a href="#tong-ket">TỔNG KẾT</a><ul>
 <li><a href="#ba-ieu-neu-chi-nho-uoc-ba-ieu">Ba điều nếu chỉ nhớ được ba điều</a></li>
 </ul>
 </li>
@@ -334,17 +413,91 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </nav>
   <main class="content">
 <blockquote>
-<p><strong>Tài liệu này để đọc hiểu.</strong> Bảng lệnh đầy đủ kèm 4 thí nghiệm gây lỗi nằm ở file <strong><code>S10-02-Lab-thuc-hanh.html</code></strong>.</p>
+<p><strong>Tài liệu này bám sát slide bài giảng.</strong> Bốn Lesson và các mục con đánh số <strong>đúng như trên slide</strong>, để bạn đối chiếu được giữa lúc nghe giảng và lúc đọc lại.</p>
+<p><strong>Ba tài liệu của buổi học:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tài liệu</th>
+<th>Dùng khi nào</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slide bài giảng</td>
+<td>Nghe giảng trên lớp</td>
+</tr>
+<tr>
+<td><strong>Tài liệu này</strong></td>
+<td>Đọc lại để <strong>hiểu vì sao</strong></td>
+</tr>
+<tr>
+<td><code>S10-02-Lab-thuc-hanh.html</code></td>
+<td><strong>Gõ lệnh</strong> — bảng lệnh đầy đủ kèm 4 thí nghiệm gây lỗi</td>
+</tr>
+<tr>
+<td><code>S10-04-Trien-khai-VPS-that.html</code></td>
+<td>Khi làm trên <strong>máy chủ AWS thật</strong></td>
+</tr>
+</tbody>
+</table>
 </blockquote>
+<h2 id="ban-o-slide-tai-lieu-bai-lab">Bản đồ: slide ↔ tài liệu ↔ bài lab</h2>
+<table>
+<thead>
+<tr>
+<th>Slide</th>
+<th>Lesson</th>
+<th>Tài liệu này</th>
+<th>Bài lab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4–6</td>
+<td><strong>01</strong> · Khởi tạo VPS và thiết lập kết nối quản trị</td>
+<td>Lesson 01</td>
+<td>BÀI 1</td>
+</tr>
+<tr>
+<td>8–11</td>
+<td><strong>02</strong> · Tạo user triển khai và bảo mật truy cập SSH</td>
+<td>Lesson 02</td>
+<td>BÀI 2</td>
+</tr>
+<tr>
+<td>13–16</td>
+<td><strong>03</strong> · Cài Docker, cấu hình UFW và kiểm soát cổng public</td>
+<td>Lesson 03</td>
+<td>BÀI 3</td>
+</tr>
+<tr>
+<td>18–21</td>
+<td><strong>04</strong> · Đồng bộ cấu hình và vận hành QuickBite bằng Compose</td>
+<td>Lesson 04</td>
+<td>BÀI 4</td>
+</tr>
+<tr>
+<td>—</td>
+<td>Tìm lỗi</td>
+<td>Rải trong từng Lesson</td>
+<td>BÀI 5</td>
+</tr>
+<tr>
+<td>—</td>
+<td><strong>(bổ sung)</strong> Đưa lên server thật, gọi qua API Gateway bằng IP</td>
+<td><strong>Lesson 05</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h1 id="buoi-nay-la-buoi-gi">Buổi này là buổi gì?</h1>
-<p>Tám buổi trước ta làm việc với <strong>máy của mình</strong> và <strong>máy của GitHub</strong>. Hôm nay lần đầu tiên ta làm việc với <strong>một máy chủ thật, có địa chỉ công khai, chạy suốt ngày đêm, và thuộc trách nhiệm của ta</strong>.</p>
+<h1 id="truoc-khi-vao-bai-buoi-nay-noi-tiep-session-08-the-nao">Trước khi vào bài: buổi này nối tiếp Session 08 thế nào</h1>
 <div class="keybox">
 <span class="lbl">Một câu để nhớ cả buổi</span>
 <p><strong>Session 08 dạy cách đóng gói. Session 10 dạy cách giữ cho nó sống và không bị chiếm.</strong></p>
 </div>
 
-<h2 id="session-08-session-10">Session 08 → Session 10</h2>
 <table>
 <thead>
 <tr>
@@ -389,19 +542,197 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <blockquote>
 <p><strong>Mối liên hệ giữa hai buổi:</strong> chính nhờ Session 08 đã đẩy image lên Registry mà hôm nay VPS <strong>không cần cài Java, không cần Gradle, không cần mã nguồn</strong>. Nó chỉ <code>docker compose pull</code> rồi <code>up -d</code>.</p>
 </blockquote>
-<h2 id="vi-sao-vps-khac-moi-thu-ta-tung-dung">Vì sao VPS khác mọi thứ ta từng dùng</h2>
-<p>Runner của GitHub sống vài phút rồi bị xoá. Hỏng thì chạy lại workflow. VPS thì khác:</p>
-<ul>
-<li>Nó <strong>tồn tại mãi</strong> cho tới khi bạn trả máy</li>
-<li>Nó có <strong>IP công khai</strong> — và <strong>ngay giây phút được tạo ra, nó đã bị quét</strong></li>
-<li>Sai cấu hình SSH là <strong>bạn không vào được nữa</strong></li>
-</ul>
-<blockquote class="warn">
-<p>⚠️ Các bot dò cổng 22 và thử mật khẩu phổ biến <strong>liên tục, cả ngày lẫn đêm</strong>. Đây không phải chuyện doạ: mở log SSH của một VPS mới sau vài giờ là thấy hàng trăm lượt thử đăng nhập. Đó là lý do phần bảo mật SSH <strong>không phải bài học tuỳ chọn</strong>.</p>
-</blockquote>
 <hr />
-<h1 id="phan-1-may-chu-moi-ve-thi-lam-gi">Phần 1 — Máy chủ mới về thì làm gì</h1>
-<h2 id="apt-update-va-apt-upgrade-khac-nhau-the-nao"><code>apt update</code> và <code>apt upgrade</code> khác nhau thế nào</h2>
+<h1 id="lesson-01-khoi-tao-vps-va-thiet-lap-ket-noi-quan-tri">LESSON 01 · KHỞI TẠO VPS VÀ THIẾT LẬP KẾT NỐI QUẢN TRỊ</h1>
+<h2 id="11-mot-may-chu-public-i-kem-toan-bo-trach-nhiem-van-hanh">1.1 · Một máy chủ public đi kèm toàn bộ trách nhiệm vận hành</h2>
+<p>Thuê một máy chủ không chỉ là có thêm chỗ chạy ứng dụng — nó là <strong>nhận thêm một danh sách việc phải làm suốt đời máy đó</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Hạ tầng</th>
+<th>Mức kiểm soát</th>
+<th>Công việc bạn phải tự quản trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VPS</strong></td>
+<td>OS, network và runtime</td>
+<td>Cập nhật, bảo mật, triển khai, giám sát</td>
+</tr>
+<tr>
+<td><strong>Cloud VM</strong></td>
+<td>Tương tự VPS, tích hợp thêm dịch vụ cloud</td>
+<td>IAM, network cloud, chi phí, vận hành VM</td>
+</tr>
+<tr>
+<td><strong>PaaS</strong></td>
+<td>Ít quyền hệ điều hành hơn</td>
+<td>Chủ yếu cấu hình và ứng dụng</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Đọc bảng này từ dưới lên:</strong> càng xuống dưới càng ít việc, nhưng cũng càng ít quyền. PaaS lo hộ bạn gần hết, đổi lại bạn không chạm được vào hệ điều hành. VPS cho bạn toàn quyền, đổi lại <strong>mọi thứ hỏng đều là việc của bạn</strong>.</p>
+</blockquote>
+<h3 id="pham-vi-thuc-hanh-cua-quickbite">Phạm vi thực hành của QuickBite</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Cụ thể</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hệ điều hành</td>
+<td><strong>Ubuntu Server 24.04 LTS</strong> với public IP</td>
+</tr>
+<tr>
+<td>Tài nguyên</td>
+<td>Phải đủ cho container Java, database và Docker Engine — <strong>kiểm tra RAM, CPU, dung lượng thật</strong>, đừng áp một cấu hình tối thiểu rập khuôn</td>
+</tr>
+<tr>
+<td>Đặc tính VPS</td>
+<td>Là <strong>máy chủ đơn</strong> — không tự có high availability, không autoscaling, không backup tự động</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Dòng cuối quan trọng hơn vẻ ngoài của nó.</strong> VPS <strong>không tự sao lưu</strong>. Máy hỏng là mất dữ liệu, trừ khi bạn tự dựng cơ chế sao lưu. Đừng nhầm VPS với các dịch vụ được quản lý sẵn.</p>
+</blockquote>
+<h3 id="mo-hinh-luong-ket-noi-cua-du-an">Mô hình luồng kết nối của dự án</h3>
+<div class="highlight"><pre><span></span><code>┌───────────┐      ┌──────────┐      ┌─────────────────────────────┐
+│ Localhost │ ───▶ │ Internet │ ───▶ │          VPS Host           │
+│ (máy bạn) │      │          │      │  ┌───────────────────────┐  │
+└───────────┘      └──────────┘      │  │    Docker Compose     │  │
+                                     │  │  ┌─────────────────┐  │  │
+                                     │  │  │  QuickBite App  │  │  │
+                                     │  │  └─────────────────┘  │  │
+                                     │  └───────────────────────┘  │
+                                     └─────────────────────────────┘
+</code></pre></div>
+
+<p>Bạn ngồi ở <strong>Localhost</strong>, đi qua <strong>Internet</strong>, tới <strong>VPS Host</strong>. Trên đó <strong>Docker Compose</strong> điều phối các container, và <strong>QuickBite App</strong> chạy bên trong một container.</p>
+<blockquote>
+<p>💡 <strong>Nhìn sơ đồ này để hiểu vì sao có nhiều lớp bảo vệ.</strong> Mỗi mũi tên là một chỗ có thể chặn: Internet → VPS chặn bằng <strong>tường lửa</strong>; vào được VPS rồi thì chặn tiếp bằng <strong>SSH key</strong>; container nào được lộ ra ngoài thì quyết định bằng <strong><code>ports</code></strong>. Ba lớp ở ba vị trí khác nhau trên cùng sơ đồ này.</p>
+</blockquote>
+<h3 id="vi-sao-vps-khac-moi-thu-ta-tung-dung">Vì sao VPS khác mọi thứ ta từng dùng</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>GitHub Runner (Session 07–08)</th>
+<th><strong>VPS (buổi này)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sống bao lâu</td>
+<td>Vài phút rồi <strong>bị xoá</strong></td>
+<td><strong>Mãi mãi</strong> cho tới khi bạn trả máy</td>
+</tr>
+<tr>
+<td>Hỏng thì sao</td>
+<td>Chạy lại workflow</td>
+<td><strong>Tự sửa</strong>, có thể mất dịch vụ</td>
+</tr>
+<tr>
+<td>Ai nhìn thấy nó</td>
+<td>Không ai</td>
+<td><strong>Cả Internet</strong> — nó có IP public</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Ngay giây phút VPS được tạo ra, nó đã bị quét.</strong> Các bot dò cổng 22 và thử mật khẩu phổ biến liên tục, cả ngày lẫn đêm. Đây không phải chuyện doạ — mở log SSH của một VPS mới sau vài giờ là thấy hàng trăm lượt thử đăng nhập. Đó là lý do <strong>Lesson 02 không phải bài học tuỳ chọn</strong>.</p>
+</blockquote>
+<h2 id="12-cong-cu-ho-tro-thao-tac-khong-thay-the-co-che-bao-mat-ssh">1.2 · Công cụ hỗ trợ thao tác, không thay thế cơ chế bảo mật SSH</h2>
+<p>Ngoài lệnh <code>ssh</code> trong terminal, có nhiều phần mềm SSH client có giao diện (Termius, MobaXterm, Xshell, Tabby…). Chúng <strong>tiện hơn</strong>, nhưng cần hiểu rõ chúng <strong>không thay thế</strong> bất cứ cơ chế bảo mật nào.</p>
+<h3 id="profile-ket-noi">Profile kết nối</h3>
+<table>
+<thead>
+<tr>
+<th>Việc</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Khai báo thông tin</strong></td>
+<td>Điền <strong>Host</strong>, <strong>Port</strong>, <strong>Username</strong> rồi lưu profile (ví dụ file <code>.tlp</code>) theo tên dễ nhận diện</td>
+</tr>
+<tr>
+<td><strong>Nguyên tắc bảo mật</strong></td>
+<td><strong>Không chia sẻ</strong> profile có chứa thông tin xác thực; ưu tiên chuyển sang <strong>SSH key</strong> ở Lesson 02</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Terminal thuần làm được y hệt mà không cần cài gì.</strong> Thêm vài dòng vào <code>~/.ssh/config</code> là có "profile" riêng:
+<code>Host quickbite
+    HostName 13.210.134.235
+    User deployer
+    IdentityFile ~/.ssh/quickbite_vps_ed25519</code>
+Từ đó chỉ cần gõ <code>ssh quickbite</code>. Cách này chạy trên <strong>mọi hệ điều hành</strong>, không phụ thuộc phần mềm nào, và <code>scp</code> cũng dùng được luôn bí danh đó.</p>
+</blockquote>
+<h3 id="hai-cua-so-lam-viec">Hai cửa sổ làm việc</h3>
+<table>
+<thead>
+<tr>
+<th>Cửa sổ</th>
+<th>Dùng để</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>New terminal console</strong></td>
+<td>Chạy các lệnh quản trị trực tiếp trên hệ điều hành VPS</td>
+</tr>
+<tr>
+<td><strong>New SFTP window</strong></td>
+<td>Truyền tải file <strong>có chủ đích</strong>, trực quan giữa máy local và VPS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hai-gioi-han-can-hieu-ro">Hai giới hạn cần hiểu rõ</h3>
+<p><strong>Thao tác thủ công.</strong> SFTP tiện cho thao tác nhanh, nhưng <strong>không tạo ra lịch sử triển khai rõ ràng như Git</strong>.</p>
+<blockquote class="warn">
+<p>⚠️ <strong>Đây là cái bẫy lớn nhất của SFTP.</strong> Bạn kéo thả một file sửa lỗi lên máy chủ lúc 11 giờ đêm. Ba tuần sau hệ thống hỏng, và <strong>không ai biết file trên máy chủ khác file trong Git ở chỗ nào</strong> — kể cả bạn. Mọi thay đổi nên đi qua Git và Registry, giống hệt những gì ta làm từ Session 07 tới nay. SFTP chỉ nên dùng cho thứ <strong>không thuộc về mã nguồn</strong>, ví dụ file <code>.env</code> production.</p>
+</blockquote>
+<p><strong>Duy trì session.</strong> Keep-alive chỉ giữ kết nối <strong>tạm thời</strong>. Nếu mạng rớt giữa chừng, lệnh đang chạy <strong>chết theo</strong>.</p>
+<blockquote>
+<p>💡 <strong>Tác vụ dài cần <code>tmux</code> hoặc <code>screen</code>.</strong> Chúng tạo một phiên <strong>sống độc lập với kết nối SSH</strong> — mạng rớt thì phiên vẫn chạy tiếp, bạn vào lại và nối tiếp đúng chỗ cũ:</p>
+<table>
+<thead>
+<tr>
+<th>Việc</th>
+<th>Lệnh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tạo phiên mới</td>
+<td><code>tmux new -s deploy</code></td>
+</tr>
+<tr>
+<td>Rời phiên (vẫn chạy tiếp)</td>
+<td>Nhấn <code>Ctrl+B</code> rồi <code>D</code></td>
+</tr>
+<tr>
+<td>Xem các phiên đang có</td>
+<td><code>tmux ls</code></td>
+</tr>
+<tr>
+<td>Vào lại phiên cũ</td>
+<td><code>tmux attach -t deploy</code></td>
+</tr>
+</tbody>
+</table>
+<p>Dùng cho những việc kéo dài như <code>apt upgrade</code> lớn, migration database, hoặc build nặng. Với <code>docker compose up -d</code> thì không cần, vì lệnh đó trả về ngay.</p>
+</blockquote>
+<h2 id="13-cap-nhat-goi-kiem-tra-reboot-va-ghi-lai-trang-thai-ban-au">1.3 · Cập nhật gói, kiểm tra reboot và ghi lại trạng thái ban đầu</h2>
+<h3 id="apt-update-va-apt-upgrade-khac-nhau-the-nao"><code>apt update</code> và <code>apt upgrade</code> khác nhau thế nào</h3>
 <p>Hai lệnh này hay bị gõ như một cặp mà không hiểu vì sao phải có cả hai:</p>
 <table>
 <thead>
@@ -425,11 +756,15 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tbody>
 </table>
 <blockquote>
-<p>💡 Chạy <code>upgrade</code> mà quên <code>update</code> nghĩa là bạn đang nâng cấp dựa trên <strong>danh mục cũ</strong>. Có bản vá bảo mật vừa ra cũng không thấy.</p>
+<p>💡 <code>apt update</code> là <strong>đi xem catalogue</strong>, <code>apt upgrade</code> là <strong>đặt hàng</strong>. Chạy <code>upgrade</code> mà quên <code>update</code> là đặt hàng theo catalogue năm ngoái — có bản vá bảo mật vừa ra cũng không thấy.</p>
 </blockquote>
-<h2 id="vi-sao-phai-kiem-tra-reboot-required">Vì sao phải kiểm tra <code>reboot-required</code></h2>
-<p>Khi nhân Linux được vá, <strong>máy vẫn đang chạy nhân cũ</strong> cho tới lần khởi động lại. Nghĩa là bản vá đã tải về nhưng <strong>chưa có tác dụng</strong>. Hệ thống đánh dấu điều này bằng file <code>/var/run/reboot-required</code>.</p>
-<h2 id="oc-tai-nguyen-may-chu-e-lam-gi">Đọc tài nguyên máy chủ để làm gì</h2>
+<h3 id="vi-sao-phai-kiem-tra-reboot-required">Vì sao phải kiểm tra <code>reboot-required</code></h3>
+<p>Khi nhân Linux được vá, <strong>máy vẫn đang chạy nhân cũ</strong> cho tới lần khởi động lại. Bản vá đã tải về nhưng <strong>chưa có tác dụng</strong>. Hệ thống đánh dấu điều này bằng file <code>/var/run/reboot-required</code>.</p>
+<blockquote class="warn">
+<p>⚠️ Nếu cờ này xuất hiện, hãy khởi động lại <strong>trong giờ bảo trì</strong>, rồi SSH vào lại để xác nhận máy lên bình thường — đừng reboot rồi bỏ đi.</p>
+</blockquote>
+<h3 id="ghi-lai-bang-chung-baseline">Ghi lại bằng chứng: baseline</h3>
+<p>Lưu lại <strong>phiên bản OS, tài nguyên VPS hiện tại và kết quả cập nhật</strong> để làm mốc cho các bước sau.</p>
 <table>
 <thead>
 <tr>
@@ -450,14 +785,100 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <td>Đĩa</td>
 <td>Image Docker và log tích lại rất nhanh</td>
 </tr>
+<tr>
+<td>Phiên bản OS và nhân</td>
+<td>Để sau này biết "nó đã đổi gì so với lúc đầu"</td>
+</tr>
 </tbody>
 </table>
 <blockquote class="warn">
+<p>💡 <strong>Vì sao phải ghi baseline?</strong> Khi hệ thống hỏng sau vài tuần, câu hỏi đầu tiên luôn là <em>"nó khác lúc đầu ở chỗ nào?"</em>. Không có mốc ban đầu thì không trả lời được, và bạn sẽ sửa bằng cách đoán.</p>
 <p>⚠️ Khi hết RAM, Linux <strong>giết tiến trình ngốn nhiều nhất</strong> — thường chính là ứng dụng của bạn. Lỗi đó hiện ra dưới tên <strong>Exit code 137</strong>, và phần lớn trường hợp nguyên nhân là <strong>máy chủ quá nhỏ</strong>, không phải code bị rò rỉ bộ nhớ.</p>
 </blockquote>
+<h3 id="ket-qua-at-uoc-sau-lesson-01">Kết quả đạt được sau Lesson 01</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>Kết nối đúng VPS</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>Mở được Terminal và SFTP</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>Có baseline cập nhật rõ ràng</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h1 id="phan-2-chi-minh-ban-vao-uoc-may-chu">Phần 2 — Chỉ mình bạn vào được máy chủ</h1>
-<h2 id="khoa-cong-khai-va-khoa-rieng-hieu-bang-mot-hinh-anh">Khoá công khai và khoá riêng — hiểu bằng một hình ảnh</h2>
+<h1 id="lesson-02-tao-user-trien-khai-va-bao-mat-truy-cap-ssh">LESSON 02 · TẠO USER TRIỂN KHAI VÀ BẢO MẬT TRUY CẬP SSH</h1>
+<h2 id="21-ssh-hardening-phai-giam-ca-be-mat-tan-cong-va-hau-qua-thao-tac-sai">2.1 · SSH hardening phải giảm cả bề mặt tấn công và hậu quả thao tác sai</h2>
+<p>Hai mục tiêu, không phải một:</p>
+<table>
+<thead>
+<tr>
+<th>Mục tiêu</th>
+<th>Nghĩa là</th>
+<th>Đạt bằng cách</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Giảm <strong>bề mặt tấn công</strong></td>
+<td>Bớt đi những đường mà kẻ lạ có thể thử</td>
+<td>Tắt đăng nhập mật khẩu, tắt root</td>
+</tr>
+<tr>
+<td>Giảm <strong>hậu quả thao tác sai</strong></td>
+<td>Bạn gõ nhầm thì thiệt hại nhỏ lại</td>
+<td>Dùng user thường, chỉ nâng quyền khi cần</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mo-hinh-phan-ra-ac-quyen">Mô hình phân rã đặc quyền</h3>
+<blockquote>
+<p>Người dùng thông thường <strong>không có quyền phá hoại</strong>, trừ khi chủ động nâng quyền qua một cơ chế kiểm soát chặt chẽ.</p>
+</blockquote>
+<h3 id="bon-nguyen-tac-thiet-lap-an-toan">Bốn nguyên tắc thiết lập an toàn</h3>
+<table>
+<thead>
+<tr>
+<th>Nguyên tắc</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hạn chế tài khoản root</strong></td>
+<td>Không dùng root cho công việc hằng ngày; tạo user <code>deployer</code> và chỉ nâng quyền bằng <code>sudo</code> khi thực sự cần</td>
+</tr>
+<tr>
+<td><strong>Xác thực bằng khoá</strong></td>
+<td>Private key ở máy local; public key của user nằm trong <code>/home/deployer/.ssh/authorized_keys</code> để <strong>loại bỏ hoàn toàn mật khẩu</strong></td>
+</tr>
+<tr>
+<td><strong>Bảo vệ khoá private</strong></td>
+<td>SSH key thay thế mật khẩu, nhưng private key <strong>bắt buộc</strong> phải được bảo vệ bằng quyền file nghiêm ngặt và passphrase phù hợp</td>
+</tr>
+<tr>
+<td><strong>Quy trình an toàn</strong></td>
+<td><strong>Không tắt root/password trước khi</strong> luồng đăng nhập mới đã được kiểm tra và xác nhận thành công trên một session khác</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vi-sao-khong-dung-thang-root">Vì sao không dùng thẳng <code>root</code></h3>
+<p><code>root</code> <strong>không có phanh</strong>. Gõ nhầm một lệnh xoá là mất máy. <code>sudo</code> buộc bạn <strong>dừng lại nửa giây và gõ mật khẩu</strong> trước mỗi hành động nguy hiểm.</p>
+<p>Và <code>sudo</code> còn làm một việc mà root thuần không làm được: <strong>ghi lại nhật ký</strong> — ai, lúc nào, lệnh gì. Trên máy chủ nhiều người dùng, nó biến <em>"ai đó đã xoá thư mục"</em> thành <em>"lúc 14:32 tài khoản deployer đã chạy lệnh này"</em>.</p>
+<h2 id="22-thiet-lap-ssh-key-va-phan-quyen-tai-khoan-deployer">2.2 · Thiết lập SSH key và phân quyền tài khoản deployer</h2>
+<h3 id="khoa-cong-khai-va-khoa-rieng-hieu-bang-mot-hinh-anh">Khoá công khai và khoá riêng — hiểu bằng một hình ảnh</h3>
 <p>Hãy coi <strong>khoá công khai</strong> là một <strong>ổ khoá</strong>, còn <strong>khoá riêng</strong> là <strong>chìa</strong>.</p>
 <ul>
 <li>Bạn gắn <strong>ổ khoá</strong> lên cửa máy chủ. Việc này công khai, ai nhìn thấy cũng không sao.</li>
@@ -501,6 +922,29 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tr>
 </tbody>
 </table>
+<h3 id="viec-lam-tren-hai-may-khong-tron-lan">Việc làm trên hai máy, không trộn lẫn</h3>
+<table>
+<thead>
+<tr>
+<th>Máy</th>
+<th>Việc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trên VPS</strong> (bằng root)</td>
+<td><code>adduser deployer</code>, <code>usermod -aG sudo deployer</code></td>
+</tr>
+<tr>
+<td><strong>Trên máy local</strong></td>
+<td><code>ssh-keygen -t ed25519</code>, rồi xem nội dung file <code>.pub</code></td>
+</tr>
+<tr>
+<td><strong>Trên VPS</strong> (cấu hình deployer)</td>
+<td>Tạo thư mục <code>.ssh</code> quyền <code>700</code>, dán public key vào <code>authorized_keys</code>, đặt quyền <code>600</code></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Hai file được tạo ra, và chúng đi hai hướng khác nhau:</strong></p>
 <table>
 <thead>
@@ -524,12 +968,63 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </tbody>
 </table>
 <blockquote class="warn">
-<p>⚠️ Chỉ chép file có đuôi <code>.pub</code>. Khoá riêng không gửi qua chat, không upload lên VPS, không commit vào Git. Ai cầm được nó là vào được máy chủ của bạn.</p>
+<p>⚠️ <strong>Chỉ dán nội dung file <code>.pub</code>.</strong> Khoá bí mật (<code>id_ed25519</code>) phải được giữ tuyệt mật tại máy cá nhân — <strong>không tải lên VPS</strong>, không chia sẻ qua bất kỳ kênh nào, không commit vào Git. Ai cầm được nó là vào được máy chủ của bạn.</p>
 </blockquote>
-<h2 id="vi-sao-khong-dung-thang-root">Vì sao không dùng thẳng <code>root</code></h2>
-<p><code>root</code> <strong>không có phanh</strong>. Gõ nhầm một lệnh xoá là mất máy. <code>sudo</code> buộc bạn <strong>dừng lại nửa giây và gõ mật khẩu</strong> trước mỗi hành động nguy hiểm.</p>
-<p>Và <code>sudo</code> còn làm một việc mà root thuần không làm được: <strong>ghi lại nhật ký</strong> — ai, lúc nào, lệnh gì. Trên máy chủ nhiều người dùng, nó biến <em>"ai đó đã xoá thư mục"</em> thành <em>"lúc 14:32 tài khoản deployer đã chạy lệnh này"</em>.</p>
-<h2 id="nguyen-tac-quan-trong-nhat-thu-truoc-khoa-sau">Nguyên tắc quan trọng nhất: thử trước, khoá sau</h2>
+<details class="q"><summary><span>Vì sao chọn `ed25519` chứ không phải `rsa`?</span></summary>
+
+| | RSA 2048 | **ed25519** |
+|---|---|---|
+| Độ dài khoá | ~400 ký tự | **~70 ký tự** |
+| Tốc độ | Chậm hơn | **Nhanh hơn** |
+| Mức an toàn | Đủ dùng | **Cao hơn** |
+| Hỗ trợ | Mọi nơi | Mọi hệ thống từ 2014 |
+
+Không có lý do thực tế nào để chọn RSA cho máy chủ mới, trừ khi phải nối tới thiết bị rất cũ.
+</details>
+
+<h2 id="23-hardening-ssh-theo-quy-trinh-thu-truoc-khoa-sau">2.3 · Hardening SSH theo quy trình thử trước, khoá sau</h2>
+<h3 id="giu-session-cu-mo-cho-en-khi-session-moi-hoat-ong">Giữ session cũ mở cho đến khi session mới hoạt động</h3>
+<p>Thứ tự năm bước, <strong>không được đảo</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Việc</th>
+<th>Phải thấy gì mới đi tiếp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Mở terminal <strong>mới</strong> test kết nối bằng deployer</td>
+<td>Vào được, <strong>không hỏi mật khẩu</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Kiểm tra quyền <code>sudo</code></td>
+<td><code>sudo -v</code> chạy được</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Sửa <code>/etc/ssh/sshd_config</code></td>
+<td><code>PermitRootLogin no</code>, <code>PasswordAuthentication no</code>, <code>PubkeyAuthentication yes</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Kiểm tra cú pháp</strong> rồi nạp lại</td>
+<td><code>sshd -t</code> không báo lỗi</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Mở session mới test lần cuối</td>
+<td>Vào được → <strong>giờ mới đóng session root cũ</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Tuyệt đối không đóng session root hiện tại</strong> cho tới khi xác nhận kết nối mới thành công. Nếu cấu hình sai, session root cũ là <strong>"phao cứu sinh" duy nhất</strong> giúp bạn sửa lại mà không bị khoá hoàn toàn khỏi VPS.</p>
+</blockquote>
+<h3 id="vi-sao-thu-tu-nay-khong-uoc-ao">Vì sao thứ tự này không được đảo</h3>
 <p>Hãy hình dung bạn làm ngược lại — tắt đăng nhập bằng mật khẩu <strong>trước</strong>, rồi mới cài khoá. Nếu dán nhầm public key (thiếu một ký tự, hoặc trình soạn thảo tự xuống dòng):</p>
 <ul>
 <li>Mật khẩu: <strong>đã tắt</strong></li>
@@ -541,10 +1036,42 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p>Khi thay đổi <strong>chính cái đường mình đang đứng trên đó</strong>, luôn giữ đường cũ mở cho tới khi đường mới đã được chứng minh là chạy.</p>
 </div>
 
-<h2 id="sshd-t-oc-cau-hinh-ang-that-su-chay"><code>sshd -T</code> — đọc cấu hình đang thật sự chạy</h2>
-<p>File bạn vừa sửa <strong>chưa chắc là cấu hình đang chạy</strong>. Ubuntu có thư mục <code>/etc/ssh/sshd_config.d/</code> chứa các file ghi đè. Có thể bạn sửa <code>PasswordAuthentication no</code> mà một file drop-in bật lại thành <code>yes</code>.</p>
-<p><code>sshd -T</code> in ra <strong>kết quả cuối cùng sau khi gộp tất cả</strong> — đó mới là sự thật.</p>
-<h2 id="oc-ung-thong-bao-loi-cua-ssh">Đọc đúng thông báo lỗi của SSH</h2>
+<h3 id="sshd-t-va-sshd-t-hai-lenh-khac-nhau-mot-chu"><code>sshd -t</code> và <code>sshd -T</code> — hai lệnh khác nhau một chữ</h3>
+<table>
+<thead>
+<tr>
+<th>Lệnh</th>
+<th>Làm gì</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sshd -t</code> (chữ thường)</td>
+<td><strong>Kiểm tra cú pháp</strong> file cấu hình. Chạy <strong>trước khi</strong> nạp lại</td>
+</tr>
+<tr>
+<td><code>sshd -T</code> (chữ hoa)</td>
+<td><strong>In ra cấu hình đang thật sự chạy</strong>, sau khi gộp mọi file</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Vì sao không đọc thẳng file config?</strong> Vì file bạn vừa sửa <strong>chưa chắc là cấu hình đang chạy</strong>. Ubuntu có thư mục <code>/etc/ssh/sshd_config.d/</code> chứa các file ghi đè. Có thể bạn sửa <code>PasswordAuthentication no</code> mà một file drop-in bật lại thành <code>yes</code>. <code>sshd -T</code> in ra <strong>kết quả cuối cùng</strong> — đó mới là sự thật.</p>
+</blockquote>
+<h3 id="bang-chung-cua-a-khoa-ung">Bằng chứng cửa đã khoá đúng</h3>
+<p>Sau khi hardening, thử đăng nhập bằng mật khẩu sẽ nhận:</p>
+<div class="highlight"><pre><span></span><code>Trước:  Permission denied (publickey,password)
+Sau:    Permission denied (publickey)
+</code></pre></div>
+
+<blockquote>
+<p>✅ <strong>Một chữ biến mất.</strong> Đó không phải thông báo lỗi — đó là <strong>bằng chứng</strong> mật khẩu đã bị loại khỏi hệ thống.</p>
+</blockquote>
+<h2 id="24-khi-ssh-key-khong-hoat-ong-kiem-tra-tu-quyen-file-en-log">2.4 · Khi SSH key không hoạt động, kiểm tra từ quyền file đến log</h2>
+<blockquote class="warn">
+<p>⚠️ <strong>Không sửa mò cấu hình trong khi chỉ còn một đường truy cập.</strong> Kiểm tra theo thứ tự, đừng đổi lung tung rồi thử lại.</p>
+</blockquote>
+<h3 id="oc-ung-thong-bao-loi-buoc-khoanh-vung-au-tien">Đọc đúng thông báo lỗi — bước khoanh vùng đầu tiên</h3>
 <table>
 <thead>
 <tr>
@@ -574,31 +1101,208 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <blockquote>
 <p>💡 Phân biệt được ba thông báo này là bạn đã khoanh vùng được quá nửa số sự cố SSH. Chúng chỉ về ba chỗ hoàn toàn khác nhau.</p>
 </blockquote>
+<h3 id="ba-nhom-loi-cau-hinh-pho-bien-nhat">Ba nhóm lỗi cấu hình phổ biến nhất</h3>
+<table>
+<thead>
+<tr>
+<th>Nhóm</th>
+<th>Biểu hiện</th>
+<th>Kiểm tra bằng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Quyền file nghiêm ngặt</strong></td>
+<td>Sai owner hoặc permission của thư mục home, thư mục <code>.ssh</code>, hoặc file <code>authorized_keys</code></td>
+<td><code>namei -l /home/deployer/.ssh/authorized_keys</code></td>
+</tr>
+<tr>
+<td><strong>Lỗi khớp khoá</strong></td>
+<td>Dán sai hoặc thiếu chuỗi public key khi copy lên VPS; hoặc client local đang chọn <strong>sai file private key</strong></td>
+<td><code>ssh -v</code> xem khoá nào được đưa ra</td>
+</tr>
+<tr>
+<td><strong>Xung đột cấu hình ẩn</strong></td>
+<td>Thiết lập bị ghi đè bởi file include/drop-in khác, hoặc lỗi cú pháp làm SSHD nhận sai thông số</td>
+<td><code>sudo sshd -T | grep ...</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong><code>namei -l</code> hơn <code>ls -l</code> ở chỗ nào?</strong> <code>ls -l</code> chỉ xem <strong>một</strong> file. <code>namei -l</code> đi <strong>suốt cả đường dẫn</strong> từ <code>/</code> xuống, in quyền từng chặng. SSH kiểm tra <strong>cả chuỗi</strong> — chỉ cần một thư mục trên đường bị nới lỏng là nó từ chối, và <code>ls -l</code> sẽ không cho bạn thấy điều đó.</p>
+</blockquote>
 <details class="q"><summary><span>Vì sao `chmod 644` cho `authorized_keys` vẫn đăng nhập được, mà `chmod 666` thì không?</span></summary>
 
 Vì SSH **không quan tâm ai đọc được** file đó — nội dung bên trong vốn là khoá **công khai**, đọc cũng không làm gì được.
 
 SSH chỉ từ chối khi người ngoài **GHI** được, vì ghi được nghĩa là họ **tự thêm khoá của mình vào** rồi vào máy. Tương tự, nếu thư mục `.ssh` là `777` thì người khác **thay được cả file**, nên SSH cũng từ chối.
 
+| Trường hợp | Vào được? |
+|---|---|
+| `600` authorized_keys | ✅ |
+| `644` authorized_keys | ✅ **Có** |
+| `666` authorized_keys | ❌ |
+| `.ssh` là `777` | ❌ |
+
 **Dù vậy vẫn luôn đặt `600`** — đó là thói quen phòng thân, và nhiều công cụ kiểm tra bảo mật sẽ báo lỗi nếu khác.
+
+> Bài lab có thí nghiệm chạy thật để bạn tự đo bốn trường hợp này.
 </details>
 
-<details class="q"><summary><span>Vì sao chọn `ed25519` chứ không phải `rsa`?</span></summary>
-
-| | RSA 2048 | **ed25519** |
-|---|---|---|
-| Độ dài khoá | ~400 ký tự | **~70 ký tự** |
-| Tốc độ | Chậm hơn | **Nhanh hơn** |
-| Mức an toàn | Đủ dùng | **Cao hơn** |
-
-Không có lý do thực tế nào để chọn RSA cho máy chủ mới, trừ khi phải nối tới thiết bị rất cũ.
-</details>
-
+<h3 id="uong-phuc-hoi-khan-cap">Đường phục hồi khẩn cấp</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Luôn giữ session cũ</strong></td>
+<td>Tuyệt đối không tắt terminal đang kết nối cho tới khi chắc chắn mọi thứ đã hoạt động</td>
+</tr>
+<tr>
+<td><strong>Dùng Web Console</strong></td>
+<td>Nếu mất kết nối, dùng Rescue / Web Console của nhà cung cấp VPS để khôi phục cấu hình</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Hãy mở thử Web Console của nhà cung cấp ngay hôm nay</strong>, lúc mọi thứ còn bình thường. Tìm nút đó lần đầu trong lúc đang mất kết nối, giữa đêm, với dịch vụ đang ngừng, là trải nghiệm không ai muốn có.</p>
+</blockquote>
+<h3 id="ket-qua-at-uoc-sau-lesson-02">Kết quả đạt được sau Lesson 02</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>Tài khoản <code>deployer</code> đăng nhập thành công bằng SSH key an toàn</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>Sử dụng quyền quản trị qua <code>sudo</code>, tắt hoàn toàn đăng nhập root/password</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>Thiết lập bảo mật tiêu chuẩn và <strong>luôn có đường cứu hộ dự phòng</strong></td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h1 id="phan-3-ong-het-chi-mo-thu-can">Phần 3 — Đóng hết, chỉ mở thứ cần</h1>
-<h2 id="vi-sao-danh-sach-cho-phep-thang-danh-sach-cam">Vì sao "danh sách cho phép" thắng "danh sách cấm"</h2>
-<p>Giả sử bạn chọn cách ngược lại: <em>chặn những cổng nguy hiểm, mở phần còn lại</em>. Vấn đề là máy chủ có <strong>65.535 cổng</strong>, và mỗi phần mềm cài thêm có thể mở một cổng mới mà bạn không biết. Bạn <strong>không thể liệt kê hết cái xấu</strong>.</p>
-<p>Với <code>default deny incoming</code>, mọi cổng mới mở ra đều <strong>mặc định không ai gọi vào được</strong>. Bạn chỉ cần nhớ <strong>ba cổng đã mở</strong>, thay vì canh chừng sáu vạn cổng.</p>
+<h1 id="lesson-03-cai-at-docker-cau-hinh-ufw-va-kiem-soat-cong-public">LESSON 03 · CÀI ĐẶT DOCKER, CẤU HÌNH UFW VÀ KIỂM SOÁT CỔNG PUBLIC</h1>
+<h2 id="31-cai-docker-engine-tu-repository-chinh-thuc">3.1 · Cài Docker Engine từ repository chính thức</h2>
+<p>Ubuntu có sẵn gói tên <code>docker.io</code>, nhưng nó thường <strong>cũ hơn vài phiên bản</strong>, không phải bản chính thức, và có thể thiếu plugin như <code>docker compose</code>.</p>
+<p>Quy trình đúng gồm hai phần:</p>
+<table>
+<thead>
+<tr>
+<th>Phần</th>
+<th>Làm gì</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Thiết lập APT repository</strong></td>
+<td>Cài <code>ca-certificates</code> và <code>curl</code>, tạo thư mục keyring an toàn, tải và phân quyền GPG key của Docker</td>
+</tr>
+<tr>
+<td><strong>2. Cài Docker CE và plugin</strong></td>
+<td>Cài <code>docker-ce</code>, <code>docker-ce-cli</code>, <code>containerd.io</code>, <code>docker-buildx-plugin</code>, <code>docker-compose-plugin</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="kiem-chung-moi-la-phan-quan-trong">Kiểm chứng mới là phần quan trọng</h3>
+<blockquote class="warn">
+<p>⚠️ <strong><code>apt install</code> thành công KHÔNG chứng minh bạn cài đúng nguồn</strong> — nó cũng thành công nếu lấy nhầm gói cũ của Ubuntu.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>apt-cache policy docker-ce
+</code></pre></div>
+
+<p>Dòng kết quả phải chỉ về <code>https://download.docker.com/linux/ubuntu</code>. Đây mới là câu trả lời cho câu hỏi <em>"gói này được lấy từ máy chủ nào?"</em>.</p>
+<p>Và đừng chỉ nhìn lệnh <code>apt</code> chạy xong — <strong>xác minh daemon thật sự đang chạy</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Lệnh</th>
+<th>Xác nhận điều gì</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sudo systemctl is-active docker</code></td>
+<td>Docker daemon <strong>đang chạy</strong></td>
+</tr>
+<tr>
+<td><code>sudo docker run --rm hello-world</code></td>
+<td>Chạy container được</td>
+</tr>
+<tr>
+<td><code>docker compose version</code></td>
+<td>Plugin Compose đã có</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>CE là Community Edition</strong>, không phải "Enterprise". Đây là bản <strong>miễn phí, chính thức, dùng cho production được</strong>. Bản trả phí tên là Docker Business. Nhầm hai chữ này dẫn tới việc tìm nhầm tài liệu.</p>
+</blockquote>
+<h2 id="32-nhom-docker-tien-loi-nhung-mang-quyen-rat-cao">3.2 · Nhóm <code>docker</code> tiện lợi nhưng mang quyền rất cao</h2>
+<blockquote class="warn">
+<p>⚠️ Thêm một tài khoản vào nhóm <code>docker</code> <strong>tương đương trao quyền root</strong> cho tài khoản đó. Không phải "gần bằng" — là <strong>tương đương</strong>.</p>
+</blockquote>
+<h3 id="co-che-hoat-ong-va-rui-ro">Cơ chế hoạt động và rủi ro</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unix socket và quyền root</strong></td>
+<td>Docker daemon chạy với quyền root và expose socket cho group <code>docker</code></td>
+</tr>
+<tr>
+<td><strong>Đạt quyền root gián tiếp</strong></td>
+<td>Thành viên nhóm này có thể điều khiển daemon, <strong>mount filesystem của host</strong> và leo thang đặc quyền</td>
+</tr>
+<tr>
+<td><strong>Cách kiểm chứng tốt nhất</strong></td>
+<td><code>newgrp docker</code> chỉ cập nhật shell hiện tại — hãy <strong>đăng xuất và đăng nhập lại</strong>, rồi kiểm tra bằng <code>id -nG</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Tuyệt đối không</strong> thêm tài khoản không tin cậy hoặc tài khoản dùng chung vào nhóm <code>docker</code>.</p>
+<p><strong>Rootless mode</strong> là hướng đi bảo mật tốt hơn, nhưng nằm ngoài phạm vi bài thực hành này.</p>
+</blockquote>
+<h2 id="33-ufw-giu-an-toan-ket-noi-va-kiem-soat-cong-public">3.3 · UFW: giữ an toàn kết nối và kiểm soát cổng public</h2>
+<h3 id="default-deny-incoming-chi-mo-ung-dich-vu-public">Default deny incoming, chỉ mở đúng dịch vụ public</h3>
+<table>
+<thead>
+<tr>
+<th>Chính sách</th>
+<th>Nghĩa là</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ufw default deny incoming</code></td>
+<td><em>"Không ai được chủ động gọi vào máy tôi"</em></td>
+</tr>
+<tr>
+<td><code>ufw default allow outgoing</code></td>
+<td><em>"Máy tôi vẫn gọi ra ngoài được"</em> — cần cho <code>apt update</code> và <code>docker pull</code></td>
+</tr>
+</tbody>
+</table>
+<p>Rồi mở đúng ba cổng:</p>
 <table>
 <thead>
 <tr>
@@ -625,17 +1329,23 @@ Không có lý do thực tế nào để chọn RSA cho máy chủ mới, trừ 
 </tr>
 </tbody>
 </table>
+<h3 id="vi-sao-danh-sach-cho-phep-thang-danh-sach-cam">Vì sao "danh sách cho phép" thắng "danh sách cấm"</h3>
+<p>Giả sử bạn chọn cách ngược lại: <em>chặn những cổng nguy hiểm, mở phần còn lại</em>. Vấn đề là máy chủ có <strong>65.535 cổng</strong>, và mỗi phần mềm cài thêm có thể mở một cổng mới mà bạn không biết. Bạn <strong>không thể liệt kê hết cái xấu</strong>.</p>
+<p>Với <code>default deny incoming</code>, mọi cổng mới mở ra đều <strong>mặc định không ai gọi vào được</strong>. Bạn chỉ cần nhớ <strong>ba cổng đã mở</strong>, thay vì canh chừng sáu vạn cổng.</p>
 <blockquote class="warn">
-<p>⚠️ <strong>Phải <code>ufw allow OpenSSH</code> TRƯỚC khi <code>ufw enable</code>.</strong> Quên dòng này là <strong>tự khoá mình ra khỏi máy chủ ngay lập tức</strong>. Và nếu SSH của bạn chạy ở cổng khác 22, phải mở đúng cổng đó.</p>
+<p>⚠️ <strong>Hai điều bắt buộc về SSH:</strong>
+1. Nếu SSH dùng port khác 22, phải <code>allow</code> <strong>đúng port đó trước khi</strong> enable tường lửa.
+2. Sau khi bật UFW, <strong>mở session SSH mới để kiểm tra</strong> — không đóng session đang dùng ngay.</p>
+<p>Quên điều 1 là <strong>tự khoá mình ra khỏi máy chủ ngay lập tức</strong>. Bài lab có thí nghiệm cho bạn trải nghiệm chuyện này trong môi trường an toàn.</p>
 </blockquote>
-<h2 id="cai-bay-lon-nhat-cua-ca-buoi-hoc">Cái bẫy lớn nhất của cả buổi học</h2>
+<h2 id="34-ports-la-quyet-inh-public-network-khong-chi-la-cau-hinh-compose">3.4 · <code>ports</code> là quyết định public network, không chỉ là cấu hình Compose</h2>
 <div class="keybox">
-<span class="lbl">Docker đi vòng qua tường lửa</span>
+<span class="lbl">Cái bẫy lớn nhất của cả buổi học</span>
 <p>Bạn đã bật UFW chặn hết. Nhưng nếu Compose khai <code>"5432:5432"</code> cho database thì <strong>cổng đó vẫn mở ra Internet</strong>.</p>
-<p>Lý do: Docker tạo luật chuyển tiếp ở <strong>tầng thấp hơn</strong> nơi UFW làm việc.</p>
+<p>Lý do: Docker tạo luật NAT/firewall cho bridge network, và traffic tới published port có thể được <strong>chuyển hướng trước các chain UFW thường dùng</strong>.</p>
 </div>
 
-<p>Ba cách khai <code>ports</code> và hậu quả của từng cách:</p>
+<h3 id="ba-cach-khai-ports-va-hau-qua">Ba cách khai <code>ports</code> và hậu quả</h3>
 <table>
 <thead>
 <tr>
@@ -653,7 +1363,7 @@ Không có lý do thực tế nào để chọn RSA cho máy chủ mới, trừ 
 <tr>
 <td><code>"127.0.0.1:8081:8081"</code></td>
 <td>Chỉ chính máy chủ đó</td>
-<td>Có reverse proxy trên cùng máy</td>
+<td>Có <strong>reverse proxy</strong> trên cùng VPS</td>
 </tr>
 <tr>
 <td><em>(không khai <code>ports</code>)</em></td>
@@ -662,10 +1372,34 @@ Không có lý do thực tế nào để chọn RSA cho máy chủ mới, trừ 
 </tr>
 </tbody>
 </table>
-<blockquote class="warn">
-<p>⚠️ <strong>Không bao giờ</strong> publish <code>5432</code> (PostgreSQL), <code>3306</code> (MySQL), <code>6379</code> (Redis), <code>27017</code> (MongoDB) ra <code>0.0.0.0</code>. Rất nhiều vụ lộ dữ liệu bắt đầu đúng từ một dòng <code>ports</code> viết ẩu.</p>
-</blockquote>
-<h2 id="ba-lop-bao-ve-moi-lop-chan-mot-thu-khac-nhau">Ba lớp bảo vệ, mỗi lớp chặn một thứ khác nhau</h2>
+<h3 id="bon-nguyen-tac-thiet-lap-network">Bốn nguyên tắc thiết lập network</h3>
+<table>
+<thead>
+<tr>
+<th>Nguyên tắc</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hiểu cơ chế</td>
+<td>Docker tạo rule NAT riêng; traffic tới published port có thể đi <strong>trước</strong> các chain UFW</td>
+</tr>
+<tr>
+<td>Không public cổng nội bộ</td>
+<td><strong>Không</strong> mở <code>5432</code>, <code>3306</code>, <code>6379</code>, <code>27017</code> nếu không có nhu cầu thực sự</td>
+</tr>
+<tr>
+<td>Bind loopback khi có proxy</td>
+<td>Dùng <code>127.0.0.1</code> khi chỉ reverse proxy trên cùng VPS cần truy cập</td>
+</tr>
+<tr>
+<td>Không tắt iptables của Docker</td>
+<td>Làm vậy <strong>phá vỡ networking của container</strong> — đừng dùng như một "cách sửa nhanh"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ba-lop-bao-ve-moi-lop-chan-mot-thu-khac-nhau">Ba lớp bảo vệ, mỗi lớp chặn một thứ khác nhau</h3>
 <table>
 <thead>
 <tr>
@@ -693,32 +1427,78 @@ Không có lý do thực tế nào để chọn RSA cho máy chủ mới, trừ 
 </tbody>
 </table>
 <p>Ba lớp này <strong>không thay thế nhau</strong>. Thiếu một lớp là có một đường vòng.</p>
-<h2 id="nhom-docker-mang-quyen-rat-lon">Nhóm <code>docker</code> mang quyền rất lớn</h2>
-<blockquote class="warn">
-<p>⚠️ Thêm một tài khoản vào nhóm <code>docker</code> <strong>tương đương trao quyền root</strong> cho tài khoản đó. Không phải "gần bằng" — là <strong>tương đương</strong>.</p>
-</blockquote>
-<p>Lý do: Docker daemon chạy bằng quyền root. Thành viên nhóm <code>docker</code> ra lệnh được cho daemon, nên chỉ cần một lệnh là <strong>gắn toàn bộ ổ đĩa của máy chủ vào container</strong> rồi sửa bất cứ file nào, kể cả file mật khẩu hệ thống.</p>
-<p><strong>Không bao giờ</strong> thêm tài khoản dùng chung hay tài khoản không tin cậy vào nhóm này.</p>
-<details class="q"><summary><span>Vì sao phải cài Docker từ kho của Docker, không dùng gói `docker.io` của Ubuntu?</span></summary>
-
-Gói `docker.io` trong kho Ubuntu thường **cũ hơn vài phiên bản** và không phải bản chính thức, nên có thể thiếu bản vá bảo mật và thiếu plugin như `docker compose`.
-
-Và quan trọng hơn: `apt install` **thành công không chứng minh bạn cài đúng nguồn**. Hãy kiểm tra bằng:
-
-
-<div class="highlight"><pre><span></span><code>apt-cache policy docker-ce
-</code></pre></div>
-
-
-
-Dòng kết quả phải chỉ về `https://download.docker.com/linux/ubuntu`.
-
-> **CE là Community Edition**, không phải "Enterprise". Đây là bản miễn phí, chính thức, dùng cho production được.
-</details>
-
+<h3 id="ket-qua-at-uoc-sau-lesson-03">Kết quả đạt được sau Lesson 03</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅</td>
+<td>Docker chạy ổn định, quyền socket được kiểm soát an toàn</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>UFW bảo vệ chặt chẽ SSH/HTTP/HTTPS</td>
+</tr>
+<tr>
+<td>✅</td>
+<td>Compose chuẩn hoá, <strong>ngăn rò rỉ database và dịch vụ nội bộ ra Internet</strong></td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h1 id="phan-4-dung-he-thong-len-va-chung-minh-no-song">Phần 4 — Dựng hệ thống lên và chứng minh nó sống</h1>
-<h2 id="env-song-tren-may-chu-khong-song-trong-git"><code>.env</code> sống trên máy chủ, không sống trong Git</h2>
+<h1 id="lesson-04-ong-bo-cau-hinh-va-van-hanh-quickbite-bang-docker-compose">LESSON 04 · ĐỒNG BỘ CẤU HÌNH VÀ VẬN HÀNH QUICKBITE BẰNG DOCKER COMPOSE</h1>
+<h2 id="41-hai-ssh-key-phuc-vu-hai-quan-he-tin-cay-khac-nhau">4.1 · Hai SSH key phục vụ hai quan hệ tin cậy khác nhau</h2>
+<h3 id="ban-o-phan-phoi-khoa">Bản đồ phân phối khoá</h3>
+<table>
+<thead>
+<tr>
+<th>Kết nối</th>
+<th><strong>Private key</strong> nằm ở đâu</th>
+<th><strong>Public key</strong> nằm ở đâu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Local → VPS</strong></td>
+<td>Máy local</td>
+<td><code>authorized_keys</code> của <code>deployer</code></td>
+</tr>
+<tr>
+<td><strong>VPS → GitHub</strong></td>
+<td><strong>VPS</strong></td>
+<td>Repo → Settings → <strong>Deploy keys</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Không sao chép private key cá nhân lên VPS</strong> để VPS lấy code. Nếu VPS bị chiếm, kẻ tấn công cầm khoá đó <strong>vào được mọi repo</strong> mà bạn có quyền — kể cả những repo không liên quan gì tới dự án này.</p>
+</blockquote>
+<h3 id="hai-nguyen-tac-thiet-lap-tin-cay">Hai nguyên tắc thiết lập tin cậy</h3>
+<table>
+<thead>
+<tr>
+<th>Nguyên tắc</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Giới hạn đặc quyền tối thiểu</strong></td>
+<td>Với một repo hạ tầng, <strong>Deploy Key read-only</strong> giới hạn quyền tốt hơn SSH key gắn với tài khoản cá nhân</td>
+</tr>
+<tr>
+<td><strong>Thiết kế credential cô lập</strong></td>
+<td>Mỗi Deploy Key <strong>chỉ dùng cho một repository</strong>; hệ thống nhiều repo cần cơ chế định danh độc lập, tránh dùng chung</td>
+</tr>
+</tbody>
+</table>
+<h2 id="42-env-production-ton-tai-tren-vps-khong-ton-tai-trong-git">4.2 · <code>.env</code> production tồn tại trên VPS, không tồn tại trong Git</h2>
+<h3 id="phan-tach-moi-truong">Phân tách môi trường</h3>
 <table>
 <thead>
 <tr>
@@ -730,7 +1510,7 @@ Dòng kết quả phải chỉ về `https://download.docker.com/linux/ubuntu`.
 <tbody>
 <tr>
 <td><code>.env.example</code></td>
-<td>Chỉ <strong>tên biến</strong> và giá trị mẫu vô hại</td>
+<td>Chỉ <strong>tên biến</strong> và giá trị mẫu không nhạy cảm</td>
 <td>✅ <strong>Có</strong></td>
 </tr>
 <tr>
@@ -740,51 +1520,108 @@ Dòng kết quả phải chỉ về `https://download.docker.com/linux/ubuntu`.
 </tr>
 </tbody>
 </table>
-<p>Kiểm tra Git có thật sự bỏ qua <code>.env</code> không — dùng đúng lệnh này:</p>
-<div class="highlight"><pre><span></span><code>git check-ignore -v .env
+<p>Quy trình: <strong>tạo từ mẫu → giới hạn quyền đọc → kiểm tra trước khi chạy Compose</strong>.</p>
+<div class="highlight"><pre><span></span><code>cp .env.example .env
+nano .env
+chmod 600 .env
+</code></pre></div>
+
+<h3 id="kiem-tra-git-co-that-su-bo-qua-env-khong">Kiểm tra Git có thật sự bỏ qua <code>.env</code> không</h3>
+<div class="highlight"><pre><span></span><code>git check-ignore .env
 </code></pre></div>
 
 <blockquote class="warn">
-<p>💡 <code>git status</code> không thấy <code>.env</code> có thể vì nó bị bỏ qua, <strong>cũng có thể</strong> vì bạn đã lỡ commit nó rồi. <code>git check-ignore -v</code> chỉ thẳng ra <strong>dòng nào, trong file nào</strong> đang bỏ qua nó.</p>
-<p>⚠️ <strong>Nếu secret từng bị commit, xoá file đi là chưa đủ.</strong> Nó vẫn nằm trong lịch sử repo và ai cũng xem lại được. Bạn phải <strong>đổi secret đó</strong> (rotate) và xử lý lịch sử repository.</p>
+<p>💡 <strong>Vì sao dùng lệnh này chứ không nhìn <code>git status</code>?</strong> <code>git status</code> không thấy <code>.env</code> có thể vì nó bị bỏ qua, <strong>cũng có thể</strong> vì bạn đã lỡ commit nó rồi. <code>git check-ignore -v</code> chỉ thẳng ra <strong>dòng nào, trong file nào</strong> đang bỏ qua nó.</p>
+<p>⚠️ <strong>Nếu secret từng bị commit, xoá file đi là chưa đủ.</strong> Nó vẫn nằm trong lịch sử repo và ai cũng xem lại được. Bạn phải <strong>rotate secret</strong> đó và xử lý lịch sử repository.</p>
 </blockquote>
-<h2 id="vi-sao-pull-roi-moi-up-d">Vì sao <code>pull</code> rồi mới <code>up -d</code></h2>
-<p><code>docker compose pull</code> là bước <strong>dễ hỏng nhất</strong> (mạng chậm, hết hạn đăng nhập, sai tên image) nhưng lại <strong>vô hại nhất</strong> — nó chỉ tải file về đĩa, <strong>không đụng</strong> tới hệ thống đang chạy.</p>
-<p>Nếu <code>pull</code> thất bại, dịch vụ cũ vẫn phục vụ khách bình thường. Nếu gộp chung vào <code>up -d</code>, hệ thống có thể bị dừng <strong>giữa chừng</strong> rồi mới phát hiện không tải được image mới.</p>
-<blockquote class="warn">
-<p>⚠️ <strong>Luôn dùng tag cố định</strong> như <code>1.0.0</code>, <strong>tránh <code>latest</code></strong>. Dùng <code>latest</code> thì mỗi máy pull vào thời điểm khác nhau có thể chạy bản khác nhau, và khi cần quay về bản cũ thì không còn nhãn nào trỏ tới nó.</p>
-</blockquote>
-<h2 id="bon-lenh-kiem-tra-moi-lenh-tra-loi-mot-cau-khac-nhau">Bốn lệnh kiểm tra, mỗi lệnh trả lời một câu khác nhau</h2>
+<h3 id="kiem-tra-cau-truc-truoc-khi-chay">Kiểm tra cấu trúc trước khi chạy</h3>
+<div class="highlight"><pre><span></span><code>docker compose config --quiet
+</code></pre></div>
+
+<p>Lệnh này giúp kiểm tra <strong>cấu trúc và nội suy biến</strong> — nhưng <strong>không đảm bảo</strong> các service sẽ khởi động thành công.</p>
+<details class="q"><summary><span>`docker compose config --quiet` báo đạt thì đã chạy được chưa?</span></summary>
+
+**Chưa.** Lệnh đó kiểm tra **cấu trúc**, không kiểm tra **ý nghĩa**.
+
+| Loại lỗi | Bắt được? |
+|---|---|
+| Sai cú pháp YAML | ✅ |
+| Thiếu biến làm mất `image:` | ✅ |
+| **Biến có tên nhưng giá trị rỗng** | ❌ **Lọt lưới** |
+| Mật khẩu sai | ❌ |
+| Image không tồn tại trên Registry | ❌ |
+
+Trong bài lab có một thí nghiệm chạy thật chứng minh điều này: một `.env` có đủ tên biến nhưng `DB_PASSWORD=` để trống sẽ **qua được** lệnh kiểm tra với `rc=0`, trong khi nó tạo ra một database **không có mật khẩu**.
+
+**Cách phòng thủ thật sự:** tự kiểm tra biến bắt buộc trước khi deploy, ví dụ
+`grep -q '^DB_PASSWORD=.\+' .env || echo "THIEU MAT KHAU"`
+</details>
+
+<h2 id="43-pull-image-truoc-sau-o-moi-tao-hoac-cap-nhat-container">4.3 · Pull image trước, sau đó mới tạo hoặc cập nhật container</h2>
+<p>Tách bước <strong>tải image</strong> khỏi bước <strong>thay đổi trạng thái hệ thống</strong>:</p>
+<div class="highlight"><pre><span></span><code>docker compose pull     # chỉ tải về đĩa
+docker compose up -d    # mới thật sự đổi hệ thống
+docker compose ps       # kiểm tra sau deploy
+</code></pre></div>
+
+<h3 id="ba-nguyen-tac-van-hanh">Ba nguyên tắc vận hành</h3>
 <table>
 <thead>
 <tr>
-<th>Lệnh</th>
-<th>Trả lời câu hỏi</th>
+<th>Nguyên tắc</th>
+<th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cô lập rủi ro tải file</strong></td>
+<td>Nếu <code>pull</code> thất bại do mạng hoặc xác thực, hệ thống hiện tại <strong>vẫn chạy an toàn</strong>, chưa bị thay đổi hay ngắt quãng</td>
+</tr>
+<tr>
+<td><strong>Cập nhật chính xác</strong></td>
+<td><code>up -d</code> tạo mới hoặc thay thế container để khớp với cấu hình Compose mới</td>
+</tr>
+<tr>
+<td><strong>Quản lý phiên bản chặt chẽ</strong></td>
+<td><strong>Luôn dùng tag release cụ thể</strong>; tuyệt đối tránh phụ thuộc <code>latest</code> khi cần truy vết và rollback nhanh</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Vì sao <code>latest</code> nguy hiểm?</strong> Mỗi máy pull vào thời điểm khác nhau có thể nhận <strong>bản khác nhau</strong>, và khi cần quay về bản cũ thì <strong>không còn nhãn nào trỏ tới nó</strong>.</p>
+</blockquote>
+<h2 id="44-chi-ket-luan-thanh-cong-sau-khi-kiem-tra-toan-dien">4.4 · Chỉ kết luận thành công sau khi kiểm tra toàn diện</h2>
+<p>Trạng thái, log, health và tài nguyên trả lời <strong>các câu hỏi khác nhau</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Lệnh kiểm tra</th>
+<th>Xác nhận thực tế điều gì</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>docker compose ps</code></td>
-<td>Container <strong>đang ở trạng thái nào</strong>? (Up / Exit / Restarting)</td>
+<td>Container đang ở trạng thái nào (<strong>Up / Exit</strong>)</td>
 </tr>
 <tr>
 <td><code>docker compose logs</code></td>
-<td>Ứng dụng <strong>khởi động xong chưa, hỏng ở đâu</strong>?</td>
+<td>Ứng dụng khởi động thành công hay <strong>lỗi ở đâu</strong></td>
 </tr>
 <tr>
 <td><code>curl .../actuator/health</code></td>
-<td>Dịch vụ <strong>sẵn sàng nhận yêu cầu chưa</strong>?</td>
+<td>Service đã <strong>sẵn sàng phục vụ</strong> yêu cầu chưa</td>
 </tr>
 <tr>
-<td><code>docker stats</code></td>
-<td>Đang <strong>ăn bao nhiêu CPU và RAM</strong>?</td>
+<td><code>docker stats --no-stream</code></td>
+<td>Snapshot mức tiêu thụ <strong>CPU và RAM</strong> hiện tại</td>
 </tr>
 </tbody>
 </table>
 <blockquote class="warn">
 <p>⚠️ Bốn lệnh này <strong>không thay thế nhau</strong>. Container <code>Up</code> mà ứng dụng bên trong đã chết — chuyện thường ngày. Chỉ khi <code>health</code> trả về <code>UP</code> <strong>và</strong> API trả về dữ liệu thật thì mới được kết luận là xong.</p>
 </blockquote>
-<h2 id="oc-cot-ports-noi-nhin-ra-lo-hong-bang-mat-thuong">Đọc cột PORTS — nơi nhìn ra lỗ hổng bằng mắt thường</h2>
+<h3 id="oc-cot-ports-noi-nhin-ra-lo-hong-bang-mat-thuong">Đọc cột PORTS — nơi nhìn ra lỗ hổng bằng mắt thường</h3>
 <div class="highlight"><pre><span></span><code>NAME                  PORTS
 quickbite-prod-db     5432/tcp
 quickbite-prod-user   127.0.0.1:8081-&gt;8081/tcp
@@ -813,40 +1650,13 @@ quickbite-prod-user   127.0.0.1:8081-&gt;8081/tcp
 </tbody>
 </table>
 <blockquote>
-<p>💡 Vậy người dùng thật vào bằng đường nào? Qua <strong>reverse proxy</strong> (Nginx, Caddy, Traefik) chạy trên cùng máy chủ: nó nghe cổng 443 công khai, nhận HTTPS, rồi chuyển tiếp vào <code>127.0.0.1:8081</code>. Nhờ vậy ứng dụng Java <strong>không bao giờ</strong> phải phơi mình ra Internet.</p>
+<p>💡 <strong>Vậy người dùng thật vào bằng đường nào?</strong> Qua <strong>reverse proxy</strong> (Nginx, Caddy, Traefik) chạy trên cùng máy chủ: nó nghe cổng 443 công khai, nhận HTTPS, rồi chuyển tiếp vào <code>127.0.0.1:8081</code>. Nhờ vậy ứng dụng Java <strong>không bao giờ</strong> phải phơi mình ra Internet.</p>
 </blockquote>
-<details class="q"><summary><span>`docker compose config --quiet` báo đạt thì đã chạy được chưa?</span></summary>
-
-**Chưa.** Lệnh đó kiểm tra **cấu trúc**, không kiểm tra **ý nghĩa**.
-
-| Loại lỗi | Bắt được? |
-|---|---|
-| Sai cú pháp YAML | ✅ |
-| Thiếu biến làm mất `image:` | ✅ |
-| **Biến có tên nhưng giá trị rỗng** | ❌ **Lọt lưới** |
-| Mật khẩu sai | ❌ |
-| Image không tồn tại trên Registry | ❌ |
-
-Trong bài lab có một thí nghiệm chứng minh điều này: một `.env` có đủ tên biến nhưng `DB_PASSWORD=` để trống sẽ **qua được** lệnh kiểm tra với `rc=0`, trong khi nó tạo ra một database **không có mật khẩu**.
-</details>
-
-<details class="q"><summary><span>Hai khoá SSH trong buổi học dùng cho việc gì, khác nhau ra sao?</span></summary>
-
-| Kết nối | Khoá riêng nằm ở | Khoá công khai nằm ở | Loại |
-|---|---|---|---|
-| **Máy bạn → VPS** | Máy bạn | `authorized_keys` của `deployer` | Khoá đăng nhập |
-| **VPS → GitHub** | **VPS** | Repo → Settings → Deploy keys | **Deploy key, chỉ đọc** |
-
-> ⚠️ **Không bao giờ chép khoá riêng cá nhân lên VPS** để VPS lấy code. Nếu VPS bị chiếm, kẻ tấn công cầm khoá đó vào được **mọi repo** bạn có quyền.
-
-Deploy key thì chỉ dùng cho **một repo**, và để read-only thì cũng không sửa được code.
-</details>
-
 <details class="q"><summary><span>`Exit code 137` nghĩa là gì?</span></summary>
 
-Tiến trình **bị giết bằng SIGKILL** — gần như luôn là do **hết RAM** (OOM Killer của Linux).
+Tiến trình **bị buộc dừng đột ngột bằng SIGKILL** — gần như luôn là do **hết RAM** (OOM Killer của Linux).
 
-Đừng vội kết luận "rò rỉ bộ nhớ". Kiểm tra theo thứ tự:
+Cần rà soát kỹ **OOM, hành vi quản trị hệ thống hoặc log hệ điều hành** trước khi kết luận có memory leak:
 
 1. VPS có đủ RAM không — `free -h`
 2. Có đặt `mem_limit` quá thấp trong Compose không
@@ -863,35 +1673,496 @@ Phần lớn trường hợp là **máy chủ quá nhỏ**, không phải code s
 </details>
 
 <hr />
-<h1 id="tong-ket-buoi-hoc">Tổng kết buổi học</h1>
+<h1 id="lesson-05-thuc-chien-ua-quickbite-len-server-va-goi-qua-api-gateway-bang-ip">LESSON 05 (THỰC CHIẾN) · ĐƯA QUICKBITE LÊN SERVER VÀ GỌI QUA API GATEWAY BẰNG IP</h1>
+<blockquote>
+<p><strong>Phần này không có trên slide.</strong> Nó ghép cả bốn Lesson lại thành một việc duy nhất: <strong>hệ thống chạy thật trên server ngay sau buổi học</strong>, gọi được bằng <strong>IP</strong>, chưa cần tên miền.</p>
+<p><strong>Ví dụ xuyên suốt:</strong> server có IP <code>13.210.134.235</code>. <strong>Thay bằng IP máy của bạn</strong> ở mọi lệnh.</p>
+</blockquote>
+<h2 id="51-toan-canh-cai-gi-chay-o-au">5.1 · Toàn cảnh: cái gì chạy ở đâu</h2>
+<div class="highlight"><pre><span></span><code>   Internet
+      │
+      │  chỉ MỘT cổng được mở
+      ▼
+┌─────────────────────────────────────────────────────┐
+│ SERVER 13.210.134.235                               │
+│                                                     │
+│   :8080  ┌──────────────┐                           │
+│  ◀───────│ api-gateway  │  ← cửa duy nhất ra ngoài  │
+│          └──────┬───────┘                           │
+│                 │ mạng Docker nội bộ                │
+│       ┌─────────┼─────────┬──────────────┐          │
+│       ▼         ▼         ▼              ▼          │
+│  ┌────────┐ ┌────────┐ ┌───────┐ ┌──────────────┐   │
+│  │ user   │ │restaur.│ │ order │ │ notification │   │
+│  │ :8081  │ │ :8082  │ │ :8083 │ │    :8084     │   │
+│  └───┬────┘ └───┬────┘ └───┬───┘ └──────┬───────┘   │
+│      └──────────┴──────────┴────────────┘           │
+│                      ▼                              │
+│              ┌───────────────┐                      │
+│              │ PostgreSQL    │  ← KHÔNG cổng ra     │
+│              └───────────────┘                      │
+└─────────────────────────────────────────────────────┘
+</code></pre></div>
+
 <table>
 <thead>
 <tr>
-<th>Bài</th>
-<th>Câu hỏi trả lời</th>
-<th>Kết quả đạt được</th>
+<th>Thành phần</th>
+<th>Cổng trên server</th>
+<th>Internet gọi được?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>api-gateway</strong></td>
+<td><strong>8080</strong></td>
+<td>✅ <strong>Có — đây là cửa duy nhất</strong></td>
+</tr>
+<tr>
+<td>user-service</td>
+<td>8081</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>restaurant-service</td>
+<td>8082</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>order-service</td>
+<td>8083</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>notification-service</td>
+<td>8084</td>
+<td>❌ Không</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>5432</td>
+<td>❌ Không</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Đây chính là bài học Lesson 03 mục 3.4 áp dụng vào thật.</strong> Bốn service và database <strong>không khai <code>ports</code></strong> nên chúng chỉ tồn tại trong mạng Docker. Chỉ gateway được publish. Kẻ tấn công quét server bạn sẽ thấy <strong>đúng một cổng ứng dụng</strong>, thay vì sáu.</p>
+</blockquote>
+<h2 id="52-server-can-gi-va-khong-can-gi">5.2 · Server cần gì — và <strong>không</strong> cần gì</h2>
+<table>
+<thead>
+<tr>
+<th>Cần</th>
+<th>Không cần</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Docker</strong> (đã cài ở Lesson 03)</td>
+<td>❌ Java / JDK</td>
+</tr>
+<tr>
+<td><strong>git</strong></td>
+<td>❌ Gradle</td>
+</tr>
+<tr>
+<td>Khoảng <strong>4 GB</strong> đĩa trống</td>
+<td>❌ Maven, Node, hay bất cứ runtime nào</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Vì sao server không cần Java?</strong> Vì việc build JAR cũng <strong>chạy bên trong Docker</strong> — script <code>build-all.sh</code> dùng image <code>gradle:8.10-jdk17</code> làm "xưởng gia công tạm". Đúng tinh thần multi-stage của Session 08: máy chủ chỉ cần Docker, mọi công cụ biên dịch nằm trong container.</p>
+</blockquote>
+<p>Kiểm tra server đã sẵn sàng:</p>
+<div class="highlight"><pre><span></span><code>docker --version &amp;&amp; docker compose version &amp;&amp; git --version
+</code></pre></div>
+
+<p>Nếu thiếu <code>git</code>:</p>
+<div class="highlight"><pre><span></span><code>sudo apt install -y git
+</code></pre></div>
+
+<h2 id="53-lay-code-ve-server">5.3 · Lấy code về server</h2>
+<div class="highlight"><pre><span></span><code>cd ~
+git clone https://github.com/caotv1512/project-demo.git
+cd project-demo/session-05
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> <code>build-all.sh</code>, <code>start-all.sh</code>, <code>check.sh</code>, <code>stack/</code>, <code>quickbite5-db/</code></p>
+<blockquote>
+<p>💡 <strong>Vì sao dùng <code>https://</code> mà không cần SSH key?</strong> Vì repo này <strong>công khai</strong> — ai cũng clone được, không cần xác thực. Deploy key ở Lesson 04 chỉ cần khi repo <strong>riêng tư</strong>. Với repo riêng tư, lệnh sẽ là <code>git clone git@github.com:&lt;ns&gt;/&lt;repo&gt;.git</code> và server phải có deploy key.</p>
+</blockquote>
+<h2 id="54-tao-env-ap-dung-ngay-lesson-04">5.4 · Tạo <code>.env</code> — áp dụng ngay Lesson 04</h2>
+<p>Repo <strong>cố tình không chứa <code>.env</code></strong> (nó nằm trong <code>.gitignore</code>). Bạn phải tạo từ mẫu:</p>
+<div class="highlight"><pre><span></span><code>cd ~/project-demo/session-05/stack
+cp .env.example .env
+nano .env
+</code></pre></div>
+
+<p><strong>Các giá trị phải khớp với <code>quickbite5-db/init-db.sql</code></strong> — file đó tạo sẵn 4 user trong PostgreSQL:</p>
+<table>
+<thead>
+<tr>
+<th>Biến</th>
+<th>Giá trị</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>USER_DB_USERNAME</code> / <code>USER_DB_PASSWORD</code></td>
+<td><code>quickbite_user</code> / <code>quickbite_user</code></td>
+</tr>
+<tr>
+<td><code>RESTAURANT_DB_USERNAME</code> / <code>..._PASSWORD</code></td>
+<td><code>quickbite_restaurant</code> / <code>quickbite_restaurant</code></td>
+</tr>
+<tr>
+<td><code>ORDER_DB_USERNAME</code> / <code>..._PASSWORD</code></td>
+<td><code>quickbite_order</code> / <code>quickbite_order</code></td>
+</tr>
+<tr>
+<td><code>NOTIFICATION_DB_USERNAME</code> / <code>..._PASSWORD</code></td>
+<td><code>quickbite_notification</code> / <code>quickbite_notification</code></td>
+</tr>
+<tr>
+<td><code>GATEWAY_HOST_PORT</code></td>
+<td><code>8080</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>chmod 600 .env
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ <strong>Mật khẩu ở trên là mật khẩu demo, trùng với tên user.</strong> Dùng được để chạy thử, nhưng <strong>không được giữ nguyên trên một server thật phục vụ người dùng</strong>. Muốn đổi, bạn phải sửa <strong>cả hai nơi</strong>: <code>.env</code> và <code>quickbite5-db/init-db.sql</code> — rồi <strong>xoá volume database</strong> để script khởi tạo chạy lại (<code>docker compose down -v</code> trong thư mục <code>quickbite5-db</code>). Sửa mỗi <code>.env</code> thì service sẽ không đăng nhập được vào database.</p>
+</blockquote>
+<p>Kiểm tra lại đúng cách của Lesson 04:</p>
+<div class="highlight"><pre><span></span><code>git check-ignore -v .env
+docker compose config --quiet &amp;&amp; echo "Cu phap OK"
+</code></pre></div>
+
+<h2 id="55-build-5-jar-ben-trong-docker">5.5 · Build 5 JAR — bên trong Docker</h2>
+<div class="highlight"><pre><span></span><code>cd ~/project-demo/session-05
+./build-all.sh
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> lần lượt <code>🔨 Build user-service ...</code> cho tới <code>api-gateway</code>, rồi <code>✅ Xong tat ca.</code></p>
+<blockquote class="warn">
+<p>⚠️ <strong>Bước này nặng nhất của cả quy trình.</strong> Lần đầu phải tải Gradle và toàn bộ thư viện — mất <strong>5–15 phút</strong> tuỳ đường truyền, và ăn nhiều RAM.</p>
+<p><strong>Nếu server chỉ có 1 GB RAM</strong>, hãy tạo swap <strong>trước khi</strong> chạy lệnh này, nếu không Gradle sẽ bị hệ điều hành giết giữa chừng:</p>
+<p><code>sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile &amp;&amp; sudo mkswap /swapfile &amp;&amp; sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab</code></p>
+<p>💡 Đây là tác vụ dài — <strong>nên chạy trong <code>tmux</code></strong> (mục 1.2) để mạng rớt cũng không mất tiến trình:
+<code>tmux new -s build</code> → chạy → <code>Ctrl+B</code> rồi <code>D</code> để rời ra.</p>
+</blockquote>
+<h2 id="56-khoi-chay-he-thong">5.6 · Khởi chạy hệ thống</h2>
+<div class="highlight"><pre><span></span><code>./start-all.sh
+</code></pre></div>
+
+<p>Script này làm ba việc <strong>theo đúng thứ tự</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Việc</th>
+<th>Vì sao thứ tự này</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Bật <strong>database trước</strong>, đợi <code>pg_isready</code></td>
+<td>Service bật trước database sẽ chết vì không kết nối được</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bật 4 microservice + gateway</td>
+<td>Chúng cần database đã sẵn sàng</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Restart riêng gateway</strong></td>
+<td>Gateway (Netty) <strong>cache kết quả phân giải DNS</strong> — nếu một service vừa được tạo lại và đổi IP, gateway vẫn gọi vào IP cũ và báo <code>Connection refused</code></td>
+</tr>
+</tbody>
+</table>
+<p>Kiểm tra:</p>
+<div class="highlight"><pre><span></span><code>cd stack &amp;&amp; docker compose ps
+</code></pre></div>
+
+<p><strong>Phải thấy</strong> 5 container <code>Up</code>, và <strong>chỉ gateway có mũi tên cổng</strong>:</p>
+<div class="highlight"><pre><span></span><code>quickbite5-gateway          0.0.0.0:8080-&gt;8080/tcp
+quickbite5-user             8081/tcp
+quickbite5-restaurant       8082/tcp
+quickbite5-order            8083/tcp
+quickbite5-notification     8084/tcp
+</code></pre></div>
+
+<h2 id="57-mo-ung-mot-cong-cho-gateway">5.7 · Mở đúng <strong>một</strong> cổng cho Gateway</h2>
+<p>Hệ thống đang chạy nhưng <strong>chưa ai ngoài Internet gọi được</strong> — vì Lesson 03 đã chặn hết. Giờ mở đúng cổng gateway:</p>
+<div class="highlight"><pre><span></span><code>sudo ufw allow 8080/tcp
+sudo ufw status verbose
+</code></pre></div>
+
+<p><strong>Phải thấy</strong> <code>8080/tcp ALLOW IN Anywhere</code> bên cạnh OpenSSH, 80 và 443.</p>
+<blockquote class="warn">
+<p>⚠️ 🌐 <strong>Nếu server nằm trên AWS, phải mở ở CẢ HAI nơi.</strong> Mở UFW thôi là chưa đủ — Security Group vẫn chặn. Vào <strong>EC2 → chọn máy → Security → Edit inbound rules → Add rule</strong>: Custom TCP, Port <code>8080</code>, Source <code>0.0.0.0/0</code>.</p>
+<p>Đây đúng là tình huống "hai tầng tường lửa" ở file <code>S10-04</code>. Mở một tầng mà quên tầng kia là triệu chứng <em>"mở cổng rồi mà vẫn không gọi được"</em>.</p>
+</blockquote>
+<h2 id="58-goi-api-bang-ip-bang-chung-deploy-thanh-cong">5.8 · Gọi API bằng IP — bằng chứng deploy thành công</h2>
+<p>Từ <strong>máy của bạn</strong> (không phải từ server):</p>
+<div class="highlight"><pre><span></span><code>curl http://13.210.134.235:8080/api/v1/users
+</code></pre></div>
+
+<p><strong>Phải thấy dữ liệu thật:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"full_name"</span><span class="p">:</span><span class="s2">"Nguyen Van An"</span><span class="p">,</span><span class="nt">"email"</span><span class="p">:</span><span class="s2">"an.nguyen@quickbite.vn"</span><span class="p">,</span><span class="nt">"wallet_balance"</span><span class="p">:</span><span class="mi">425000</span><span class="p">},</span><span class="w"> </span><span class="err">...</span><span class="p">]</span>
+</code></pre></div>
+
+<p>Thử cả bốn đường:</p>
+<table>
+<thead>
+<tr>
+<th>Đường gọi</th>
+<th>Gateway chuyển tới</th>
+<th>Trả về</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>http://13.210.134.235:8080/api/v1/users</code></td>
+<td>user-service:8081</td>
+<td>Danh sách người dùng</td>
+</tr>
+<tr>
+<td><code>http://13.210.134.235:8080/api/v1/restaurants</code></td>
+<td>restaurant-service:8082</td>
+<td>Danh sách nhà hàng</td>
+</tr>
+<tr>
+<td><code>http://13.210.134.235:8080/api/v1/orders</code></td>
+<td>order-service:8083</td>
+<td>Danh sách đơn hàng</td>
+</tr>
+<tr>
+<td><code>http://13.210.134.235:8080/api/v1/notifications</code></td>
+<td>notification-service:8084</td>
+<td>Danh sách thông báo</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Gateway biến đường dẫn thế nào?</strong> Nó khớp <code>Path=/api/v1/users/**</code> rồi áp <code>StripPrefix=2</code> — <strong>cắt bỏ 2 đoạn đầu</strong> (<code>api</code> và <code>v1</code>) trước khi chuyển tiếp. Nên <code>/api/v1/users</code> ở ngoài trở thành <code>/users</code> khi tới user-service.</p>
+<p>Nhờ vậy bạn <strong>đổi được cấu trúc URL công khai mà không phải sửa code service nào</strong> — chỉ sửa cấu hình gateway.</p>
+</blockquote>
+<p>Mở trình duyệt và dán thẳng vào thanh địa chỉ cũng ra kết quả — đó là lúc sinh viên thấy rõ nhất rằng <strong>hệ thống đã thật sự lên mạng</strong>.</p>
+<div class="keybox">
+<span class="lbl">Đây là khoảnh khắc deploy thành công</span>
+<p>Một người bất kỳ, ở một máy bất kỳ, gõ <code>http://13.210.134.235:8080/api/v1/users</code> vào trình duyệt và nhận được dữ liệu thật từ PostgreSQL đang chạy trên server của bạn.</p>
+<p><strong>Chưa cần tên miền. Chưa cần HTTPS. Hệ thống đã chạy.</strong></p>
+</div>
+
+<h2 id="59-kiem-tra-bao-mat-va-sua-mot-lo-hong-co-that">5.9 · Kiểm tra bảo mật — và sửa một lỗ hổng có thật</h2>
+<p>Deploy chạy được <strong>chưa có nghĩa là an toàn</strong>. Hãy soát lại bằng đúng công cụ của Lesson 03.</p>
+<p><strong>Bước 1 — xem mọi cổng đang mở ra ngoài:</strong></p>
+<div class="highlight"><pre><span></span><code>docker ps --format '{{.Names}}\t{{.Ports}}'
+</code></pre></div>
+
+<p><strong>Bước 2 — kiểm tra từng service có bị publish ra ngoài không.</strong></p>
+<p>Đây mới là phép thử <strong>chắc chắn</strong>, vì nó hỏi thẳng Docker thay vì đoán qua cổng:</p>
+<div class="highlight"><pre><span></span><code>for c in quickbite5-user quickbite5-restaurant quickbite5-order quickbite5-notification quickbite5-db; do
+  printf '%-28s %s\n' "$c" "$(docker inspect $c --format '{{.HostConfig.PortBindings}}')"
+done
+</code></pre></div>
+
+<p><strong>Phải thấy <code>map[]</code> ở cả năm dòng.</strong> Dòng nào khác <code>map[]</code> là service đó <strong>đang mở ra ngoài</strong>.</p>
+<p>Thử thêm từ máy bạn cho trực quan:</p>
+<div class="highlight"><pre><span></span><code>curl --max-time 5 http://13.210.134.235:8081/users
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> treo rồi timeout, hoặc <code>Connection refused</code>.</p>
+<blockquote class="warn">
+<p>⚠️ <strong>Nếu lệnh <code>curl</code> này lại trả về một mã HTTP nào đó, đừng vội kết luận service bị hở.</strong> Có thể <strong>một container khác</strong> trên cùng máy đang nghe cổng 8081 và trả lời thay. Trên máy cá nhân dùng cho nhiều buổi học, chuyện này rất hay xảy ra — chính tài liệu này đã gặp khi chạy thử.</p>
+<p><strong>Kết luận dựa vào <code>docker inspect</code> ở trên</strong>, không dựa vào <code>curl</code>. Muốn biết ai đang giữ cổng:
+<code>docker ps --format '{{.Names}}\t{{.Ports}}' | grep 8081</code></p>
+</blockquote>
+<p><strong>Bước 3 — bạn sẽ phát hiện database đang hở.</strong></p>
+<p>Mở <code>quickbite5-db/docker-compose.yml</code> và nhìn kỹ:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">quickbite5-db</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:15-alpine</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"5433:5432"</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">← DÒNG NÀY MỞ DATABASE RA INTERNET</span>
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ <strong>Dòng này hoàn toàn hợp lý ở Session 05</strong> — lúc đó ta chạy trên máy cá nhân và cần nối DBeaver vào xem dữ liệu. Nhưng trên một <strong>server public</strong>, nó có nghĩa là <strong>bất kỳ ai trên Internet cũng gõ cửa PostgreSQL của bạn được</strong>, và mật khẩu lại là mật khẩu demo.</p>
+<p>Đây chính là loại lỗi mà Lesson 03 mục 3.4 cảnh báo: <strong>UFW không cứu được bạn</strong>, vì Docker publish cổng ở tầng thấp hơn.</p>
+</blockquote>
+<p><strong>Sửa:</strong> xoá hai dòng <code>ports:</code> đó đi.</p>
+<div class="highlight"><pre><span></span><code>nano ~/project-demo/session-05/quickbite5-db/docker-compose.yml
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>cd ~/project-demo/session-05/quickbite5-db &amp;&amp; docker compose up -d --force-recreate
+</code></pre></div>
+
+<p><strong>Bước 4 — xác nhận đã bịt:</strong></p>
+<div class="highlight"><pre><span></span><code>docker inspect quickbite5-db --format '{{.HostConfig.PortBindings}}'
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> <code>map[]</code> — rỗng, không còn ánh xạ cổng nào.</p>
+<div class="highlight"><pre><span></span><code>cd ../stack &amp;&amp; docker compose restart &amp;&amp; sleep 30
+curl http://13.210.134.235:8080/api/v1/users
+</code></pre></div>
+
+<blockquote>
+<p>✅ <strong>Hệ thống vẫn chạy bình thường sau khi bịt cổng database</strong> — đã kiểm chứng thật. Lý do: các service nói chuyện với database <strong>qua mạng Docker nội bộ</strong>, chúng chưa bao giờ cần tới cổng publish trên máy chủ. Cổng đó chỉ phục vụ con người ngồi ngoài nối vào.</p>
+<p>💡 <strong>Vậy muốn xem database thì làm sao?</strong> Dùng <strong>SSH tunnel</strong> — không phải mở cổng:
+<code>ssh -L 5433:localhost:5433 deployer@13.210.134.235</code>
+Rồi nối DBeaver vào <code>localhost:5433</code> ở máy bạn. Dữ liệu đi trong đường hầm SSH đã mã hoá, và <strong>không có cổng nào mở ra Internet</strong>.</p>
+</blockquote>
+<h2 id="510-checklist-chay-uoc-ngay-sau-buoi-hoc">5.10 · Checklist "chạy được ngay sau buổi học"</h2>
+<p><strong>Trên server</strong></p>
+<ul>
+<li><input type="checkbox"> <code>docker --version</code>, <code>docker compose version</code>, <code>git --version</code> đều chạy</li>
+<li><input type="checkbox"> Đã <code>git clone</code> repo về và thấy thư mục <code>session-05</code></li>
+<li><input type="checkbox"> Đã <code>cp .env.example .env</code>, điền đủ giá trị khớp <code>init-db.sql</code>, <code>chmod 600</code></li>
+<li><input type="checkbox"> <code>git check-ignore -v .env</code> xác nhận <code>.env</code> không bị commit</li>
+<li><input type="checkbox"> Đã tạo swap nếu RAM ≤ 2 GB</li>
+<li><input type="checkbox"> <code>./build-all.sh</code> chạy xong, đủ 5 file JAR</li>
+<li><input type="checkbox"> <code>./start-all.sh</code> chạy xong, <code>docker compose ps</code> thấy 5 container <code>Up</code></li>
+</ul>
+<p><strong>Bảo mật</strong></p>
+<ul>
+<li><input type="checkbox"> <code>docker ps</code> cho thấy <strong>chỉ gateway</strong> có mũi tên cổng</li>
+<li><input type="checkbox"> <code>docker inspect quickbite5-db</code> trả về <code>PortBindings = map[]</code></li>
+<li><input type="checkbox"> Gọi thẳng <code>http://&lt;ip&gt;:8081</code> <strong>không được</strong></li>
+<li><input type="checkbox"> UFW chỉ mở OpenSSH, 80, 443 và 8080</li>
+<li><input type="checkbox"> 🌐 AWS: Security Group cũng chỉ mở đúng những cổng đó</li>
+</ul>
+<p><strong>Bằng chứng deploy thành công</strong></p>
+<ul>
+<li><input type="checkbox"> <code>curl http://&lt;ip&gt;:8080/api/v1/users</code> trả về dữ liệu thật</li>
+<li><input type="checkbox"> Cả 4 route <code>users</code> / <code>restaurants</code> / <code>orders</code> / <code>notifications</code> đều trả <code>200</code></li>
+<li><input type="checkbox"> Mở được trên trình duyệt từ một máy khác</li>
+<li><input type="checkbox"> <code>sudo reboot</code> rồi hệ thống <strong>tự lên lại</strong> (nhờ <code>restart: always</code>)</li>
+</ul>
+<h2 id="511-khi-hong-thi-tim-o-au">5.11 · Khi hỏng thì tìm ở đâu</h2>
+<table>
+<thead>
+<tr>
+<th>Triệu chứng</th>
+<th>Nguyên nhân thường gặp</th>
+<th>Kiểm tra bằng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>curl</code> từ máy bạn <strong>treo rồi timeout</strong></td>
+<td>Chưa mở cổng 8080 ở UFW, hoặc 🌐 chưa mở ở Security Group</td>
+<td><code>sudo ufw status</code> và kiểm tra inbound rules</td>
+</tr>
+<tr>
+<td><code>Connection refused</code> ngay lập tức</td>
+<td>Gateway chưa chạy</td>
+<td><code>docker compose ps</code></td>
+</tr>
+<tr>
+<td>Gateway trả <strong>503 Service Unavailable</strong></td>
+<td>Service đích chưa sẵn sàng, hoặc gateway còn cache DNS cũ</td>
+<td><code>docker compose restart api-gateway</code></td>
+</tr>
+<tr>
+<td>Gateway trả <strong>404</strong></td>
+<td>Sai đường dẫn — phải có đủ <code>/api/v1/</code></td>
+<td>Đối chiếu bảng ở mục 5.8</td>
+</tr>
+<tr>
+<td>Service chết ngay khi bật</td>
+<td><code>.env</code> sai mật khẩu, không khớp <code>init-db.sql</code></td>
+<td><code>docker compose logs user-service</code></td>
+</tr>
+<tr>
+<td>Build dừng giữa chừng không báo lỗi rõ</td>
+<td><strong>Hết RAM</strong> khi Gradle chạy</td>
+<td><code>free -h</code>, tạo swap rồi build lại</td>
+</tr>
+<tr>
+<td>Container <code>Up</code> nhưng API không trả lời</td>
+<td>Ứng dụng bên trong đã chết</td>
+<td><code>docker compose logs --tail=50 &lt;service&gt;</code></td>
+</tr>
+<tr>
+<td>Mọi thứ hỏng sau khi sửa <code>.env</code></td>
+<td>Container chưa đọc lại biến mới</td>
+<td><code>docker compose up -d --force-recreate</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Thứ tự chẩn đoán luôn đi từ ngoài vào trong:</strong> tường lửa → gateway → service → database. Đừng nhảy thẳng vào đọc log ứng dụng khi chưa chắc gói tin có tới được server hay không.</p>
+</blockquote>
+<h2 id="512-buoc-tiep-theo-sau-buoi-hoc">5.12 · Bước tiếp theo sau buổi học</h2>
+<p>Hệ thống đã chạy bằng IP. Ba việc nên làm tiếp, theo thứ tự ưu tiên:</p>
+<table>
+<thead>
+<tr>
+<th>Ưu tiên</th>
+<th>Việc</th>
+<th>Vì sao</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>1</strong></td>
-<td>Máy chủ mới về làm gì?</td>
-<td>Nền sạch, đã vá, có mốc baseline</td>
+<td>Đổi mật khẩu database khỏi giá trị demo</td>
+<td>Mật khẩu trùng tên user là mời gọi</td>
 </tr>
 <tr>
 <td><strong>2</strong></td>
-<td>Ai vào được máy chủ?</td>
-<td><strong>Chỉ bạn</strong> — root và mật khẩu bị loại bỏ</td>
+<td>Gắn <strong>tên miền + HTTPS</strong> qua reverse proxy (Caddy/Nginx)</td>
+<td>Trình duyệt cảnh báo "Not secure" với HTTP thuần</td>
 </tr>
 <tr>
 <td><strong>3</strong></td>
-<td>Cổng nào mở ra Internet?</td>
-<td><strong>Đóng hết</strong>, chỉ mở SSH/80/443</td>
+<td>Đẩy 5 image lên <strong>Registry</strong> rồi server chỉ <code>pull</code></td>
+<td>Server không phải build nữa — đúng tinh thần Session 08</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Việc số 3 mới là đích đến thật sự.</strong> Hiện tại server vẫn phải build, nên mỗi lần deploy mất 5–15 phút và tốn RAM. Khi cả 5 service đã có image trên Registry, quy trình rút gọn thành <code>docker compose pull &amp;&amp; docker compose up -d</code> — vài giây, và <strong>giống hệt nhau trên mọi server</strong>.</p>
+</blockquote>
+<hr />
+<h1 id="tong-ket">TỔNG KẾT</h1>
+<table>
+<thead>
+<tr>
+<th>Lesson</th>
+<th>Nội dung</th>
+<th>Kết quả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>01</strong></td>
+<td>Khởi tạo VPS: thuê máy, khởi tạo ban đầu</td>
+<td>Nền sạch, đã vá, có baseline</td>
 </tr>
 <tr>
-<td><strong>4</strong></td>
-<td>Hệ thống sống chưa?</td>
-<td><code>health</code> trả <code>UP</code>, API trả dữ liệu thật, database <strong>không lộ</strong></td>
+<td><strong>02</strong></td>
+<td>SSH hardening: thay thế đăng nhập root và mật khẩu</td>
+<td><strong>Chỉ bạn vào được</strong></td>
+</tr>
+<tr>
+<td><strong>03</strong></td>
+<td>Cài Docker và firewall để bảo vệ VPS</td>
+<td><strong>Đóng hết, chỉ mở thứ cần</strong></td>
+</tr>
+<tr>
+<td><strong>04</strong></td>
+<td>Đưa dự án lên và khởi chạy thực tế</td>
+<td>Dịch vụ sống, <strong>database không lộ</strong></td>
 </tr>
 </tbody>
 </table>
@@ -919,16 +2190,32 @@ Phần lớn trường hợp là **máy chủ quá nhỏ**, không phải code s
 <td><code>ssh -i ~/.ssh/ten-khoa deployer@&lt;ip&gt;</code></td>
 </tr>
 <tr>
+<td>Đặt bí danh máy chủ</td>
+<td>Thêm khối <code>Host</code> vào <code>~/.ssh/config</code>, rồi <code>ssh &lt;bi-danh&gt;</code></td>
+</tr>
+<tr>
+<td>Giữ tác vụ dài không chết khi rớt mạng</td>
+<td><code>tmux new -s deploy</code> → <code>Ctrl+B</code> <code>D</code> → <code>tmux attach -t deploy</code></td>
+</tr>
+<tr>
 <td>Xem quyền cả đường dẫn</td>
 <td><code>namei -l /home/deployer/.ssh/authorized_keys</code></td>
 </tr>
 <tr>
-<td>Kiểm tra cú pháp SSH trước khi reload</td>
+<td>Kiểm tra cú pháp SSH <strong>trước khi</strong> reload</td>
 <td><code>sudo sshd -t</code></td>
 </tr>
 <tr>
-<td>Xem cấu hình SSH đang chạy</td>
+<td>Xem cấu hình SSH <strong>đang chạy</strong></td>
 <td><code>sudo sshd -T | grep passwordauth</code></td>
+</tr>
+<tr>
+<td>Xem log đăng nhập SSH</td>
+<td><code>sudo journalctl -u ssh --since "10 minutes ago"</code></td>
+</tr>
+<tr>
+<td>Kiểm chứng Docker cài đúng nguồn</td>
+<td><code>apt-cache policy docker-ce</code></td>
 </tr>
 <tr>
 <td>Chặn hết đầu vào</td>
@@ -959,10 +2246,6 @@ Phần lớn trường hợp là **máy chủ quá nhỏ**, không phải code s
 <td><code>docker compose up -d</code></td>
 </tr>
 <tr>
-<td>Trạng thái + cổng</td>
-<td><code>docker compose ps</code></td>
-</tr>
-<tr>
 <td>Xem cổng có bị publish ra ngoài không</td>
 <td><code>docker inspect &lt;ten&gt; --format '{{.HostConfig.PortBindings}}'</code></td>
 </tr>
@@ -986,12 +2269,16 @@ Phần lớn trường hợp là **máy chủ quá nhỏ**, không phải code s
 <td>Tải danh mục ↔ Cài thật</td>
 </tr>
 <tr>
+<td><code>sshd -t</code> ↔ <code>sshd -T</code></td>
+<td>Kiểm tra cú pháp ↔ In cấu hình <strong>đang chạy</strong></td>
+</tr>
+<tr>
 <td><code>Permission denied</code> ↔ <code>Connection timed out</code></td>
 <td>Bị từ chối ↔ <strong>Không tới được</strong> (tường lửa)</td>
 </tr>
 <tr>
-<td><code>sshd -t</code> ↔ <code>sshd -T</code></td>
-<td>Kiểm tra cú pháp ↔ In cấu hình đang chạy</td>
+<td>SSH key đăng nhập ↔ Deploy key</td>
+<td>Local → VPS ↔ VPS → GitHub (read-only)</td>
 </tr>
 <tr>
 <td><code>.env.example</code> ↔ <code>.env</code></td>
@@ -1004,6 +2291,14 @@ Phần lớn trường hợp là **máy chủ quá nhỏ**, không phải code s
 <tr>
 <td><code>"8081:8081"</code> ↔ <code>"127.0.0.1:8081:8081"</code></td>
 <td>Cả Internet ↔ Chỉ chính máy chủ</td>
+</tr>
+<tr>
+<td>Docker CE ↔ Docker Business</td>
+<td>Community, miễn phí ↔ Bản trả phí</td>
+</tr>
+<tr>
+<td>SFTP ↔ Git + Registry</td>
+<td>Nhanh, <strong>không có lịch sử</strong> ↔ Có truy vết đầy đủ</td>
 </tr>
 </tbody>
 </table>

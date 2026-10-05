@@ -96,13 +96,180 @@ Tài khoản **root AWS** là email bạn dùng để đăng ký. Nó làm đư�
 | 5. Permissions | **Add user to group** | Xem B3 — đừng gán policy trực tiếp |
 | 6. Create user | | Lưu lại **URL đăng nhập** dạng `https://<ID-tài-khoản>.signin.aws.amazon.com/console` |
 
-**Ngay sau khi tạo — bắt buộc bật MFA:**
+> 📌 **Chưa xong.** User vừa tạo mới chỉ có mật khẩu. Làm tiếp **B2b** ngay để gắn mã bảo mật hai lớp trước khi cấp bất kỳ quyền nào.
 
-**IAM → Users → chọn user → Security credentials → Multi-factor authentication (MFA) → Assign MFA device**
+## B2b. Gắn mã bảo mật 2FA (MFA) cho IAM user
 
-Chọn **Authenticator app** rồi quét QR bằng Google Authenticator / Microsoft Authenticator / 1Password.
+> ⚠️ **Một IAM user có quyền sửa hạ tầng mà không có MFA là một mật khẩu duy nhất đứng giữa kẻ tấn công và toàn bộ hệ thống của bạn.** Mật khẩu bị lộ qua lừa đảo là chuyện xảy ra hằng ngày; MFA chặn gần hết các trường hợp đó.
 
-> ⚠️ **Một IAM user có quyền sửa hạ tầng mà không có MFA là một mật khẩu đứng giữa kẻ tấn công và toàn bộ hệ thống của bạn.** Mật khẩu bị lộ qua lừa đảo là chuyện xảy ra hằng ngày; MFA chặn gần hết các trường hợp đó.
+### Chọn loại thiết bị
+
+| Loại | Là gì | Phù hợp khi |
+|---|---|---|
+| **Authenticator app** | Ứng dụng sinh mã 6 số đổi mỗi 30 giây (Google Authenticator, Microsoft Authenticator, Authy, 1Password) | **Mặc định nên chọn** — miễn phí, nhanh |
+| **Passkey / security key** | Khoá vật lý FIDO2 (YubiKey) hoặc vân tay/Face ID của máy | An toàn nhất, nhưng cần thiết bị hỗ trợ |
+| **Hardware TOTP token** | Thẻ sinh mã rời | Môi trường cấm dùng điện thoại |
+
+Phần dưới đi theo **Authenticator app**.
+
+### Flow gắn MFA — 8 bước
+
+| # | Thao tác | Lưu ý |
+|---|---|---|
+| 1 | **IAM → Users →** bấm vào tên user | Không phải group |
+| 2 | Mở tab **Security credentials** | Tab thứ hai |
+| 3 | Kéo tới khối **Multi-factor authentication (MFA)** → bấm **Assign MFA device** | |
+| 4 | **Device name**: đặt tên nhận diện, ví dụ `caotv-dien-thoai` | Tên này sẽ thành ARN của thiết bị |
+| 5 | Chọn **Authenticator app** → **Next** | |
+| 6 | Bấm **Show QR code**, mở app trên điện thoại → **quét mã** | App sẽ bắt đầu sinh mã 6 số |
+| 7 | Nhập **hai mã liên tiếp** vào ô *MFA code 1* và *MFA code 2* | Xem cảnh báo bên dưới |
+| 8 | Bấm **Add MFA** | Phải thấy thiết bị hiện trong danh sách |
+
+> ⚠️ **Bước 7 là chỗ vấp nhiều nhất.** AWS đòi **hai mã khác nhau, liên tiếp nhau** — không phải nhập cùng một mã hai lần.
+>
+> Cách làm đúng: nhập mã đang hiện vào ô 1, **đợi app đổi sang mã mới** (tối đa 30 giây), rồi nhập mã mới vào ô 2.
+
+> ⚠️ **Nếu AWS báo mã không hợp lệ dù bạn nhập đúng**, gần như luôn là do **đồng hồ điện thoại bị lệch**. Mã TOTP tính theo thời gian, lệch vài chục giây là hỏng.
+>
+> Sửa: bật **đặt giờ tự động** trên điện thoại (iOS: Cài đặt → Cài đặt chung → Ngày & Giờ → Tự động; Android: Cài đặt → Hệ thống → Ngày & Giờ → Tự động).
+
+### Bước cuối mà nhiều người quên
+
+> 📌 **Phải đăng xuất rồi đăng nhập lại.** Phiên hiện tại được tạo **trước khi** có MFA nên nó **không mang trạng thái MFA**. Nếu bạn áp policy bắt buộc MFA ở phần dưới, phiên cũ sẽ bị chặn và bạn tưởng là cấu hình sai.
+
+Lần đăng nhập sau, trình tự sẽ là: **URL tài khoản → username → mật khẩu → nhập mã 6 số**.
+
+### Kiểm chứng MFA đã bật
+
+**Trên Console:** IAM → Users → user đó → cột **MFA** phải hiện tên thiết bị thay vì `Not enabled`.
+
+**Bằng CLI:**
+
+```bash
+aws iam list-mfa-devices --user-name caotv
+```
+
+**Phải thấy** một mục có `SerialNumber` dạng:
+
+```
+arn:aws:iam::111122223333:mfa/caotv-dien-thoai
+```
+
+> 💡 **Ghi lại chuỗi ARN này.** Nó chính là `--serial-number` bạn cần khi dùng CLI với MFA (xem cuối mục này).
+
+### Đăng ký thiết bị dự phòng — đừng bỏ qua
+
+AWS cho phép gắn **nhiều thiết bị MFA** cho cùng một user. Hãy gắn thêm ít nhất một cái.
+
+Lặp lại flow 8 bước ở trên, đặt tên khác (ví dụ `caotv-may-tinh`), và quét bằng **một app khác hoặc một máy khác**.
+
+> ⚠️ **Nếu chỉ có một thiết bị và bạn mất điện thoại**, bạn **không tự vào lại được**. Khi đó:
+>
+> | Loại tài khoản | Cách khôi phục |
+> |---|---|
+> | **IAM user** | Nhờ người có quyền IAM vào **Deactivate** thiết bị MFA cũ rồi gắn lại |
+> | **Tài khoản root** | Phải liên hệ **AWS Support** và xác minh danh tính — mất nhiều ngày |
+>
+> Một thiết bị dự phòng mất 2 phút để đăng ký, và tiết kiệm cho bạn rất nhiều rắc rối.
+
+### Bắt buộc mọi user phải bật MFA mới làm được gì
+
+Gắn MFA cho từng người là việc thủ công và dễ bị bỏ qua. Policy dưới đây làm điều đó **tự động**: người dùng **chỉ** được tự quản lý MFA của chính mình, mọi thao tác khác đều bị chặn cho tới khi họ đăng nhập có MFA.
+
+**IAM → Policies → Create policy → JSON**:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ChoPhepXemThongTinChung",
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetAccountPasswordPolicy",
+        "iam:ListVirtualMFADevices"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ChoPhepTuQuanLyMFACuaChinhMinh",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateVirtualMFADevice",
+        "iam:DeleteVirtualMFADevice",
+        "iam:EnableMFADevice",
+        "iam:ResyncMFADevice",
+        "iam:ListMFADevices",
+        "iam:GetUser",
+        "iam:ChangePassword"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:mfa/${aws:username}",
+        "arn:aws:iam::*:user/${aws:username}"
+      ]
+    },
+    {
+      "Sid": "ChanMoiThuKhacNeuChuaXacThucMFA",
+      "Effect": "Deny",
+      "NotAction": [
+        "iam:CreateVirtualMFADevice",
+        "iam:EnableMFADevice",
+        "iam:ResyncMFADevice",
+        "iam:ListMFADevices",
+        "iam:ListVirtualMFADevices",
+        "iam:GetUser",
+        "iam:ChangePassword",
+        "iam:GetAccountPasswordPolicy",
+        "sts:GetSessionToken"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "BoolIfExists": { "aws:MultiFactorAuthPresent": "false" }
+      }
+    }
+  ]
+}
+```
+
+Đặt tên `BatBuocMFA` rồi gắn vào **mọi group** có người dùng là con người.
+
+### Ba chi tiết trong policy này đều có lý do
+
+| Chi tiết | Vì sao |
+|---|---|
+| `${aws:username}` trong `Resource` | Biến này được AWS thay bằng **tên người đang gọi**. Nhờ vậy một policy duy nhất dùng cho tất cả, và **không ai sửa được MFA của người khác** |
+| Dùng **`NotAction`** thay vì `Action` | Nghĩa là *"chặn tất cả, TRỪ những hành động liệt kê"*. Vài hành động phải được chừa ra, nếu không người chưa có MFA sẽ **không thể tự bật MFA** — khoá cứng luôn |
+| `BoolIfExists` thay vì `Bool` | `aws:MultiFactorAuthPresent` **không tồn tại** với một số loại thông tin xác thực. `BoolIfExists` xử lý được cả trường hợp khoá vắng mặt; dùng `Bool` sẽ gây hành vi khó đoán |
+
+> ⚠️ **Policy này cũng chặn CLI dùng access key dài hạn**, vì loại khoá đó không mang trạng thái MFA. Đó là **chủ ý**, nhưng bạn cần biết trước — xem cách xử lý ngay dưới.
+
+### Dùng CLI khi đã bắt buộc MFA
+
+Access key thường sẽ bị từ chối. Phải đổi lấy **thông tin xác thực tạm thời** trước mỗi phiên làm việc:
+
+```bash
+aws sts get-session-token \
+  --serial-number arn:aws:iam::111122223333:mfa/caotv-dien-thoai \
+  --token-code 123456
+```
+
+Lệnh trả về ba giá trị. Xuất chúng ra biến môi trường:
+
+```bash
+export AWS_ACCESS_KEY_ID=<AccessKeyId trong ket qua>
+export AWS_SECRET_ACCESS_KEY=<SecretAccessKey trong ket qua>
+export AWS_SESSION_TOKEN=<SessionToken trong ket qua>
+```
+
+```bash
+aws sts get-caller-identity
+```
+
+**Phải thấy** ARN của bạn — từ giờ mọi lệnh `aws` trong cửa sổ terminal này đều mang trạng thái MFA.
+
+> 💡 **Thông tin tạm thời mặc định sống 12 tiếng** (đổi được bằng `--duration-seconds`, từ 15 phút tới 36 tiếng). Hết hạn thì chạy lại lệnh trên với mã mới.
+>
+> ⚠️ Ba biến đó chỉ có tác dụng trong **cửa sổ terminal hiện tại**. Mở cửa sổ mới là phải xuất lại.
 
 ## B3. Gán quyền qua **Group**, không gán thẳng cho từng người
 
@@ -111,12 +278,173 @@ Chọn **Authenticator app** rồi quét QR bằng Google Authenticator / Micros
 | Group | Gán policy | Dành cho |
 |---|---|---|
 | `quickbite-xem` | `AmazonEC2ReadOnlyAccess` | **Sinh viên** — chỉ nhìn, không sửa được gì |
-| `quickbite-vanhanh` | Policy tự viết ở B4 | Người được phép bật/tắt máy |
+| `quickbite-ec2-admin` | **Toàn quyền EC2** — xem **B4** | Người quản trị hạ tầng (bạn) |
+| `quickbite-vanhanh` | Policy tự viết ở **B5** | Người chỉ được bật/tắt máy |
 | `quickbite-admin` | `AdministratorAccess` | **Chỉ bạn.** Không gán cho ai khác |
 
 > 💡 **Vì sao qua Group?** Vì người thì thay đổi, còn vai trò thì không. Khi một sinh viên nghỉ, bạn xoá user — không phải đi dò xem họ từng được gán những policy nào. Khi cần đổi quyền cho cả lớp, bạn sửa **một** group thay vì ba mươi user.
 
-## B4. Policy "đặc quyền tối thiểu" — chỉ thao tác được trên đúng máy của mình
+## B4. Tạo tài khoản IAM **toàn quyền với EC2**
+
+Đây là tài khoản bạn dùng để quản trị hạ tầng: tạo máy, đổi Security Group, gắn Elastic IP, tạo snapshot. Có hai cách, chọn một.
+
+### Cách 1 — Gắn policy có sẵn của AWS (nhanh nhất)
+
+**IAM → User groups → Create group** → tên `quickbite-ec2-admin` → ở ô **Attach permissions policies**, tìm và tick:
+
+```
+AmazonEC2FullAccess
+```
+
+Rồi **IAM → Users → chọn user → Groups → Add user to groups** → chọn group vừa tạo.
+
+Kiểm tra bằng CLI:
+
+```bash
+aws ec2 describe-instances --query 'Reservations[].Instances[].[InstanceId,State.Name,PublicIpAddress]' --output table
+```
+
+**Phải thấy** bảng liệt kê các máy EC2 của bạn.
+
+### `AmazonEC2FullAccess` thật sự cho những gì?
+
+| Cho phép | Nghĩa là |
+|---|---|
+| `ec2:*` | **Mọi thao tác EC2** — tạo, xoá, bật, tắt máy; sửa Security Group; gắn/tháo ổ đĩa; tạo snapshot |
+| `elasticloadbalancing:*` | Toàn quyền với Load Balancer |
+| `autoscaling:*` | Toàn quyền với Auto Scaling |
+| `cloudwatch:*` | Xem và tạo cảnh báo giám sát |
+| `iam:CreateServiceLinkedRole` | Để EC2 tự tạo role nội bộ khi cần (bị giới hạn chỉ cho vài dịch vụ) |
+
+### Những gì nó **KHÔNG** cho — chỗ nhiều người bất ngờ
+
+| Không cho | Hậu quả thực tế |
+|---|---|
+| Quản lý **IAM** | Không tạo/sửa được user, group, policy khác |
+| Xem **hoá đơn** | Vào Billing sẽ báo `Access Denied` |
+| **S3, RDS, Lambda…** | Mọi dịch vụ khác đều bị từ chối |
+
+> 💡 Nên nếu tài khoản này báo `Access Denied` khi bạn xem chi phí hay sửa IAM, **đó là đúng thiết kế**, không phải lỗi. Dùng tài khoản admin riêng cho những việc đó.
+
+> ⚠️ **Ba rủi ro có thật của `AmazonEC2FullAccess`** — biết để đặt rào chắn ở Cách 2:
+> 1. **Chi phí.** Tạo được máy **bất kỳ loại nào, ở bất kỳ khu vực nào**. Một máy GPU `p4d` quên tắt tốn **hàng nghìn đô một ngày**.
+> 2. **Bảo mật.** Sửa được Security Group → mở toang mọi cổng, kể cả database.
+> 3. **Mất dữ liệu.** `TerminateInstances` xoá máy cùng ổ đĩa gốc, **không hỏi lại**.
+
+### Cách 2 — Toàn quyền EC2 nhưng có rào chắn (khuyên dùng)
+
+Vẫn là toàn quyền EC2, nhưng **khoá trong một khu vực** và **chặn các loại máy đắt tiền**. Dùng được cho công việc hằng ngày mà không mở đường cho hai tai nạn tốn kém nhất.
+
+**IAM → Policies → Create policy → JSON**, dán vào:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ToanQuyenEC2NhungChiTrongMotRegion",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*",
+        "elasticloadbalancing:*",
+        "autoscaling:*",
+        "cloudwatch:*"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": { "aws:RequestedRegion": "ap-southeast-2" }
+      }
+    },
+    {
+      "Sid": "ChoPhepEC2TuTaoServiceLinkedRole",
+      "Effect": "Allow",
+      "Action": "iam:CreateServiceLinkedRole",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "iam:AWSServiceName": [
+            "autoscaling.amazonaws.com",
+            "ec2scheduled.amazonaws.com",
+            "elasticloadbalancing.amazonaws.com",
+            "spot.amazonaws.com",
+            "spotfleet.amazonaws.com",
+            "transitgateway.amazonaws.com"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ChanCacLoaiMayDatTien",
+      "Effect": "Deny",
+      "Action": "ec2:RunInstances",
+      "Resource": "arn:aws:ec2:*:*:instance/*",
+      "Condition": {
+        "ForAnyValue:StringLike": {
+          "ec2:InstanceType": ["*8xlarge*", "*12xlarge*", "*16xlarge*", "*24xlarge*", "p*", "g*", "x*"]
+        }
+      }
+    }
+  ]
+}
+```
+
+Đặt tên policy là `QuickBiteEC2AdminCoRaoChan`, rồi gắn vào group `quickbite-ec2-admin`.
+
+**Phải sửa một chỗ:** `ap-southeast-2` → đổi thành khu vực máy bạn. IP `13.210.x` thường là **ap-southeast-2 (Sydney)**; xác nhận ở góc trên bên phải Console.
+
+### Ba statement đó làm gì
+
+| Statement | Tác dụng |
+|---|---|
+| `ToanQuyenEC2NhungChiTrongMotRegion` | Cho toàn quyền EC2, **nhưng chỉ ở một khu vực**. Thao tác ở khu vực khác bị từ chối — chặn luôn kiểu tấn công "tạo máy đào coin ở khu vực bạn không bao giờ nhìn tới" |
+| `ChoPhepEC2TuTaoServiceLinkedRole` | EC2 đôi khi cần tự tạo role nội bộ. **Không có statement này một số tính năng sẽ lỗi.** Nó nằm riêng vì `iam:` là dịch vụ toàn cầu, không áp được điều kiện khu vực |
+| `ChanCacLoaiMayDatTien` | **`Deny` luôn thắng `Allow`** trong IAM. Dù statement đầu đã cho `ec2:*`, dòng này vẫn chặn được việc tạo máy GPU và máy siêu lớn |
+
+> 💡 **Vì sao `Deny` lại thắng?** IAM duyệt theo thứ tự: **có `Deny` nào khớp không → nếu có thì chặn ngay**, không cần xét tiếp. Nhờ vậy bạn đặt được rào chắn mà không phải liệt kê thủ công hàng trăm hành động EC2 được phép.
+
+### Muốn bắt buộc có MFA mới dùng được?
+
+Thêm điều kiện này vào statement đầu:
+
+```
+"Bool": { "aws:MultiFactorAuthPresent": "true" }
+```
+
+> ⚠️ **Thêm dòng này sẽ làm hỏng CLI nếu bạn dùng access key thường.** Access key dài hạn **không mang thông tin MFA**, nên `aws:MultiFactorAuthPresent` là `false` và **mọi lệnh đều bị từ chối** — kể cả `describe-instances`.
+>
+> Dùng Console thì không sao. Muốn vừa có MFA vừa dùng CLI, phải lấy thông tin tạm thời trước mỗi phiên:
+> ```
+> aws sts get-session-token --serial-number arn:aws:iam::111122223333:mfa/<ten-thiet-bi> --token-code 123456
+> ```
+> rồi xuất ba biến `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` mà lệnh đó trả về.
+>
+> **Nếu bạn còn đang tập và chủ yếu thao tác trên Console, cứ bỏ điều kiện MFA trong policy** rồi bật MFA ở mức đăng nhập Console (mục B2) — đơn giản hơn nhiều mà vẫn chặn được phần lớn rủi ro.
+
+### Rào chắn cuối: cảnh báo hoá đơn
+
+Policy chặn được máy đắt tiền, nhưng **không chặn được việc tạo hai mươi máy nhỏ**. Hãy đặt thêm một cảnh báo chi phí:
+
+**AWS Billing → Budgets → Create budget** → Cost budget → đặt ngưỡng (ví dụ **10 USD/tháng**) → thêm email nhận cảnh báo ở mức **80%** và **100%**.
+
+> 💡 **Đây là rào chắn rẻ nhất và hiệu quả nhất trên AWS.** Nó không ngăn được sự cố, nhưng biến *"cuối tháng mới biết"* thành *"biết trong vòng vài giờ"*. Hãy đặt nó **ngay hôm nay**, trước khi cấp quyền EC2 cho bất kỳ ai.
+
+### Kiểm chứng quyền đã đúng chưa
+
+```bash
+aws sts get-caller-identity
+```
+```bash
+aws ec2 describe-instances --output table
+```
+```bash
+aws ec2 describe-regions --region us-east-1
+```
+
+**Phải thấy:** hai lệnh đầu chạy được; lệnh thứ ba **bị từ chối** nếu bạn dùng Cách 2 — đó là bằng chứng rào chắn khu vực đang hoạt động.
+
+## B5. Policy "đặc quyền tối thiểu" — chỉ thao tác được trên đúng máy của mình
+
+
 
 Đây là policy nên dùng cho người vận hành. Nó cho phép **xem** mọi thứ, nhưng chỉ **bật/tắt** được những máy có gắn nhãn `Project = quickbite`.
 
@@ -160,9 +488,9 @@ Rồi gắn nhãn cho máy chủ: **EC2 → Instances → chọn máy → Tags �
 
 > 💡 **Vì sao statement đầu để `"Resource": "*"`?** Vì các hành động `ec2:Describe*` **không hỗ trợ giới hạn theo tài nguyên** — AWS quy định như vậy. Bạn không thể viết "chỉ được xem máy này". Nhưng `Describe` chỉ **đọc**, nên để `*` là chấp nhận được. Mọi hành động **thay đổi** đều đã bị siết ở statement thứ hai.
 
-> ⚠️ **Đừng gán `AmazonEC2FullAccess` cho sinh viên.** Nó cho phép **tạo máy mới**, và một máy GPU bị tạo nhầm rồi quên tắt có thể ngốn vài trăm đô một ngày vào hoá đơn của bạn.
+> ⚠️ **Đừng gán `AmazonEC2FullAccess` cho sinh viên.** Nó cho phép **tạo máy mới** và **sửa Security Group**. Quyền đó dành cho người quản trị hạ tầng (mục B4), không dành cho người chỉ cần nhìn.
 
-## B5. Access key — chỉ tạo khi thật sự cần dùng CLI
+## B6. Access key — chỉ tạo khi thật sự cần dùng CLI
 
 Nếu người đó chỉ bấm nút trên Console thì **không cần access key**. Chỉ tạo khi họ phải chạy `aws` trên máy mình.
 
@@ -187,7 +515,7 @@ aws sts get-caller-identity
 >
 > Nếu lỡ commit: **xoá key đó trên AWS ngay lập tức**, đừng chỉ xoá khỏi repo. Nó vẫn nằm trong lịch sử Git.
 
-## B6. Khi đội đông hơn — IAM Identity Center
+## B7. Khi đội đông hơn — IAM Identity Center
 
 AWS hiện khuyến nghị dùng **IAM Identity Center** (tên cũ: AWS SSO) cho người dùng là **con người**, thay vì tạo IAM user cho từng người.
 
@@ -478,8 +806,13 @@ aws ssm start-session --target i-0abc123def456
 - [ ] Tài khoản root AWS đã bật MFA và **không có access key nào**
 - [ ] Đã tạo IAM user riêng cho mình, dùng nó hằng ngày thay cho root
 - [ ] Mỗi người một IAM user, **không dùng chung**
-- [ ] Mọi IAM user có quyền sửa hạ tầng đều đã bật **MFA**
+- [ ] Mọi IAM user có quyền sửa hạ tầng đều đã bật **MFA** (B2b)
+- [ ] Mỗi user đã đăng ký **thiết bị MFA dự phòng**
+- [ ] Đã gắn policy `BatBuocMFA` vào các group có người dùng là con người
+- [ ] Đã đăng xuất và đăng nhập lại để phiên mang trạng thái MFA
 - [ ] Quyền gán qua **Group**, không gán thẳng cho user
+- [ ] Tài khoản toàn quyền EC2 **có rào chắn khu vực** và **chặn loại máy đắt tiền** (B4 Cách 2)
+- [ ] Đã đặt **cảnh báo ngân sách** trong AWS Budgets
 - [ ] Sinh viên chỉ có quyền **xem** (`AmazonEC2ReadOnlyAccess`)
 - [ ] Không có access key nào bị commit vào Git
 - [ ] Máy chủ đã gắn tag `Project = quickbite`
@@ -532,6 +865,13 @@ aws ssm start-session --target i-0abc123def456
 | `Exit code 137` | Hết RAM | Tạo swap (G2), hoặc nâng cấp máy |
 | Hoá đơn cao bất thường | Elastic IP không dùng, hoặc máy bị tạo nhầm | Kiểm tra **Billing → Cost Explorer** |
 | `UnauthorizedOperation` khi gọi `aws` | IAM user thiếu quyền | Kiểm tra policy của group |
+| Thao tác ở khu vực khác bị từ chối | Policy B4 Cách 2 **khoá theo khu vực** — đúng thiết kế | Đổi về đúng region, hoặc sửa `aws:RequestedRegion` |
+| CLI bị từ chối **mọi lệnh** dù policy cho phép | Policy có điều kiện MFA mà access key không mang MFA | Bỏ điều kiện MFA, hoặc dùng `aws sts get-session-token` |
+| AWS báo mã MFA không hợp lệ dù nhập đúng | **Đồng hồ điện thoại lệch** — mã TOTP tính theo thời gian | Bật đặt giờ tự động trên điện thoại |
+| Gắn MFA xong nhưng vẫn bị chặn | Phiên hiện tại tạo **trước khi** có MFA | **Đăng xuất rồi đăng nhập lại** |
+| Nhập hai mã mà AWS không nhận | Nhập **cùng một mã** hai lần | Đợi app đổi mã rồi mới nhập ô thứ hai |
+| Mất điện thoại, không vào được | Chỉ đăng ký một thiết bị MFA | Nhờ người có quyền IAM deactivate; với root phải qua AWS Support |
+| Vào Billing báo `Access Denied` | `AmazonEC2FullAccess` **không gồm** quyền xem hoá đơn | Đúng thiết kế — dùng tài khoản admin riêng |
 | `REMOTE HOST IDENTIFICATION HAS CHANGED` | Tạo lại máy nên vân tay đổi | `ssh-keygen -R 13.210.134.235` ✅ |
 
 ---

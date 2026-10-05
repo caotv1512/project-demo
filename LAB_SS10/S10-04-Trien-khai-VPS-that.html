@@ -299,10 +299,32 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#b-tao-iam-user-tren-aws">B · TẠO IAM USER TRÊN AWS</a><ul>
 <li><a href="#b1-vi-sao-khong-dung-tai-khoan-root-cua-aws">B1. Vì sao không dùng tài khoản root của AWS</a></li>
 <li><a href="#b2-tao-iam-user-cho-mot-nguoi-that">B2. Tạo IAM user cho một người thật</a></li>
+<li><a href="#b2b-gan-ma-bao-mat-2fa-mfa-cho-iam-user">B2b. Gắn mã bảo mật 2FA (MFA) cho IAM user</a><ul>
+<li><a href="#chon-loai-thiet-bi">Chọn loại thiết bị</a></li>
+<li><a href="#flow-gan-mfa-8-buoc">Flow gắn MFA — 8 bước</a></li>
+<li><a href="#buoc-cuoi-ma-nhieu-nguoi-quen">Bước cuối mà nhiều người quên</a></li>
+<li><a href="#kiem-chung-mfa-a-bat">Kiểm chứng MFA đã bật</a></li>
+<li><a href="#ang-ky-thiet-bi-du-phong-ung-bo-qua">Đăng ký thiết bị dự phòng — đừng bỏ qua</a></li>
+<li><a href="#bat-buoc-moi-user-phai-bat-mfa-moi-lam-uoc-gi">Bắt buộc mọi user phải bật MFA mới làm được gì</a></li>
+<li><a href="#ba-chi-tiet-trong-policy-nay-eu-co-ly-do">Ba chi tiết trong policy này đều có lý do</a></li>
+<li><a href="#dung-cli-khi-a-bat-buoc-mfa">Dùng CLI khi đã bắt buộc MFA</a></li>
+</ul>
+</li>
 <li><a href="#b3-gan-quyen-qua-group-khong-gan-thang-cho-tung-nguoi">B3. Gán quyền qua Group, không gán thẳng cho từng người</a></li>
-<li><a href="#b4-policy-ac-quyen-toi-thieu-chi-thao-tac-uoc-tren-ung-may-cua-minh">B4. Policy "đặc quyền tối thiểu" — chỉ thao tác được trên đúng máy của mình</a></li>
-<li><a href="#b5-access-key-chi-tao-khi-that-su-can-dung-cli">B5. Access key — chỉ tạo khi thật sự cần dùng CLI</a></li>
-<li><a href="#b6-khi-oi-ong-hon-iam-identity-center">B6. Khi đội đông hơn — IAM Identity Center</a></li>
+<li><a href="#b4-tao-tai-khoan-iam-toan-quyen-voi-ec2">B4. Tạo tài khoản IAM toàn quyền với EC2</a><ul>
+<li><a href="#cach-1-gan-policy-co-san-cua-aws-nhanh-nhat">Cách 1 — Gắn policy có sẵn của AWS (nhanh nhất)</a></li>
+<li><a href="#amazonec2fullaccess-that-su-cho-nhung-gi">AmazonEC2FullAccess thật sự cho những gì?</a></li>
+<li><a href="#nhung-gi-no-khong-cho-cho-nhieu-nguoi-bat-ngo">Những gì nó KHÔNG cho — chỗ nhiều người bất ngờ</a></li>
+<li><a href="#cach-2-toan-quyen-ec2-nhung-co-rao-chan-khuyen-dung">Cách 2 — Toàn quyền EC2 nhưng có rào chắn (khuyên dùng)</a></li>
+<li><a href="#ba-statement-o-lam-gi">Ba statement đó làm gì</a></li>
+<li><a href="#muon-bat-buoc-co-mfa-moi-dung-uoc">Muốn bắt buộc có MFA mới dùng được?</a></li>
+<li><a href="#rao-chan-cuoi-canh-bao-hoa-on">Rào chắn cuối: cảnh báo hoá đơn</a></li>
+<li><a href="#kiem-chung-quyen-a-ung-chua">Kiểm chứng quyền đã đúng chưa</a></li>
+</ul>
+</li>
+<li><a href="#b5-policy-ac-quyen-toi-thieu-chi-thao-tac-uoc-tren-ung-may-cua-minh">B5. Policy "đặc quyền tối thiểu" — chỉ thao tác được trên đúng máy của mình</a></li>
+<li><a href="#b6-access-key-chi-tao-khi-that-su-can-dung-cli">B6. Access key — chỉ tạo khi thật sự cần dùng CLI</a></li>
+<li><a href="#b7-khi-oi-ong-hon-iam-identity-center">B7. Khi đội đông hơn — IAM Identity Center</a></li>
 </ul>
 </li>
 <li><a href="#c-security-group-tuong-lua-thu-hai">C · SECURITY GROUP — TƯỜNG LỬA THỨ HAI</a></li>
@@ -533,11 +555,244 @@ Hai thứ hoàn toàn độc lập. Có chìa phòng không có nghĩa là nói 
 </tr>
 </tbody>
 </table>
-<p><strong>Ngay sau khi tạo — bắt buộc bật MFA:</strong></p>
-<p><strong>IAM → Users → chọn user → Security credentials → Multi-factor authentication (MFA) → Assign MFA device</strong></p>
-<p>Chọn <strong>Authenticator app</strong> rồi quét QR bằng Google Authenticator / Microsoft Authenticator / 1Password.</p>
+<blockquote>
+<p>📌 <strong>Chưa xong.</strong> User vừa tạo mới chỉ có mật khẩu. Làm tiếp <strong>B2b</strong> ngay để gắn mã bảo mật hai lớp trước khi cấp bất kỳ quyền nào.</p>
+</blockquote>
+<h2 id="b2b-gan-ma-bao-mat-2fa-mfa-cho-iam-user">B2b. Gắn mã bảo mật 2FA (MFA) cho IAM user</h2>
 <blockquote class="warn">
-<p>⚠️ <strong>Một IAM user có quyền sửa hạ tầng mà không có MFA là một mật khẩu đứng giữa kẻ tấn công và toàn bộ hệ thống của bạn.</strong> Mật khẩu bị lộ qua lừa đảo là chuyện xảy ra hằng ngày; MFA chặn gần hết các trường hợp đó.</p>
+<p>⚠️ <strong>Một IAM user có quyền sửa hạ tầng mà không có MFA là một mật khẩu duy nhất đứng giữa kẻ tấn công và toàn bộ hệ thống của bạn.</strong> Mật khẩu bị lộ qua lừa đảo là chuyện xảy ra hằng ngày; MFA chặn gần hết các trường hợp đó.</p>
+</blockquote>
+<h3 id="chon-loai-thiet-bi">Chọn loại thiết bị</h3>
+<table>
+<thead>
+<tr>
+<th>Loại</th>
+<th>Là gì</th>
+<th>Phù hợp khi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authenticator app</strong></td>
+<td>Ứng dụng sinh mã 6 số đổi mỗi 30 giây (Google Authenticator, Microsoft Authenticator, Authy, 1Password)</td>
+<td><strong>Mặc định nên chọn</strong> — miễn phí, nhanh</td>
+</tr>
+<tr>
+<td><strong>Passkey / security key</strong></td>
+<td>Khoá vật lý FIDO2 (YubiKey) hoặc vân tay/Face ID của máy</td>
+<td>An toàn nhất, nhưng cần thiết bị hỗ trợ</td>
+</tr>
+<tr>
+<td><strong>Hardware TOTP token</strong></td>
+<td>Thẻ sinh mã rời</td>
+<td>Môi trường cấm dùng điện thoại</td>
+</tr>
+</tbody>
+</table>
+<p>Phần dưới đi theo <strong>Authenticator app</strong>.</p>
+<h3 id="flow-gan-mfa-8-buoc">Flow gắn MFA — 8 bước</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Thao tác</th>
+<th>Lưu ý</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>IAM → Users →</strong> bấm vào tên user</td>
+<td>Không phải group</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Mở tab <strong>Security credentials</strong></td>
+<td>Tab thứ hai</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Kéo tới khối <strong>Multi-factor authentication (MFA)</strong> → bấm <strong>Assign MFA device</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Device name</strong>: đặt tên nhận diện, ví dụ <code>caotv-dien-thoai</code></td>
+<td>Tên này sẽ thành ARN của thiết bị</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Chọn <strong>Authenticator app</strong> → <strong>Next</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Bấm <strong>Show QR code</strong>, mở app trên điện thoại → <strong>quét mã</strong></td>
+<td>App sẽ bắt đầu sinh mã 6 số</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Nhập <strong>hai mã liên tiếp</strong> vào ô <em>MFA code 1</em> và <em>MFA code 2</em></td>
+<td>Xem cảnh báo bên dưới</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Bấm <strong>Add MFA</strong></td>
+<td>Phải thấy thiết bị hiện trong danh sách</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Bước 7 là chỗ vấp nhiều nhất.</strong> AWS đòi <strong>hai mã khác nhau, liên tiếp nhau</strong> — không phải nhập cùng một mã hai lần.</p>
+<p>Cách làm đúng: nhập mã đang hiện vào ô 1, <strong>đợi app đổi sang mã mới</strong> (tối đa 30 giây), rồi nhập mã mới vào ô 2.</p>
+<p>⚠️ <strong>Nếu AWS báo mã không hợp lệ dù bạn nhập đúng</strong>, gần như luôn là do <strong>đồng hồ điện thoại bị lệch</strong>. Mã TOTP tính theo thời gian, lệch vài chục giây là hỏng.</p>
+<p>Sửa: bật <strong>đặt giờ tự động</strong> trên điện thoại (iOS: Cài đặt → Cài đặt chung → Ngày &amp; Giờ → Tự động; Android: Cài đặt → Hệ thống → Ngày &amp; Giờ → Tự động).</p>
+</blockquote>
+<h3 id="buoc-cuoi-ma-nhieu-nguoi-quen">Bước cuối mà nhiều người quên</h3>
+<blockquote>
+<p>📌 <strong>Phải đăng xuất rồi đăng nhập lại.</strong> Phiên hiện tại được tạo <strong>trước khi</strong> có MFA nên nó <strong>không mang trạng thái MFA</strong>. Nếu bạn áp policy bắt buộc MFA ở phần dưới, phiên cũ sẽ bị chặn và bạn tưởng là cấu hình sai.</p>
+</blockquote>
+<p>Lần đăng nhập sau, trình tự sẽ là: <strong>URL tài khoản → username → mật khẩu → nhập mã 6 số</strong>.</p>
+<h3 id="kiem-chung-mfa-a-bat">Kiểm chứng MFA đã bật</h3>
+<p><strong>Trên Console:</strong> IAM → Users → user đó → cột <strong>MFA</strong> phải hiện tên thiết bị thay vì <code>Not enabled</code>.</p>
+<p><strong>Bằng CLI:</strong></p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>iam<span class="w"> </span>list-mfa-devices<span class="w"> </span>--user-name<span class="w"> </span>caotv
+</code></pre></div>
+
+<p><strong>Phải thấy</strong> một mục có <code>SerialNumber</code> dạng:</p>
+<div class="highlight"><pre><span></span><code>arn:aws:iam::111122223333:mfa/caotv-dien-thoai
+</code></pre></div>
+
+<blockquote>
+<p>💡 <strong>Ghi lại chuỗi ARN này.</strong> Nó chính là <code>--serial-number</code> bạn cần khi dùng CLI với MFA (xem cuối mục này).</p>
+</blockquote>
+<h3 id="ang-ky-thiet-bi-du-phong-ung-bo-qua">Đăng ký thiết bị dự phòng — đừng bỏ qua</h3>
+<p>AWS cho phép gắn <strong>nhiều thiết bị MFA</strong> cho cùng một user. Hãy gắn thêm ít nhất một cái.</p>
+<p>Lặp lại flow 8 bước ở trên, đặt tên khác (ví dụ <code>caotv-may-tinh</code>), và quét bằng <strong>một app khác hoặc một máy khác</strong>.</p>
+<blockquote class="warn">
+<p>⚠️ <strong>Nếu chỉ có một thiết bị và bạn mất điện thoại</strong>, bạn <strong>không tự vào lại được</strong>. Khi đó:</p>
+<table>
+<thead>
+<tr>
+<th>Loại tài khoản</th>
+<th>Cách khôi phục</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IAM user</strong></td>
+<td>Nhờ người có quyền IAM vào <strong>Deactivate</strong> thiết bị MFA cũ rồi gắn lại</td>
+</tr>
+<tr>
+<td><strong>Tài khoản root</strong></td>
+<td>Phải liên hệ <strong>AWS Support</strong> và xác minh danh tính — mất nhiều ngày</td>
+</tr>
+</tbody>
+</table>
+<p>Một thiết bị dự phòng mất 2 phút để đăng ký, và tiết kiệm cho bạn rất nhiều rắc rối.</p>
+</blockquote>
+<h3 id="bat-buoc-moi-user-phai-bat-mfa-moi-lam-uoc-gi">Bắt buộc mọi user phải bật MFA mới làm được gì</h3>
+<p>Gắn MFA cho từng người là việc thủ công và dễ bị bỏ qua. Policy dưới đây làm điều đó <strong>tự động</strong>: người dùng <strong>chỉ</strong> được tự quản lý MFA của chính mình, mọi thao tác khác đều bị chặn cho tới khi họ đăng nhập có MFA.</p>
+<p><strong>IAM → Policies → Create policy → JSON</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChoPhepXemThongTinChung"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"iam:GetAccountPasswordPolicy"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ListVirtualMFADevices"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChoPhepTuQuanLyMFACuaChinhMinh"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"iam:CreateVirtualMFADevice"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:DeleteVirtualMFADevice"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:EnableMFADevice"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ResyncMFADevice"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ListMFADevices"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:GetUser"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ChangePassword"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"arn:aws:iam::*:mfa/${aws:username}"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"arn:aws:iam::*:user/${aws:username}"</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChanMoiThuKhacNeuChuaXacThucMFA"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Deny"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"NotAction"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"iam:CreateVirtualMFADevice"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:EnableMFADevice"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ResyncMFADevice"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ListMFADevices"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ListVirtualMFADevices"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:GetUser"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:ChangePassword"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"iam:GetAccountPasswordPolicy"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"sts:GetSessionToken"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Condition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"BoolIfExists"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"aws:MultiFactorAuthPresent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Đặt tên <code>BatBuocMFA</code> rồi gắn vào <strong>mọi group</strong> có người dùng là con người.</p>
+<h3 id="ba-chi-tiet-trong-policy-nay-eu-co-ly-do">Ba chi tiết trong policy này đều có lý do</h3>
+<table>
+<thead>
+<tr>
+<th>Chi tiết</th>
+<th>Vì sao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>${aws:username}</code> trong <code>Resource</code></td>
+<td>Biến này được AWS thay bằng <strong>tên người đang gọi</strong>. Nhờ vậy một policy duy nhất dùng cho tất cả, và <strong>không ai sửa được MFA của người khác</strong></td>
+</tr>
+<tr>
+<td>Dùng <strong><code>NotAction</code></strong> thay vì <code>Action</code></td>
+<td>Nghĩa là <em>"chặn tất cả, TRỪ những hành động liệt kê"</em>. Vài hành động phải được chừa ra, nếu không người chưa có MFA sẽ <strong>không thể tự bật MFA</strong> — khoá cứng luôn</td>
+</tr>
+<tr>
+<td><code>BoolIfExists</code> thay vì <code>Bool</code></td>
+<td><code>aws:MultiFactorAuthPresent</code> <strong>không tồn tại</strong> với một số loại thông tin xác thực. <code>BoolIfExists</code> xử lý được cả trường hợp khoá vắng mặt; dùng <code>Bool</code> sẽ gây hành vi khó đoán</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>⚠️ <strong>Policy này cũng chặn CLI dùng access key dài hạn</strong>, vì loại khoá đó không mang trạng thái MFA. Đó là <strong>chủ ý</strong>, nhưng bạn cần biết trước — xem cách xử lý ngay dưới.</p>
+</blockquote>
+<h3 id="dung-cli-khi-a-bat-buoc-mfa">Dùng CLI khi đã bắt buộc MFA</h3>
+<p>Access key thường sẽ bị từ chối. Phải đổi lấy <strong>thông tin xác thực tạm thời</strong> trước mỗi phiên làm việc:</p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>sts<span class="w"> </span>get-session-token<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--serial-number<span class="w"> </span>arn:aws:iam::111122223333:mfa/caotv-dien-thoai<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--token-code<span class="w"> </span><span class="m">123456</span>
+</code></pre></div>
+
+<p>Lệnh trả về ba giá trị. Xuất chúng ra biến môi trường:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span>&lt;AccessKeyId<span class="w"> </span>trong<span class="w"> </span>ket<span class="w"> </span>qua&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span>&lt;SecretAccessKey<span class="w"> </span>trong<span class="w"> </span>ket<span class="w"> </span>qua&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">AWS_SESSION_TOKEN</span><span class="o">=</span>&lt;SessionToken<span class="w"> </span>trong<span class="w"> </span>ket<span class="w"> </span>qua&gt;
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>sts<span class="w"> </span>get-caller-identity
+</code></pre></div>
+
+<p><strong>Phải thấy</strong> ARN của bạn — từ giờ mọi lệnh <code>aws</code> trong cửa sổ terminal này đều mang trạng thái MFA.</p>
+<blockquote class="warn">
+<p>💡 <strong>Thông tin tạm thời mặc định sống 12 tiếng</strong> (đổi được bằng <code>--duration-seconds</code>, từ 15 phút tới 36 tiếng). Hết hạn thì chạy lại lệnh trên với mã mới.</p>
+<p>⚠️ Ba biến đó chỉ có tác dụng trong <strong>cửa sổ terminal hiện tại</strong>. Mở cửa sổ mới là phải xuất lại.</p>
 </blockquote>
 <h2 id="b3-gan-quyen-qua-group-khong-gan-thang-cho-tung-nguoi">B3. Gán quyền qua <strong>Group</strong>, không gán thẳng cho từng người</h2>
 <p><strong>IAM → User groups → Create group</strong></p>
@@ -556,9 +811,14 @@ Hai thứ hoàn toàn độc lập. Có chìa phòng không có nghĩa là nói 
 <td><strong>Sinh viên</strong> — chỉ nhìn, không sửa được gì</td>
 </tr>
 <tr>
+<td><code>quickbite-ec2-admin</code></td>
+<td><strong>Toàn quyền EC2</strong> — xem <strong>B4</strong></td>
+<td>Người quản trị hạ tầng (bạn)</td>
+</tr>
+<tr>
 <td><code>quickbite-vanhanh</code></td>
-<td>Policy tự viết ở B4</td>
-<td>Người được phép bật/tắt máy</td>
+<td>Policy tự viết ở <strong>B5</strong></td>
+<td>Người chỉ được bật/tắt máy</td>
 </tr>
 <tr>
 <td><code>quickbite-admin</code></td>
@@ -570,7 +830,191 @@ Hai thứ hoàn toàn độc lập. Có chìa phòng không có nghĩa là nói 
 <blockquote>
 <p>💡 <strong>Vì sao qua Group?</strong> Vì người thì thay đổi, còn vai trò thì không. Khi một sinh viên nghỉ, bạn xoá user — không phải đi dò xem họ từng được gán những policy nào. Khi cần đổi quyền cho cả lớp, bạn sửa <strong>một</strong> group thay vì ba mươi user.</p>
 </blockquote>
-<h2 id="b4-policy-ac-quyen-toi-thieu-chi-thao-tac-uoc-tren-ung-may-cua-minh">B4. Policy "đặc quyền tối thiểu" — chỉ thao tác được trên đúng máy của mình</h2>
+<h2 id="b4-tao-tai-khoan-iam-toan-quyen-voi-ec2">B4. Tạo tài khoản IAM <strong>toàn quyền với EC2</strong></h2>
+<p>Đây là tài khoản bạn dùng để quản trị hạ tầng: tạo máy, đổi Security Group, gắn Elastic IP, tạo snapshot. Có hai cách, chọn một.</p>
+<h3 id="cach-1-gan-policy-co-san-cua-aws-nhanh-nhat">Cách 1 — Gắn policy có sẵn của AWS (nhanh nhất)</h3>
+<p><strong>IAM → User groups → Create group</strong> → tên <code>quickbite-ec2-admin</code> → ở ô <strong>Attach permissions policies</strong>, tìm và tick:</p>
+<div class="highlight"><pre><span></span><code>AmazonEC2FullAccess
+</code></pre></div>
+
+<p>Rồi <strong>IAM → Users → chọn user → Groups → Add user to groups</strong> → chọn group vừa tạo.</p>
+<p>Kiểm tra bằng CLI:</p>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>describe-instances<span class="w"> </span>--query<span class="w"> </span><span class="s1">'Reservations[].Instances[].[InstanceId,State.Name,PublicIpAddress]'</span><span class="w"> </span>--output<span class="w"> </span>table
+</code></pre></div>
+
+<p><strong>Phải thấy</strong> bảng liệt kê các máy EC2 của bạn.</p>
+<h3 id="amazonec2fullaccess-that-su-cho-nhung-gi"><code>AmazonEC2FullAccess</code> thật sự cho những gì?</h3>
+<table>
+<thead>
+<tr>
+<th>Cho phép</th>
+<th>Nghĩa là</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ec2:*</code></td>
+<td><strong>Mọi thao tác EC2</strong> — tạo, xoá, bật, tắt máy; sửa Security Group; gắn/tháo ổ đĩa; tạo snapshot</td>
+</tr>
+<tr>
+<td><code>elasticloadbalancing:*</code></td>
+<td>Toàn quyền với Load Balancer</td>
+</tr>
+<tr>
+<td><code>autoscaling:*</code></td>
+<td>Toàn quyền với Auto Scaling</td>
+</tr>
+<tr>
+<td><code>cloudwatch:*</code></td>
+<td>Xem và tạo cảnh báo giám sát</td>
+</tr>
+<tr>
+<td><code>iam:CreateServiceLinkedRole</code></td>
+<td>Để EC2 tự tạo role nội bộ khi cần (bị giới hạn chỉ cho vài dịch vụ)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nhung-gi-no-khong-cho-cho-nhieu-nguoi-bat-ngo">Những gì nó <strong>KHÔNG</strong> cho — chỗ nhiều người bất ngờ</h3>
+<table>
+<thead>
+<tr>
+<th>Không cho</th>
+<th>Hậu quả thực tế</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quản lý <strong>IAM</strong></td>
+<td>Không tạo/sửa được user, group, policy khác</td>
+</tr>
+<tr>
+<td>Xem <strong>hoá đơn</strong></td>
+<td>Vào Billing sẽ báo <code>Access Denied</code></td>
+</tr>
+<tr>
+<td><strong>S3, RDS, Lambda…</strong></td>
+<td>Mọi dịch vụ khác đều bị từ chối</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="warn">
+<p>💡 Nên nếu tài khoản này báo <code>Access Denied</code> khi bạn xem chi phí hay sửa IAM, <strong>đó là đúng thiết kế</strong>, không phải lỗi. Dùng tài khoản admin riêng cho những việc đó.</p>
+<p>⚠️ <strong>Ba rủi ro có thật của <code>AmazonEC2FullAccess</code></strong> — biết để đặt rào chắn ở Cách 2:
+1. <strong>Chi phí.</strong> Tạo được máy <strong>bất kỳ loại nào, ở bất kỳ khu vực nào</strong>. Một máy GPU <code>p4d</code> quên tắt tốn <strong>hàng nghìn đô một ngày</strong>.
+2. <strong>Bảo mật.</strong> Sửa được Security Group → mở toang mọi cổng, kể cả database.
+3. <strong>Mất dữ liệu.</strong> <code>TerminateInstances</code> xoá máy cùng ổ đĩa gốc, <strong>không hỏi lại</strong>.</p>
+</blockquote>
+<h3 id="cach-2-toan-quyen-ec2-nhung-co-rao-chan-khuyen-dung">Cách 2 — Toàn quyền EC2 nhưng có rào chắn (khuyên dùng)</h3>
+<p>Vẫn là toàn quyền EC2, nhưng <strong>khoá trong một khu vực</strong> và <strong>chặn các loại máy đắt tiền</strong>. Dùng được cho công việc hằng ngày mà không mở đường cho hai tai nạn tốn kém nhất.</p>
+<p><strong>IAM → Policies → Create policy → JSON</strong>, dán vào:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ToanQuyenEC2NhungChiTrongMotRegion"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"ec2:*"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"elasticloadbalancing:*"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"autoscaling:*"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"cloudwatch:*"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Condition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"StringEquals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"aws:RequestedRegion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ap-southeast-2"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChoPhepEC2TuTaoServiceLinkedRole"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"iam:CreateServiceLinkedRole"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Condition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"StringEquals"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"iam:AWSServiceName"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">"autoscaling.amazonaws.com"</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">"ec2scheduled.amazonaws.com"</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">"elasticloadbalancing.amazonaws.com"</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">"spot.amazonaws.com"</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">"spotfleet.amazonaws.com"</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">"transitgateway.amazonaws.com"</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"Sid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChanCacLoaiMayDatTien"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Deny"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ec2:RunInstances"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:ec2:*:*:instance/*"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"Condition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"ForAnyValue:StringLike"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"ec2:InstanceType"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"*8xlarge*"</span><span class="p">,</span><span class="w"> </span><span class="s2">"*12xlarge*"</span><span class="p">,</span><span class="w"> </span><span class="s2">"*16xlarge*"</span><span class="p">,</span><span class="w"> </span><span class="s2">"*24xlarge*"</span><span class="p">,</span><span class="w"> </span><span class="s2">"p*"</span><span class="p">,</span><span class="w"> </span><span class="s2">"g*"</span><span class="p">,</span><span class="w"> </span><span class="s2">"x*"</span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Đặt tên policy là <code>QuickBiteEC2AdminCoRaoChan</code>, rồi gắn vào group <code>quickbite-ec2-admin</code>.</p>
+<p><strong>Phải sửa một chỗ:</strong> <code>ap-southeast-2</code> → đổi thành khu vực máy bạn. IP <code>13.210.x</code> thường là <strong>ap-southeast-2 (Sydney)</strong>; xác nhận ở góc trên bên phải Console.</p>
+<h3 id="ba-statement-o-lam-gi">Ba statement đó làm gì</h3>
+<table>
+<thead>
+<tr>
+<th>Statement</th>
+<th>Tác dụng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ToanQuyenEC2NhungChiTrongMotRegion</code></td>
+<td>Cho toàn quyền EC2, <strong>nhưng chỉ ở một khu vực</strong>. Thao tác ở khu vực khác bị từ chối — chặn luôn kiểu tấn công "tạo máy đào coin ở khu vực bạn không bao giờ nhìn tới"</td>
+</tr>
+<tr>
+<td><code>ChoPhepEC2TuTaoServiceLinkedRole</code></td>
+<td>EC2 đôi khi cần tự tạo role nội bộ. <strong>Không có statement này một số tính năng sẽ lỗi.</strong> Nó nằm riêng vì <code>iam:</code> là dịch vụ toàn cầu, không áp được điều kiện khu vực</td>
+</tr>
+<tr>
+<td><code>ChanCacLoaiMayDatTien</code></td>
+<td><strong><code>Deny</code> luôn thắng <code>Allow</code></strong> trong IAM. Dù statement đầu đã cho <code>ec2:*</code>, dòng này vẫn chặn được việc tạo máy GPU và máy siêu lớn</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>Vì sao <code>Deny</code> lại thắng?</strong> IAM duyệt theo thứ tự: <strong>có <code>Deny</code> nào khớp không → nếu có thì chặn ngay</strong>, không cần xét tiếp. Nhờ vậy bạn đặt được rào chắn mà không phải liệt kê thủ công hàng trăm hành động EC2 được phép.</p>
+</blockquote>
+<h3 id="muon-bat-buoc-co-mfa-moi-dung-uoc">Muốn bắt buộc có MFA mới dùng được?</h3>
+<p>Thêm điều kiện này vào statement đầu:</p>
+<div class="highlight"><pre><span></span><code>"Bool": { "aws:MultiFactorAuthPresent": "true" }
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ <strong>Thêm dòng này sẽ làm hỏng CLI nếu bạn dùng access key thường.</strong> Access key dài hạn <strong>không mang thông tin MFA</strong>, nên <code>aws:MultiFactorAuthPresent</code> là <code>false</code> và <strong>mọi lệnh đều bị từ chối</strong> — kể cả <code>describe-instances</code>.</p>
+<p>Dùng Console thì không sao. Muốn vừa có MFA vừa dùng CLI, phải lấy thông tin tạm thời trước mỗi phiên:
+<code>aws sts get-session-token --serial-number arn:aws:iam::111122223333:mfa/&lt;ten-thiet-bi&gt; --token-code 123456</code>
+rồi xuất ba biến <code>AWS_ACCESS_KEY_ID</code>, <code>AWS_SECRET_ACCESS_KEY</code>, <code>AWS_SESSION_TOKEN</code> mà lệnh đó trả về.</p>
+<p><strong>Nếu bạn còn đang tập và chủ yếu thao tác trên Console, cứ bỏ điều kiện MFA trong policy</strong> rồi bật MFA ở mức đăng nhập Console (mục B2) — đơn giản hơn nhiều mà vẫn chặn được phần lớn rủi ro.</p>
+</blockquote>
+<h3 id="rao-chan-cuoi-canh-bao-hoa-on">Rào chắn cuối: cảnh báo hoá đơn</h3>
+<p>Policy chặn được máy đắt tiền, nhưng <strong>không chặn được việc tạo hai mươi máy nhỏ</strong>. Hãy đặt thêm một cảnh báo chi phí:</p>
+<p><strong>AWS Billing → Budgets → Create budget</strong> → Cost budget → đặt ngưỡng (ví dụ <strong>10 USD/tháng</strong>) → thêm email nhận cảnh báo ở mức <strong>80%</strong> và <strong>100%</strong>.</p>
+<blockquote>
+<p>💡 <strong>Đây là rào chắn rẻ nhất và hiệu quả nhất trên AWS.</strong> Nó không ngăn được sự cố, nhưng biến <em>"cuối tháng mới biết"</em> thành <em>"biết trong vòng vài giờ"</em>. Hãy đặt nó <strong>ngay hôm nay</strong>, trước khi cấp quyền EC2 cho bất kỳ ai.</p>
+</blockquote>
+<h3 id="kiem-chung-quyen-a-ung-chua">Kiểm chứng quyền đã đúng chưa</h3>
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>sts<span class="w"> </span>get-caller-identity
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>describe-instances<span class="w"> </span>--output<span class="w"> </span>table
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>aws<span class="w"> </span>ec2<span class="w"> </span>describe-regions<span class="w"> </span>--region<span class="w"> </span>us-east-1
+</code></pre></div>
+
+<p><strong>Phải thấy:</strong> hai lệnh đầu chạy được; lệnh thứ ba <strong>bị từ chối</strong> nếu bạn dùng Cách 2 — đó là bằng chứng rào chắn khu vực đang hoạt động.</p>
+<h2 id="b5-policy-ac-quyen-toi-thieu-chi-thao-tac-uoc-tren-ung-may-cua-minh">B5. Policy "đặc quyền tối thiểu" — chỉ thao tác được trên đúng máy của mình</h2>
 <p>Đây là policy nên dùng cho người vận hành. Nó cho phép <strong>xem</strong> mọi thứ, nhưng chỉ <strong>bật/tắt</strong> được những máy có gắn nhãn <code>Project = quickbite</code>.</p>
 <p><strong>IAM → Policies → Create policy → JSON</strong>, dán vào:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -621,9 +1065,9 @@ Hai thứ hoàn toàn độc lập. Có chìa phòng không có nghĩa là nói 
 <p>Rồi gắn nhãn cho máy chủ: <strong>EC2 → Instances → chọn máy → Tags → Manage tags → Add tag</strong>, với <code>Key = Project</code>, <code>Value = quickbite</code>.</p>
 <blockquote class="warn">
 <p>💡 <strong>Vì sao statement đầu để <code>"Resource": "*"</code>?</strong> Vì các hành động <code>ec2:Describe*</code> <strong>không hỗ trợ giới hạn theo tài nguyên</strong> — AWS quy định như vậy. Bạn không thể viết "chỉ được xem máy này". Nhưng <code>Describe</code> chỉ <strong>đọc</strong>, nên để <code>*</code> là chấp nhận được. Mọi hành động <strong>thay đổi</strong> đều đã bị siết ở statement thứ hai.</p>
-<p>⚠️ <strong>Đừng gán <code>AmazonEC2FullAccess</code> cho sinh viên.</strong> Nó cho phép <strong>tạo máy mới</strong>, và một máy GPU bị tạo nhầm rồi quên tắt có thể ngốn vài trăm đô một ngày vào hoá đơn của bạn.</p>
+<p>⚠️ <strong>Đừng gán <code>AmazonEC2FullAccess</code> cho sinh viên.</strong> Nó cho phép <strong>tạo máy mới</strong> và <strong>sửa Security Group</strong>. Quyền đó dành cho người quản trị hạ tầng (mục B4), không dành cho người chỉ cần nhìn.</p>
 </blockquote>
-<h2 id="b5-access-key-chi-tao-khi-that-su-can-dung-cli">B5. Access key — chỉ tạo khi thật sự cần dùng CLI</h2>
+<h2 id="b6-access-key-chi-tao-khi-that-su-can-dung-cli">B6. Access key — chỉ tạo khi thật sự cần dùng CLI</h2>
 <p>Nếu người đó chỉ bấm nút trên Console thì <strong>không cần access key</strong>. Chỉ tạo khi họ phải chạy <code>aws</code> trên máy mình.</p>
 <p><strong>IAM → Users → chọn user → Security credentials → Create access key → Command Line Interface (CLI)</strong></p>
 <div class="highlight"><pre><span></span><code>aws<span class="w"> </span>configure
@@ -641,7 +1085,7 @@ Hai thứ hoàn toàn độc lập. Có chìa phòng không có nghĩa là nói 
 3. <strong>Xoá ngay khi không còn dùng</strong> — IAM → Security credentials → Delete.</p>
 <p>Nếu lỡ commit: <strong>xoá key đó trên AWS ngay lập tức</strong>, đừng chỉ xoá khỏi repo. Nó vẫn nằm trong lịch sử Git.</p>
 </blockquote>
-<h2 id="b6-khi-oi-ong-hon-iam-identity-center">B6. Khi đội đông hơn — IAM Identity Center</h2>
+<h2 id="b7-khi-oi-ong-hon-iam-identity-center">B7. Khi đội đông hơn — IAM Identity Center</h2>
 <p>AWS hiện khuyến nghị dùng <strong>IAM Identity Center</strong> (tên cũ: AWS SSO) cho người dùng là <strong>con người</strong>, thay vì tạo IAM user cho từng người.</p>
 <table>
 <thead>
@@ -1022,8 +1466,13 @@ ubuntu@13.210.134.235: Permission denied (publickey).</code></p>
 <li><input type="checkbox"> Tài khoản root AWS đã bật MFA và <strong>không có access key nào</strong></li>
 <li><input type="checkbox"> Đã tạo IAM user riêng cho mình, dùng nó hằng ngày thay cho root</li>
 <li><input type="checkbox"> Mỗi người một IAM user, <strong>không dùng chung</strong></li>
-<li><input type="checkbox"> Mọi IAM user có quyền sửa hạ tầng đều đã bật <strong>MFA</strong></li>
+<li><input type="checkbox"> Mọi IAM user có quyền sửa hạ tầng đều đã bật <strong>MFA</strong> (B2b)</li>
+<li><input type="checkbox"> Mỗi user đã đăng ký <strong>thiết bị MFA dự phòng</strong></li>
+<li><input type="checkbox"> Đã gắn policy <code>BatBuocMFA</code> vào các group có người dùng là con người</li>
+<li><input type="checkbox"> Đã đăng xuất và đăng nhập lại để phiên mang trạng thái MFA</li>
 <li><input type="checkbox"> Quyền gán qua <strong>Group</strong>, không gán thẳng cho user</li>
+<li><input type="checkbox"> Tài khoản toàn quyền EC2 <strong>có rào chắn khu vực</strong> và <strong>chặn loại máy đắt tiền</strong> (B4 Cách 2)</li>
+<li><input type="checkbox"> Đã đặt <strong>cảnh báo ngân sách</strong> trong AWS Budgets</li>
 <li><input type="checkbox"> Sinh viên chỉ có quyền <strong>xem</strong> (<code>AmazonEC2ReadOnlyAccess</code>)</li>
 <li><input type="checkbox"> Không có access key nào bị commit vào Git</li>
 <li><input type="checkbox"> Máy chủ đã gắn tag <code>Project = quickbite</code></li>
@@ -1124,6 +1573,41 @@ ubuntu@13.210.134.235: Permission denied (publickey).</code></p>
 <td><code>UnauthorizedOperation</code> khi gọi <code>aws</code></td>
 <td>IAM user thiếu quyền</td>
 <td>Kiểm tra policy của group</td>
+</tr>
+<tr>
+<td>Thao tác ở khu vực khác bị từ chối</td>
+<td>Policy B4 Cách 2 <strong>khoá theo khu vực</strong> — đúng thiết kế</td>
+<td>Đổi về đúng region, hoặc sửa <code>aws:RequestedRegion</code></td>
+</tr>
+<tr>
+<td>CLI bị từ chối <strong>mọi lệnh</strong> dù policy cho phép</td>
+<td>Policy có điều kiện MFA mà access key không mang MFA</td>
+<td>Bỏ điều kiện MFA, hoặc dùng <code>aws sts get-session-token</code></td>
+</tr>
+<tr>
+<td>AWS báo mã MFA không hợp lệ dù nhập đúng</td>
+<td><strong>Đồng hồ điện thoại lệch</strong> — mã TOTP tính theo thời gian</td>
+<td>Bật đặt giờ tự động trên điện thoại</td>
+</tr>
+<tr>
+<td>Gắn MFA xong nhưng vẫn bị chặn</td>
+<td>Phiên hiện tại tạo <strong>trước khi</strong> có MFA</td>
+<td><strong>Đăng xuất rồi đăng nhập lại</strong></td>
+</tr>
+<tr>
+<td>Nhập hai mã mà AWS không nhận</td>
+<td>Nhập <strong>cùng một mã</strong> hai lần</td>
+<td>Đợi app đổi mã rồi mới nhập ô thứ hai</td>
+</tr>
+<tr>
+<td>Mất điện thoại, không vào được</td>
+<td>Chỉ đăng ký một thiết bị MFA</td>
+<td>Nhờ người có quyền IAM deactivate; với root phải qua AWS Support</td>
+</tr>
+<tr>
+<td>Vào Billing báo <code>Access Denied</code></td>
+<td><code>AmazonEC2FullAccess</code> <strong>không gồm</strong> quyền xem hoá đơn</td>
+<td>Đúng thiết kế — dùng tài khoản admin riêng</td>
 </tr>
 <tr>
 <td><code>REMOTE HOST IDENTIFICATION HAS CHANGED</code></td>
