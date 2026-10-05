@@ -1,0 +1,57 @@
+# ==========================================================================
+#  QuickBite - Compose PRODUCTION cho VPS (Session 10)
+#
+#  Khac han Session 04/05: o day KHONG CO "build:".
+#  VPS chi "image:" - keo ban da dong goi san o Session 08 tu Registry ve chay.
+#  VPS khong can ma nguon, khong can JDK, khong can Gradle.
+# ==========================================================================
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: quickbite-prod-db
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB:       ${DB_NAME}
+    # KHONG khai bao "ports": database chi noi bo, khong bao gio ra Internet
+    volumes:
+      - quickbite-prod-data:/var/lib/postgresql/data
+    networks:
+      - quickbite-prod-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  user-service:
+    # Tag CO DINH, khong dung latest - de truy vet va rollback duoc
+    image: ${IMAGE_REF}
+    container_name: quickbite-prod-user
+    platform: linux/amd64
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST:     postgres
+      DB_PORT:     5432
+      DB_NAME:     ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SERVER_PORT: 8081
+    # Chi mo ra 127.0.0.1: reverse proxy tren cung VPS goi duoc,
+    # con Internet thi KHONG. Doi thanh "8081:8081" la mo ra ca the gioi.
+    ports:
+      - "127.0.0.1:${APP_PORT}:8081"
+    networks:
+      - quickbite-prod-net
+
+volumes:
+  quickbite-prod-data:
+
+networks:
+  quickbite-prod-net:

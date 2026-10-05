@@ -1,0 +1,17 @@
+services:
+  vps:
+    build: .
+    container_name: vps-gia-lap
+    hostname: quickbite-vps
+    platform: linux/amd64
+    cap_add:
+      - NET_ADMIN          # de ufw/iptables chay duoc nhu tren VPS that
+      - NET_RAW
+    ports:
+      - "2222:22"          # SSH của "VPS" nằm ở cổng 2222 trên máy bạn
+    networks:
+      - vps-net
+
+networks:
+  vps-net:
+    name: vps-net
