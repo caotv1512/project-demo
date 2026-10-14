@@ -1,0 +1,22 @@
+services:
+  vps:
+    build: .
+    container_name: vps11
+    hostname: quickbite-vps
+    platform: linux/amd64
+    cap_add:
+      - NET_ADMIN            # de ufw/iptables chay duoc nhu tren VPS that
+      - NET_RAW
+    ports:
+      - "2223:22"            # SSH
+      - "8880:80"            # HTTP  -> dong vai cong 80 cua VPS that
+      - "8443:443"           # HTTPS -> dong vai cong 443
+    networks:
+      - vps11-net
+      - quickbite5-net       # de Nginx goi duoc toi API Gateway cua Session 05
+
+networks:
+  vps11-net:
+    name: vps11-net
+  quickbite5-net:
+    external: true           # mang do Session 05 tao ra
