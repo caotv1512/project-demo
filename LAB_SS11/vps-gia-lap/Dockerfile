@@ -10,6 +10,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN mkdir -p /run/sshd
 
+# Ubuntu cai san mot site mac dinh nghe cong 80 voi server_name _.
+# Neu de lai, no se xung dot voi cau hinh cua bai hoc va Nginx se BO QUA
+# cau hinh do -> moi request tra ve 404 ma khong co dau hieu gi.
+# Go san o day; Thi nghiem 1 se TU TAO LAI de minh hoa dung loi nay.
+RUN rm -f /etc/nginx/sites-enabled/default
+
 # Mật khẩu root chỉ dùng cho sandbox, để demo bước đăng nhập đầu tiên
 RUN echo 'root:quickbite' | chpasswd \
  && sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config \

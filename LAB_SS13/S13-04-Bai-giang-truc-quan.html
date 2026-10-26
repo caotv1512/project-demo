@@ -1,0 +1,1325 @@
+<!doctype html>
+<html lang="vi"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Đo lường như đời sống</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: mot cot doc theo trinh tu slide; moi khai niem co mot cap "doi song | he thong" tren giay ke o */
+:root{
+  --paper:#f6f8f4; --grid:rgba(22,48,61,.065); --card:#fff; --card2:#eef3ef;
+  --ink:#16303d; --ink-soft:#56717d; --rule:#d2dcd8;
+  --needle:#bf4229; --ok:#1c7a62; --warn:#9d6a0b;
+  --font-d:"Bitter",Georgia,serif;
+  --font-b:"Be Vietnam Pro","Segoe UI",system-ui,sans-serif;
+  --font-m:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0f1619; --grid:rgba(185,215,220,.055); --card:#162025; --card2:#1c272c;
+  --ink:#e2eceb; --ink-soft:#97aeb4; --rule:#2a3a41;
+  --needle:#ea7257; --ok:#48b89a; --warn:#dda242; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0f1619; --grid:rgba(185,215,220,.055); --card:#162025; --card2:#1c272c;
+  --ink:#e2eceb; --ink-soft:#97aeb4; --rule:#2a3a41;
+  --needle:#ea7257; --ok:#48b89a; --warn:#dda242; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-b); font-size:16px; line-height:1.7;
+  background-image:
+    repeating-linear-gradient(to right,var(--grid) 0 1px,transparent 1px 28px),
+    repeating-linear-gradient(to bottom,var(--grid) 0 1px,transparent 1px 28px);
+}
+.wrap{max-width:900px; margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:clamp(30px,6vw,62px) 72px}
+h1,h2,h3,h4{font-family:var(--font-d); text-wrap:balance; line-height:1.25; margin:0}
+h1{font-size:clamp(29px,6.2vw,48px); font-weight:700; letter-spacing:-.015em}
+h2{font-size:clamp(20px,3.3vw,27px); font-weight:600}
+h3{font-size:17px; font-weight:600}
+h4{font-size:15.5px; font-weight:600}
+p{margin:0}
+.lede{font-size:clamp(16.5px,2.2vw,19px); color:var(--ink-soft); max-width:60ch; margin-top:18px}
+.eyebrow{font-family:var(--font-m); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--needle); font-weight:600}
+
+header{border-bottom:2px solid var(--ink); padding-bottom:28px}
+.hero-note{margin-top:24px; padding:14px 18px; background:var(--card); border:1px solid var(--rule);
+  border-left:3px solid var(--needle); font-size:15px; max-width:62ch}
+
+/* --- muc luc --- */
+.toc{margin-top:24px; border:1px solid var(--rule); background:var(--card); padding:16px 18px}
+.toc h4{font-family:var(--font-m); font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px}
+.toc ol{margin:0; padding-left:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:6px 20px}
+@media (max-width:620px){.toc ol{grid-template-columns:1fr}}
+.toc a{color:var(--ink); text-decoration:none; font-size:14.5px; border-bottom:1px solid var(--rule)}
+.toc a:hover{border-bottom-color:var(--needle); color:var(--needle)}
+.toc .n{font-family:var(--font-m); font-size:12px; color:var(--needle); font-weight:600; margin-right:7px}
+
+/* --- banner lesson --- */
+.lesson{margin-top:clamp(46px,7vw,76px); background:var(--ink); color:var(--paper); padding:18px 22px; scroll-margin-top:14px}
+.lesson .lnum{font-family:var(--font-m); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; opacity:.72; font-weight:600}
+.lesson h2{color:var(--paper); margin-top:4px}
+
+section{margin-top:clamp(34px,5vw,52px); scroll-margin-top:18px}
+.shead{display:flex; gap:13px; align-items:baseline; border-bottom:1px solid var(--rule); padding-bottom:11px; margin-bottom:22px; flex-wrap:wrap}
+.snum{font-family:var(--font-m); font-size:13px; font-weight:600; color:var(--needle); flex:none}
+.sref{font-family:var(--font-m); font-size:11.5px; color:var(--ink-soft); margin-left:auto; flex:none; white-space:nowrap}
+.intro{max-width:64ch; margin-bottom:22px}
+
+/* --- cap doi song / he thong --- */
+.pair{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media (max-width:680px){.pair{grid-template-columns:1fr}}
+.pane{background:var(--card); border:1px solid var(--rule); padding:17px 18px 19px; min-width:0; display:flex; flex-direction:column; gap:10px}
+.pane.sys{background:var(--card2)}
+.tag{font-family:var(--font-m); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
+.pane p{font-size:15px}
+.pane ul{margin:0; padding-left:18px; font-size:15px; display:flex; flex-direction:column; gap:7px}
+
+.chot{margin-top:20px; padding:16px 20px; border:2px solid var(--ink); background:var(--card);
+  font-family:var(--font-d); font-size:clamp(15.5px,2.1vw,18px); font-weight:600; line-height:1.5}
+.chot .k{color:var(--needle)}
+.note{margin-top:18px; padding:13px 17px; background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--warn); font-size:14.5px}
+.note strong{color:var(--warn)}
+
+code,kbd{font-family:var(--font-m); font-size:.88em; background:var(--card2); padding:1.5px 5px; border:1px solid var(--rule)}
+.pane.sys code,.note code,.chot code{background:var(--card)}
+pre{font-family:var(--font-m); font-size:12.8px; background:var(--card); border:1px solid var(--rule);
+  padding:13px 15px; margin:0; overflow-x:auto; line-height:1.62}
+pre.out{background:var(--card2); color:var(--ink-soft)}
+pre b{color:var(--ink); font-weight:600}
+pre .g{color:var(--ok); font-weight:600}
+pre .r{color:var(--needle); font-weight:600}
+
+/* --- demo chung --- */
+.demo{margin-top:20px; border:1px solid var(--rule); background:var(--card)}
+.demo-top{display:flex; flex-wrap:wrap; gap:9px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--rule); background:var(--card2)}
+.demo-title{font-family:var(--font-m); font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; margin-right:auto}
+.demo-body{padding:18px 16px}
+button{font-family:var(--font-b); font-size:13.5px; font-weight:600; color:var(--ink);
+  background:var(--card); border:1px solid var(--ink); padding:7px 13px; cursor:pointer; border-radius:0}
+button:hover{background:var(--ink); color:var(--paper)}
+button[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+button:focus-visible{outline:2px solid var(--needle); outline-offset:2px}
+.hint{font-size:13.5px; color:var(--ink-soft); margin-top:14px}
+
+/* --- cau truc mot metric --- */
+.anat{border:1px solid var(--rule); background:var(--card); padding:16px; margin-top:4px; overflow-x:auto}
+.anat .line{font-family:var(--font-m); font-size:clamp(12px,2.4vw,15px); white-space:nowrap; line-height:2}
+.anat .nm{color:var(--needle); font-weight:600; border-bottom:2px solid var(--needle)}
+.anat .lb{color:var(--ok); font-weight:600; border-bottom:2px solid var(--ok)}
+.anat .vl{color:var(--ink); font-weight:600; border-bottom:2px solid var(--ink)}
+.anat .lg{display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:14px; font-size:13.5px; white-space:normal}
+.anat .lg span{display:flex; gap:7px; align-items:center}
+.anat .lg i{width:14px; height:3px; flex:none}
+
+/* --- demo 1: diem danh --- */
+.rolls{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+@media (max-width:680px){.rolls{grid-template-columns:1fr}}
+.roll{border:1px solid var(--rule); min-width:0}
+.roll-h{padding:10px 13px; background:var(--card2); border-bottom:1px solid var(--rule);
+  font-family:var(--font-m); font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:600}
+.roll-b{padding:12px 13px; display:flex; flex-direction:column; gap:9px}
+.row{display:flex; gap:9px; align-items:center; font-family:var(--font-m); font-size:12.5px; min-width:0}
+.row .nm{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.pill{font-family:var(--font-m); font-size:10.5px; font-weight:600; padding:2px 7px; border:1px solid currentColor; flex:none}
+.pill.up{color:var(--ok)} .pill.down{color:var(--needle)} .pill.q{color:var(--ink-soft)}
+.err{font-family:var(--font-m); font-size:11.5px; color:var(--needle); padding-left:2px; line-height:1.5}
+.silent{font-size:13.5px; color:var(--ink-soft); font-style:italic; padding:4px 0}
+
+/* --- demo 2: dong ho xe --- */
+.dash{display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:center}
+@media (max-width:680px){.dash{grid-template-columns:1fr}}
+.inst{display:flex; flex-direction:column; align-items:center; gap:10px}
+.inst-lb{font-family:var(--font-m); font-size:11px; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; text-align:center}
+.odo{display:flex; gap:3px}
+.odo span{font-family:var(--font-m); font-size:clamp(20px,5vw,27px); font-weight:600; background:var(--ink); color:var(--paper);
+  width:1.05em; text-align:center; padding:5px 0; font-variant-numeric:tabular-nums}
+.gauge{width:100%; max-width:210px; height:auto}
+.needle{transform-origin:100px 92px; transition:transform .55s cubic-bezier(.3,.9,.3,1)}
+@media (prefers-reduced-motion:reduce){.needle{transition:none}}
+.readout{font-family:var(--font-m); font-size:13px; color:var(--ink-soft); text-align:center}
+.readout b{color:var(--ink); font-size:15px}
+
+/* --- demo 3: p95 --- */
+.strip{display:grid; grid-template-columns:repeat(25,1fr); gap:3px; margin-bottom:16px; max-width:540px}
+.strip i{display:block; aspect-ratio:1; background:var(--ok); opacity:.55}
+.strip i.slow{background:var(--needle); opacity:1}
+.nums{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+@media (max-width:560px){.nums{grid-template-columns:1fr}}
+.num{border:1px solid var(--rule); padding:12px 14px; background:var(--card2)}
+.num .lb{font-family:var(--font-m); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
+.num .v{font-family:var(--font-m); font-size:clamp(20px,4vw,26px); font-weight:600; font-variant-numeric:tabular-nums; margin-top:3px}
+.num .v.bad{color:var(--needle)}
+.num .st{font-size:12.5px; color:var(--ink-soft); margin-top:2px}
+.slider-row{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:16px}
+input[type=range]{flex:1; min-width:170px; accent-color:var(--needle)}
+.slider-row label{font-size:13.5px; color:var(--ink-soft)}
+.slider-row output{font-family:var(--font-m); font-weight:600; font-size:14px}
+
+/* --- so do luong scrape --- */
+.flow{display:grid; gap:12px; margin-top:4px}
+.flow-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+@media (max-width:680px){.flow-row{grid-template-columns:1fr}}
+.node{border:1px solid var(--rule); background:var(--card); padding:12px 14px; min-width:0}
+.node.hub{background:var(--ink); color:var(--paper); border-color:var(--ink); text-align:center}
+.node .t{font-family:var(--font-m); font-size:12.5px; font-weight:600; overflow-wrap:anywhere}
+.node .s{font-size:12.5px; color:var(--ink-soft); margin-top:3px; overflow-wrap:anywhere}
+.node.hub .s{color:var(--paper); opacity:.75}
+.arrow{text-align:center; font-family:var(--font-m); font-size:13px; color:var(--needle); font-weight:600}
+
+/* --- cac buoc cai dat --- */
+.step{display:grid; grid-template-columns:38px 1fr; gap:14px; margin-top:22px; align-items:start}
+@media (max-width:560px){.step{grid-template-columns:28px 1fr; gap:10px}}
+.step-n{font-family:var(--font-m); font-size:13px; font-weight:600; color:var(--paper); background:var(--ink);
+  width:28px; height:28px; display:flex; align-items:center; justify-content:center; flex:none}
+.step-c{min-width:0; display:flex; flex-direction:column; gap:10px}
+.step-c p{font-size:15px}
+.expect{border:1px solid var(--rule); background:var(--card2)}
+.expect .eh{font-family:var(--font-m); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-soft); font-weight:600; padding:8px 13px; border-bottom:1px solid var(--rule)}
+.expect pre{border:none; background:transparent; font-size:12.5px}
+
+/* --- bang --- */
+.tbox{overflow-x:auto; margin-top:20px; border:1px solid var(--rule)}
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:14.5px; background:var(--card)}
+th,td{text-align:left; padding:10px 14px; border-bottom:1px solid var(--rule); vertical-align:top}
+th{background:var(--card2); font-family:var(--font-m); font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; color:var(--ink-soft)}
+tr:last-child td{border-bottom:none}
+td code{white-space:nowrap}
+td .no{color:var(--needle); font-weight:600}
+td .yes{color:var(--ok); font-weight:600}
+
+footer{margin-top:clamp(46px,7vw,74px); border-top:2px solid var(--ink); padding-top:20px;
+  font-size:13.5px; color:var(--ink-soft)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Session 13 · Giám sát hệ thống với Prometheus</p>
+  <h1>Bạn đã biết đo mọi thứ rồi</h1>
+  <p class="lede">Công-tơ-mét, kim xăng, bảng điểm, phiếu khám sức khỏe — bạn đọc chúng mỗi ngày mà không cần ai dạy.
+  Toàn bộ buổi học này là những việc đó, chỉ khác ở chỗ đối tượng được đo là máy chủ và ứng dụng.</p>
+  <div class="hero-note">Trang đi theo đúng thứ tự bài giảng: hiểu <strong>metric</strong> trước, rồi mới tới Prometheus, rồi mới cài đặt.
+  Mỗi khái niệm có một cặp "ngoài đời ↔ trong hệ thống"; ba chỗ có nút bấm thử; phần cuối là hướng dẫn cài và kiểm tra kèm kết quả thật.</div>
+
+  <nav class="toc">
+    <h4>Nội dung</h4>
+    <ol>
+      <li><a href="#l1"><span class="n">01</span>Metrics và kiến trúc Prometheus</a></li>
+      <li><a href="#l2"><span class="n">02</span>Tích hợp Spring Boot Actuator</a></li>
+      <li><a href="#l3"><span class="n">03</span>Triển khai bằng Docker Compose</a></li>
+      <li><a href="#l4"><span class="n">04</span>Node Exporter giám sát VPS</a></li>
+      <li><a href="#caidat"><span class="n">05</span>Cài đặt và kiểm tra từng bước</a></li>
+      <li><a href="#tra"><span class="n">06</span>Bảng đối chiếu và tra nhanh</a></li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ======================= LESSON 01 ======================= -->
+<div class="lesson" id="l1">
+  <div class="lnum">Lesson 01</div>
+  <h2>Metrics và kiến trúc của Prometheus</h2>
+</div>
+
+<section id="s11">
+  <div class="shead"><span class="snum">1.1</span><h2>Production không nên là một hộp đen</h2></div>
+  <p class="intro">Khi hệ thống chậm, QuickBite <strong>vẫn nhận request</strong> — nhìn từ ngoài tưởng như không sao.
+  Nhưng để sửa được, đội vận hành phải trả lời được những câu rất cụ thể, và không câu nào đoán ra bằng mắt thường.</p>
+
+  <div class="pair">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Xe kêu lạ mà không có đồng hồ</h3>
+      <p>Bạn biết "có gì đó không ổn", nhưng không biết nóng máy, thiếu nhớt hay sắp hết xăng. Mở nắp ra đoán từng thứ một.</p>
+      <p>Có mặt đồng hồ thì câu hỏi đổi hẳn: không còn là <em>"có sao không"</em> mà là <em>"cái nào đang vượt ngưỡng"</em>.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Năm câu phải trả lời được</h3>
+      <ul>
+        <li>VPS có quá tải CPU hoặc RAM không? — <strong>hạ tầng</strong></li>
+        <li>JVM của <code>order-service</code> gần đầy Heap chưa? — <strong>ứng dụng</strong></li>
+        <li>Garbage Collection có chạy quá nhiều không? — <strong>ứng dụng</strong></li>
+        <li>Endpoint nào nhận lượng request bất thường? — <strong>ứng dụng</strong></li>
+        <li>Sự cố bắt đầu từ thời điểm nào? — <strong>lịch sử dữ liệu</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chot">Câu cuối là câu khó nhất nếu không có monitoring.
+  Sự cố qua đi thì <span class="k">không còn dấu vết nào</span> để biết nó bắt đầu lúc nào. Metrics được ghi liên tục nên bạn tua ngược lại được.</div>
+</section>
+
+<section id="s12">
+  <div class="shead"><span class="snum">1.2</span><h2>Monitoring và Metrics</h2></div>
+  <p class="intro">Hai từ hay bị dùng lẫn. <strong>Monitoring</strong> là cả công việc theo dõi; <strong>metrics</strong> là nguyên liệu của công việc đó.
+  Giống như "khám bệnh" và "chỉ số xét nghiệm" — một bên là hoạt động, một bên là con số.</p>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Khái niệm</th><th>Ý nghĩa</th><th>Ví dụ ngoài đời</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Monitoring</strong></td><td>Thu thập, xử lý và theo dõi dữ liệu của hệ thống</td><td>Việc đi khám sức khỏe định kỳ</td></tr>
+        <tr><td><strong>Metrics</strong></td><td>Giá trị <strong>số</strong> biểu thị trạng thái hệ thống</td><td>Cân nặng, huyết áp, chỉ số đường huyết</td></tr>
+        <tr><td><strong>Timestamp</strong></td><td>Thời điểm ghi nhận giá trị</td><td>Ngày khám ghi trên phiếu</td></tr>
+        <tr><td><strong>Labels</strong></td><td>Nhãn phân biệt nguồn hoặc nhóm dữ liệu</td><td>Tên người, phòng khám, loại xét nghiệm</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:26px">Cấu trúc một metric</h3>
+  <p class="intro" style="margin:8px 0 12px">Một dòng metric luôn gồm ba phần. Nhận ra ba phần này là đọc được mọi dòng metric về sau.</p>
+  <div class="anat">
+    <div class="line"><span class="nm">http_requests_total</span><span class="lb">{method="POST", handler="/api/v1/orders"}</span> <span class="vl">1250</span></div>
+    <div class="lg">
+      <span><i style="background:var(--needle)"></i><strong>Tên metric</strong> — đo cái gì</span>
+      <span><i style="background:var(--ok)"></i><strong>Labels</strong> — của ai, ở đâu</span>
+      <span><i style="background:var(--ink)"></i><strong>Giá trị</strong> — con số</span>
+    </div>
+  </div>
+
+  <div class="pair" style="margin-top:20px">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Sổ điểm danh có thêm cột</h3>
+      <p>Cùng một chỉ tiêu "số buổi vắng", nhưng tách theo lớp, theo tổ, theo môn — mỗi tổ hợp là một dòng riêng trong sổ.</p>
+      <p>Thêm một cột phân loại là nhân số dòng lên. Thêm cột <em>"mã số sinh viên"</em> thì sổ có đúng bằng số sinh viên nhân số môn.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Mỗi tổ hợp label là một chuỗi riêng</h3>
+      <p>Cùng tên <code>http_requests_total</code> nhưng khác labels là <strong>những chuỗi dữ liệu khác nhau</strong> — nhờ vậy tách được <code>POST /orders</code> khỏi <code>GET /users</code>.</p>
+      <p>Đó cũng là chỗ nguy hiểm: label có quá nhiều giá trị khác nhau sẽ sinh ra hàng nghìn chuỗi.</p>
+    </div>
+  </div>
+
+  <div class="note"><strong>Cardinality explosion.</strong> Đừng đặt label kiểu <code>user_id</code> hay <code>order_id</code>.
+  Vài nghìn người dùng là vài nghìn chuỗi, và cơ sở dữ liệu phình rất nhanh. Label dùng để <em>nhóm</em>, không dùng để <em>định danh từng bản ghi</em>.</div>
+</section>
+
+<section id="s13">
+  <div class="shead"><span class="snum">1.3</span><h2>Counter và Gauge</h2></div>
+  <p class="intro">Ngồi lên xe là bạn thấy ngay hai con số có bản chất hoàn toàn khác nhau mà chẳng bao giờ nhầm:
+  số kilômét đã đi, và lượng xăng còn lại. Phân biệt được hai thứ này là xong hai loại metric đầu tiên.</p>
+
+  <div class="demo">
+    <div class="demo-top">
+      <span class="demo-title">Hai con số, hai bản chất</span>
+      <button id="b-run">Chạy 10 km</button>
+      <button id="b-fuel">Đổ xăng</button>
+      <button id="b-reset">Thay đồng hồ mới</button>
+    </div>
+    <div class="demo-body">
+      <div class="dash">
+        <div class="inst">
+          <div class="odo" id="odo"></div>
+          <div class="inst-lb">Công-tơ-mét — số km đã đi</div>
+          <div class="readout">Loại <b>Counter</b><br>chỉ tăng, không bao giờ giảm</div>
+        </div>
+        <div class="inst">
+          <svg class="gauge" viewBox="0 0 200 120" role="img" aria-label="Kim xăng">
+            <path d="M28 92 A72 72 0 0 1 172 92" fill="none" stroke="var(--rule)" stroke-width="11"/>
+            <path id="arc-f" d="M28 92 A72 72 0 0 1 172 92" fill="none" stroke="var(--ok)" stroke-width="11"
+                  stroke-dasharray="226" stroke-dashoffset="63"/>
+            <text x="26" y="112" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="var(--ink-soft)">E</text>
+            <text x="166" y="112" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="var(--ink-soft)">F</text>
+            <g class="needle" id="needle">
+              <line x1="100" y1="92" x2="100" y2="34" stroke="var(--needle)" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+            <circle cx="100" cy="92" r="6" fill="var(--ink)"/>
+          </svg>
+          <div class="inst-lb">Kim xăng — xăng còn lại</div>
+          <div class="readout">Loại <b>Gauge</b><br>lên được, xuống được</div>
+        </div>
+      </div>
+      <p class="hint" id="hint-2">Bấm <strong>Đổ xăng</strong>: kim xăng vọt lên, còn công-tơ-mét không giảm một mét nào. Hai loại số đo khác nhau ở chỗ đó.</p>
+    </div>
+  </div>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th></th><th>Counter</th><th>Gauge</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Đặc điểm</strong></td><td><strong>Chỉ tăng</strong>; reset về 0 khi app khởi động lại</td><td>Tăng <strong>hoặc giảm</strong> tự do theo trạng thái</td></tr>
+        <tr><td><strong>Ví dụ</strong></td><td><code>http_requests_total</code></td><td><code>jvm_memory_used_bytes</code></td></tr>
+        <tr><td><strong>Dùng khi</strong></td><td>Giá trị tích luỹ: tổng request, tổng lỗi</td><td>Chỉ số biến động: RAM, CPU, số thread</td></tr>
+        <tr><td><strong>Ngoài đời</strong></td><td>Công-tơ-mét, số hóa đơn đã in</td><td>Kim xăng, nhiệt độ phòng, số khách đang ngồi</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chot">Nút <span class="k">Thay đồng hồ mới</span> đưa công-tơ-mét về 0 — đúng như khi container restart.
+  Vì vậy con số thô của Counter gần như vô dụng; cái có nghĩa là <strong>nó tăng bao nhiêu trong 5 phút qua</strong>.</div>
+
+  <div class="note"><strong>Counter chỉ tăng thì làm sao biết "bao nhiêu request mỗi giây"?</strong>
+  Dùng <code>rate(http_requests_total[5m])</code> của PromQL — lấy hai mẫu ở hai thời điểm rồi tính độ chênh chia cho khoảng thời gian.
+  Hàm này còn tự xử lý việc Counter reset về 0: tự trừ tay thì sẽ ra số âm.
+  Giống như tính "tháng này dùng bao nhiêu số điện" — lấy chỉ số cuối trừ chỉ số đầu, và phải cộng bù nếu giữa chừng có thay công-tơ.</div>
+</section>
+
+<section id="s14">
+  <div class="shead"><span class="snum">1.4</span><h2>Histogram và Summary</h2></div>
+  <p class="intro">Hai loại còn lại không đo một con số, mà đo <strong>sự phân bố</strong> của nhiều con số.
+  Lý do cần chúng: khi Bill Gates bước vào quán phở, thu nhập trung bình của quán nhảy lên tiền tỷ — nhưng không ai giàu thêm đồng nào.</p>
+
+  <div class="demo">
+    <div class="demo-top"><span class="demo-title">100 khách gọi API, kéo thanh để thêm khách bị chậm</span></div>
+    <div class="demo-body">
+      <div class="slider-row">
+        <label for="sl-slow">Số khách gặp sự cố (chờ 9 giây):</label>
+        <input type="range" id="sl-slow" min="0" max="12" step="1" value="0">
+        <output id="out-slow">0 / 100</output>
+      </div>
+      <div class="strip" id="strip" aria-hidden="true"></div>
+      <div class="nums">
+        <div class="num"><div class="lb">Thời gian chờ trung bình</div><div class="v" id="v-mean">0,90s</div><div class="st" id="s-mean">Bình thường</div></div>
+        <div class="num"><div class="lb">p95 — 95 khách nhanh nhất</div><div class="v" id="v-p95">0,90s</div><div class="st" id="s-p95">Bình thường</div></div>
+        <div class="num"><div class="lb">p99 — 99 khách nhanh nhất</div><div class="v" id="v-p99">0,90s</div><div class="st" id="s-p99">Bình thường</div></div>
+      </div>
+      <p class="hint" id="hint-3"></p>
+    </div>
+  </div>
+
+  <div class="chot">Kéo tới <span class="k">2 khách</span>: p99 báo động, trung bình vẫn đẹp. Tới <span class="k">6 khách</span>: p95 báo động, trung bình vẫn đẹp.
+  Số trung bình không bao giờ báo động — vì nó mô tả một người không hề tồn tại.</div>
+
+  <div class="pair" style="margin-top:20px">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Hai cách báo cáo điểm thi</h3>
+      <p><strong>Histogram</strong> — nhà trường gửi bảng đếm: 12 bạn dưới 5, 30 bạn từ 5 đến 7, 8 bạn trên 9. Bạn tự tính ra bất cứ phân vị nào.</p>
+      <p><strong>Summary</strong> — nhà trường tính sẵn rồi ghi "top 5% được 9,2 điểm". Gọn, nhưng bạn không gộp được với lớp khác.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Bucket đếm được, phân vị thì không</h3>
+      <p><strong>Histogram</strong> chia dữ liệu vào các khoảng <code>le="..."</code> rồi đếm. Prometheus gộp bucket từ mọi instance rồi mới tính phân vị.</p>
+      <p><strong>Summary</strong> tính phân vị ngay tại client, chính xác cho một instance đơn lẻ.</p>
+    </div>
+  </div>
+
+  <div class="chot">Vì sao nhiều instance thì phải dùng Histogram? Vì <span class="k">phân vị không cộng được</span>.
+  p99 của container A và p99 của container B gộp lại <strong>không</strong> ra p99 của cả hệ thống. Bucket thì khác — chúng là bộ đếm, và bộ đếm thì cộng được.</div>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th></th><th>Histogram</th><th>Summary</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cách hoạt động</strong></td><td>Chia vào các <strong>bucket</strong> rồi đếm</td><td>Tính <strong>phân vị</strong> p50, p90, p99 tại client</td></tr>
+        <tr><td><strong>Hậu tố thấy được</strong></td><td><code>_bucket</code>, <code>_count</code>, <code>_sum</code></td><td><code>{quantile="..."}</code>, <code>_count</code>, <code>_sum</code></td></tr>
+        <tr><td><strong>Gộp nhiều instance</strong></td><td><span class="yes">Được</span></td><td><span class="no">Không được</span></td></tr>
+        <tr><td><strong>Chọn khi</strong></td><td>Nhiều container, cần tổng hợp latency</td><td>Cần phân vị chính xác trên từng instance</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>Spring Boot KHÔNG bật Histogram sẵn.</strong> Bạn sẽ thấy <code>_count</code> và <code>_sum</code>,
+  nhưng <strong>không có</strong> <code>_bucket</code> cho tới khi bật thủ công bằng <code>percentiles-histogram</code>.
+  Không có bucket thì Prometheus không có cách nào tính ra p95. Bài lab có thí nghiệm đo tận mắt chuyện này.</div>
+</section>
+
+<section id="s15">
+  <div class="shead"><span class="snum">1.5</span><h2>Prometheus chủ động kéo metrics</h2></div>
+  <p class="intro">Đến đây bạn đã biết metric là gì và có mấy loại. Câu hỏi tiếp theo: ai mang chúng về một chỗ?
+  Có hai cách, và chúng khác nhau ở một điểm quyết định.</p>
+
+  <div class="pair">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Gọi tên từng bạn</h3>
+      <p>Đầu mỗi tiết, giáo viên đọc danh sách. Bạn nào không đáp thì ghi vắng — và ghi luôn lý do nghe được.</p>
+      <p>Giáo viên <strong>chủ động đi tìm</strong>, nên sự im lặng cũng là một câu trả lời.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Prometheus gọi từng service</h3>
+      <p>Mỗi 15 giây, Prometheus tự gửi <code>HTTP GET</code> tới từng target trong danh sách.
+      Gọi được thì ghi <code>up 1</code>, không được thì ghi <code>up 0</code> kèm lý do vào <code>lastError</code>.</p>
+      <p>Đây gọi là <strong>pull</strong> — bên thu thập đi lấy, không ngồi đợi.</p>
+    </div>
+  </div>
+
+  <div class="demo">
+    <div class="demo-top">
+      <span class="demo-title">Thử cho một service chết</span>
+      <button id="b-ok" aria-pressed="true">Mọi thứ bình thường</button>
+      <button id="b-dead" aria-pressed="false">user-service tắt đột ngột</button>
+    </div>
+    <div class="demo-body">
+      <div class="rolls">
+        <div class="roll"><div class="roll-h">Pull — Prometheus tự gọi</div><div class="roll-b" id="roll-pull"></div></div>
+        <div class="roll"><div class="roll-h">Push — service tự gửi về</div><div class="roll-b" id="roll-push"></div></div>
+      </div>
+      <p class="hint" id="hint-1"></p>
+    </div>
+  </div>
+
+  <div class="chot">Với push, <span class="k">im lặng không nói lên điều gì</span> — service chết, mạng nghẽn, hay nó vẫn sống mà quên gửi, đều im như nhau.
+  Với pull, im lặng là một con số đọc được: <code>up 0</code>.</div>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th></th><th>Pull — Prometheus</th><th>Push</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cơ chế</strong></td><td>Prometheus gửi HTTP GET theo chu kỳ</td><td>Ứng dụng chủ động gửi metrics về server</td></tr>
+        <tr><td><strong>Phát hiện chết</strong></td><td><span class="yes">Biết ngay</span>, ghi thành <code>up=0</code></td><td><span class="no">Không phân biệt được</span> chết với im lặng</td></tr>
+        <tr><td><strong>Lưu ý</strong></td><td>Job sống ngắn hơn 15s có thể bị bỏ sót</td><td>Có thể nhận dữ liệu dồn dập từ nhiều client</td></tr>
+        <tr><td><strong>Phù hợp</strong></td><td>Service chạy <strong>lâu dài</strong></td><td>Job chạy <strong>ngắn</strong>, serverless</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>Pull cũng có chỗ yếu, nên nói cho công bằng.</strong> Một job chạy 3 giây rồi tắt sẽ sống và chết lọt giữa hai lần scrape —
+  Prometheus không bao giờ gọi kịp. Trường hợp đó người ta dùng Pushgateway để job đẩy số vào trước khi tắt.
+  Buổi này chỉ làm việc với service chạy lâu dài, nên pull là lựa chọn đúng.</div>
+</section>
+
+<section id="s16">
+  <div class="shead"><span class="snum">1.6</span><h2>Luồng scraping trong QuickBite</h2></div>
+  <p class="intro">Ghép tất cả lại: Prometheus đọc danh sách, gọi từng nơi, rồi ghi vào kho dữ liệu của nó.
+  Hai bước, nhưng bước hai mới là thứ làm nên giá trị.</p>
+
+  <div class="flow">
+    <div class="node hub">
+      <div class="t">Prometheus Server</div>
+      <div class="s">1. Đọc cấu hình: danh sách targets + chu kỳ 15s</div>
+    </div>
+    <div class="arrow">↓ &nbsp;HTTP GET mỗi 15 giây&nbsp; ↓</div>
+    <div class="flow-row">
+      <div class="node"><div class="t">user-service:8081</div><div class="s">/actuator/prometheus</div></div>
+      <div class="node"><div class="t">order-service:8083</div><div class="s">/actuator/prometheus</div></div>
+      <div class="node"><div class="t">node-exporter:9100</div><div class="s">/metrics</div></div>
+    </div>
+    <div class="arrow">↓ &nbsp;2. Xử lý và lưu&nbsp; ↓</div>
+    <div class="node hub">
+      <div class="t">TSDB — Time Series Database</div>
+      <div class="s">Mọi bản ghi đều gắn mốc thời gian</div>
+    </div>
+  </div>
+
+  <div class="pair" style="margin-top:20px">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Quyển sổ của thợ đọc công-tơ</h3>
+      <p>Giá trị quyển sổ không nằm ở con số hôm nay, mà ở chỗ nó cho biết tháng này dùng nhiều hơn tháng trước bao nhiêu.</p>
+      <p>Đốt quyển sổ đi thì con số hôm nay chẳng nói lên điều gì.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>TSDB khác database thường</h3>
+      <p>Mọi bản ghi đều gắn <strong>mốc thời gian</strong>, và nó được tối ưu cho câu hỏi
+      <em>"giá trị này thay đổi thế nào trong 6 giờ qua?"</em> — đúng thứ cần khi điều tra sự cố.</p>
+      <p>Đó là lý do volume ở Lesson 03 quan trọng đến vậy.</p>
+    </div>
+  </div>
+
+  <div class="note"><strong>Tất cả target phải cùng một Docker network với Prometheus</strong>, nếu không nó không phân giải được tên service.
+  Và vì đọc theo chu kỳ, ngay sau khi Prometheus khởi động lại, mọi target hiện <code>health: unknown</code> trong khoảng 20 giây — chưa kịp gọi lần nào.</div>
+</section>
+
+<!-- ======================= LESSON 02 ======================= -->
+<div class="lesson" id="l2">
+  <div class="lnum">Lesson 02</div>
+  <h2>Tích hợp Spring Boot Actuator</h2>
+</div>
+
+<section id="s21">
+  <div class="shead"><span class="snum">2.1</span><h2>Actuator cung cấp endpoint cho ứng dụng</h2></div>
+  <p class="intro">Prometheus biết cách đi hỏi rồi. Nhưng ứng dụng Spring Boot phải có chỗ để trả lời đã.
+  Actuator là thư viện tạo ra những chỗ đó.</p>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Endpoint</th><th>Nội dung</th><th>Định dạng</th></tr></thead>
+      <tbody>
+        <tr><td><code>/actuator/health</code></td><td>Trạng thái ứng dụng: UP hoặc DOWN</td><td>JSON</td></tr>
+        <tr><td><code>/actuator/info</code></td><td>Thông tin chung của ứng dụng</td><td>JSON</td></tr>
+        <tr><td><code>/actuator/metrics</code></td><td>Danh sách metrics</td><td>JSON</td></tr>
+        <tr><td><code>/actuator/prometheus</code></td><td>Metrics ở định dạng Prometheus</td><td><strong>Text thuần</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="hint">Lợi ích: lấy được thông tin JVM mà không phải tự viết code đo đạc, có sẵn health check cho production,
+  và xuất được sang Prometheus hay Grafana mà không cần viết thêm gì.</p>
+</section>
+
+<section id="s22">
+  <div class="shead"><span class="snum">2.2</span><h2>Micrometer chuyển metrics sang định dạng Prometheus</h2></div>
+  <p class="intro">Đây là chỗ sinh viên hay vấp nhất cả buổi. Có Actuator rồi mà <code>/actuator/prometheus</code> vẫn trả 404,
+  vì thiếu một mảnh nữa.</p>
+
+  <div class="pair">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Có quầy tiếp đón, chưa có phiên dịch</h3>
+      <p>Khách nước ngoài đến quầy. Quầy mở cửa, có người ngồi — nhưng hai bên không hiểu tiếng nhau.</p>
+      <p>Mở quầy là một việc. Nói được thứ tiếng khách hiểu là việc khác.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Phân vai cho rõ</h3>
+      <p><strong>Actuator</strong> tạo ra endpoint.</p>
+      <p><strong>Micrometer</strong> dịch dữ liệu sang định dạng Prometheus hiểu được.</p>
+      <p>Có Actuator mà thiếu Micrometer thì <code>/actuator/prometheus</code> trả <strong>404</strong>.</p>
+    </div>
+  </div>
+
+  <pre>┌─────────────────────┐   ┌──────────────────────┐   ┌────────────────────┐
+│ 1. Actuator         │──▶│ 2. Micrometer        │──▶│ 3. Prometheus      │
+│ thu thập metrics,   │   │ Prometheus Registry  │   │ Server scrape tại  │
+│ cung cấp JSON tại   │   │ định dạng lại sang   │   │ /actuator/         │
+│ /actuator/metrics   │   │ plain text chuẩn     │   │ prometheus         │
+└─────────────────────┘   └──────────────────────┘   └────────────────────┘</pre>
+
+  <div class="chot">Đây là nguyên nhân thật của <span class="k">404</span> mà bạn sẽ gặp ở phần cài đặt.
+  Target không chết — nó <strong>chưa học nói</strong>.</div>
+</section>
+
+<section id="s23">
+  <div class="shead"><span class="snum">2.3</span><h2>Thêm dependencies cho order-service</h2></div>
+  <p class="intro">Hai dòng, và phải đủ cả hai. Thiếu dòng nào cũng ra 404.</p>
+  <pre>dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+}</pre>
+  <p class="hint">Sau khi sửa, tải thư viện mới bằng <code>./gradlew build</code> hoặc <strong>Refresh Gradle project</strong> trên IDE.
+  Sửa file mà không build lại thì không có gì thay đổi.</p>
+</section>
+
+<section id="s24">
+  <div class="shead"><span class="snum">2.4</span><h2>Cấu hình endpoint và common tag</h2></div>
+  <p class="intro">Thêm thư viện xong vẫn chưa đủ: mặc định Spring Boot không mở endpoint <code>prometheus</code> ra.
+  Phải khai báo rõ.</p>
+
+  <pre>spring:
+  application:
+    name: order-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}</pre>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Cấu hình</th><th>Tác dụng</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Expose endpoints</strong></td><td>Chỉ mở <strong>hai</strong> endpoint cần thiết: <code>health</code> và <code>prometheus</code></td></tr>
+        <tr><td><strong>Common tags</strong></td><td>Gắn nhãn <code>application="order-service"</code> vào <strong>mọi</strong> metric</td></tr>
+        <tr><td><strong>Phân biệt service</strong></td><td>Lọc được dữ liệu giữa các microservice trên Grafana hoặc Prometheus</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pair" style="margin-top:20px">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Đóng dấu tên khoa lên mọi phiếu</h3>
+      <p>Năm phòng khám cùng gửi phiếu xét nghiệm về một nơi. Không có tên khoa trên phiếu thì không ai biết của ai.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Khai một lần, có tác dụng với tất cả</h3>
+      <p>Khi 5 service cùng báo <code>jvm_memory_used_bytes</code>, nhãn <code>application</code> cho biết của ai —
+      mà không phải sửa từng chỗ đo trong code.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s25">
+  <div class="shead"><span class="snum">2.5</span><h2>Cảnh báo bảo mật Spring Boot Actuator</h2></div>
+  <p class="intro">Actuator rất tiện, và chính vì tiện nên nguy hiểm khi mở quá tay.
+  Đây là phần dễ bị bỏ qua nhất nhưng lại là phần gây hậu quả nặng nhất.</p>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Không nên</th><th>Nên làm trên production</th></tr></thead>
+      <tbody>
+        <tr><td><span class="no">✕</span> <code>include: "*"</code> mở toàn bộ endpoint</td><td><span class="yes">✓</span> Chỉ mở tối thiểu <code>health</code> và <code>prometheus</code></td></tr>
+        <tr><td><span class="no">✕</span> Mở cổng metrics ra Internet công cộng</td><td><span class="yes">✓</span> Chỉ cho Prometheus trong cùng Docker network truy cập</td></tr>
+        <tr><td><span class="no">✕</span> Làm lộ thông tin JVM, biến môi trường</td><td><span class="yes">✓</span> Giới hạn thông tin, chỉ đủ phục vụ vận hành</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:26px"><code>include: "*"</code> nguy hiểm ở mức nào</h3>
+  <div class="tbox" style="margin-top:12px">
+    <table>
+      <thead><tr><th>Endpoint</th><th>Tiết lộ gì</th></tr></thead>
+      <tbody>
+        <tr><td><code>/actuator/env</code></td><td><strong>Toàn bộ biến môi trường</strong> — có thể gồm mật khẩu database</td></tr>
+        <tr><td><code>/actuator/configprops</code></td><td>Mọi thuộc tính cấu hình</td></tr>
+        <tr><td><code>/actuator/beans</code></td><td>Cấu trúc nội bộ của ứng dụng</td></tr>
+        <tr><td><code>/actuator/heapdump</code></td><td><strong>Tải về ảnh chụp bộ nhớ</strong> — có thể chứa dữ liệu người dùng</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>Không dùng Nginx để proxy cổng metrics ra bên ngoài.</strong>
+  Session 11 dạy đưa dịch vụ ra Internet qua Nginx — nhưng metrics là <strong>ngoại lệ</strong>.
+  Chúng tiết lộ cấu trúc bên trong hệ thống và chỉ dành cho nội bộ. Nguyên tắc vẫn là đặc quyền tối thiểu,
+  giống <code>ports</code> ở Session 10 và tường lửa ở Session 11.</div>
+</section>
+
+<section id="s26">
+  <div class="shead"><span class="snum">2.6</span><h2>Kiểm tra endpoint metrics tại local</h2></div>
+  <p class="intro">Trước khi dựng Prometheus, phải chắc chắn service đã nói được đã. Gọi thẳng vào endpoint và đọc kết quả.</p>
+
+  <pre>http://localhost:8083/actuator/prometheus</pre>
+  <p class="hint" style="margin-bottom:14px">Kết quả là <strong>text thuần</strong>, không phải JSON:</p>
+  <pre class="out"># HELP jvm_memory_used_bytes The amount of used memory
+# TYPE jvm_memory_used_bytes gauge
+jvm_memory_used_bytes{application="order-service", area="heap"} 4.194304E7</pre>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Dòng</th><th>Vai trò</th></tr></thead>
+      <tbody>
+        <tr><td><code># HELP</code></td><td>Mô tả metric dùng để làm gì</td></tr>
+        <tr><td><code># TYPE</code></td><td>Loại metric — <code>counter</code>, <code>gauge</code>, <code>histogram</code>, <code>summary</code></td></tr>
+        <tr><td>Dòng dữ liệu</td><td>Tên + labels + giá trị</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chot">Dòng <span class="k"># TYPE</span> cho bạn biết ngay đó là loại metric nào — không cần đoán qua tên.
+  Đây là cách nhanh nhất để kiểm chứng những gì Lesson 01 đã học.</div>
+
+  <div class="note"><strong>Nếu endpoint trả 404:</strong> kiểm tra đã thêm đủ <strong>hai</strong> dependencies Actuator và Micrometer chưa,
+  rồi xác nhận <code>exposure.include</code> trong <code>application.yml</code> đã có <code>prometheus</code>.</div>
+</section>
+
+<!-- ======================= LESSON 03 ======================= -->
+<div class="lesson" id="l3">
+  <div class="lnum">Lesson 03</div>
+  <h2>Triển khai Prometheus bằng Docker Compose</h2>
+</div>
+
+<section id="s31">
+  <div class="shead"><span class="snum">3.1</span><h2>Cấu hình chu kỳ và target trong prometheus.yml</h2></div>
+  <p class="intro">Service đã nói được. Giờ phải cho Prometheus biết nói chuyện với ai, bao lâu một lần, và gõ cửa ở đường dẫn nào.</p>
+
+  <pre>global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: quickbite-backend
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+          - user-service:8081
+          - order-service:8083</pre>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Cấu hình</th><th>Ý nghĩa</th><th>Ví dụ ngoài đời</th></tr></thead>
+      <tbody>
+        <tr><td><code>scrape_interval</code></td><td>Chu kỳ Prometheus kéo metrics</td><td>Bao lâu điểm danh một lần</td></tr>
+        <tr><td><code>job_name</code></td><td>Tên nhóm target</td><td>Tên lớp</td></tr>
+        <tr><td><code>metrics_path</code></td><td>Đường dẫn endpoint metrics</td><td>Gõ cửa phòng nào</td></tr>
+        <tr><td><code>targets</code></td><td>Danh sách service và cổng</td><td>Danh sách tên trong sổ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong><code>metrics_path</code> khác nhau giữa hai loại target.</strong>
+  Spring Boot dùng <code>/actuator/prometheus</code>, còn Node Exporter dùng <code>/metrics</code>.
+  Vì vậy chúng phải nằm ở <strong>hai job riêng</strong>, không gộp chung được.</div>
+</section>
+
+<section id="s32">
+  <div class="shead"><span class="snum">3.2</span><h2>Dùng DNS nội bộ của Docker</h2></div>
+  <p class="intro">Trong file trên, <code>user-service:8081</code> là tên chứ không phải địa chỉ IP. Đó là chủ ý.</p>
+
+  <div class="pair">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Gọi theo tên, không theo chỗ ngồi</h3>
+      <p>Gọi "bạn lớp trưởng" thì dù bạn ấy đổi chỗ ngồi bao nhiêu lần vẫn gọi đúng người.
+      Gọi "bạn ngồi bàn ba dãy giữa" thì hôm sau xếp lại bàn là sai.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>IP container đổi sau mỗi lần recreate</h3>
+      <p>Dùng service name thì không phụ thuộc IP động. Điều kiện: Prometheus và backend phải cùng một Docker network.</p>
+    </div>
+  </div>
+
+  <div class="chot">Đây đúng là cơ chế API Gateway đã dùng từ Session 05 — gateway gọi
+  <code>http://user-service:8081</code> chứ không gọi IP. <span class="k">Một ý tưởng, hai chỗ dùng.</span></div>
+</section>
+
+<section id="s33">
+  <div class="shead"><span class="snum">3.3</span><h2>Prometheus lưu lịch sử bằng volume</h2></div>
+  <p class="intro">Prometheus ghi dữ liệu vào thư mục <code>/prometheus</code> bên trong container.
+  Nếu không làm gì thêm, xoá container là mất sạch lịch sử — đúng lúc bạn cần nó nhất.</p>
+
+  <pre>prometheus:
+  image: prom/prometheus:v2.45.0
+  container_name: quickbite-prometheus
+  volumes:
+    - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    - prometheus-data:/prometheus
+  networks:
+    - quickbite5-net
+
+volumes:
+  prometheus-data:</pre>
+
+  <div class="pair" style="margin-top:20px">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Để sổ trong tủ, không nhét túi áo</h3>
+      <p>Túi áo thì giặt áo là mất. Tủ thì thay áo bao nhiêu lần quyển sổ vẫn còn.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Named volume nằm ngoài container</h3>
+      <p><code>prometheus-data</code> giữ TSDB khi container bị ngắt, xoá hoặc tái tạo.
+      Còn <code>prometheus.yml</code> thì mount từ máy bạn vào, sửa ở ngoài là xong.</p>
+    </div>
+  </div>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Lệnh</th><th>Dữ liệu lịch sử</th></tr></thead>
+      <tbody>
+        <tr><td><code>docker compose rm -sf</code></td><td><span class="yes">✓ Còn</span></td></tr>
+        <tr><td><code>docker compose down</code></td><td><span class="yes">✓ Còn</span></td></tr>
+        <tr><td><code>docker compose down -v</code></td><td><span class="no">✕ Mất hết</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note"><strong>Cờ <code>-v</code> xoá luôn volume.</strong> Chạy nhầm trên máy chủ production là mất sạch lịch sử giám sát —
+  thứ bạn cần nhất khi đang điều tra sự cố.</div>
+
+  <div class="note"><strong>Giao diện web của Prometheus không có đăng nhập.</strong>
+  Publish cổng <code>9090</code> ra Internet là cho bất kỳ ai xem toàn bộ metrics hệ thống.
+  Vì vậy trong <code>docker-compose.yml</code> của bài này <strong>không khai báo <code>ports</code></strong> cho cả Prometheus lẫn Node Exporter.</div>
+</section>
+
+<section id="s34">
+  <div class="shead"><span class="snum">3.4</span><h2>Khởi chạy và kiểm tra targets</h2></div>
+  <p class="intro">Dựng xong thì phải kiểm chứng. Ba thứ cần nhìn: container có chạy không, target có đủ không, và health của chúng ra sao.</p>
+
+  <pre>docker compose up -d
+docker compose ps
+docker exec quickbite-prometheus wget -qO- http://localhost:9090/api/v1/targets</pre>
+
+  <div class="chot">Khi target DOWN, đừng đoán theo bốn bước. <span class="k">Đọc thẳng trường <code>lastError</code></span> trong JSON —
+  nó nói luôn vì sao scrape thất bại.</div>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th><code>lastError</code></th><th>Nghĩa</th><th>Sửa ở đâu</th></tr></thead>
+      <tbody>
+        <tr><td><code>404</code></td><td>Gọi tới được nhưng <strong>endpoint không tồn tại</strong></td><td>Thiếu Micrometer — xem 2.3</td></tr>
+        <tr><td><code>connection refused</code></td><td>Service chưa chạy hoặc sai cổng</td><td>Kiểm tra container và port</td></tr>
+        <tr><td><code>no such host</code></td><td>Sai tên service hoặc <strong>khác mạng</strong></td><td>Kiểm tra network — xem 3.2</td></tr>
+        <tr><td><code>context deadline exceeded</code></td><td>Service quá chậm</td><td><code>docker compose logs</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pair" style="margin-top:20px">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Lý do vắng quan trọng hơn chữ "vắng"</h3>
+      <p>"Vắng" chỉ nói có chuyện. "Vắng vì ốm" nói luôn phải làm gì tiếp.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Metric <code>up</code> từ đâu ra</h3>
+      <p><code>up</code> <strong>không</strong> do service gửi lên — nó do <strong>chính Prometheus sinh ra</strong> sau mỗi lần scrape.
+      <code>up=1</code> là lần gần nhất thành công, <code>up=0</code> là thất bại.</p>
+      <p>Đây chính là lợi thế của pull ở Lesson 01, giờ thành một con số tra cứu được.</p>
+    </div>
+  </div>
+
+  <div class="note"><strong>Sửa xong mà <code>up</code> vẫn bằng 0?</strong> Thường chỉ là chưa tới chu kỳ scrape tiếp theo — đợi đủ 15 giây.
+  Còn nếu thấy <code>health: unknown</code> thì Prometheus vừa khởi động, chưa scrape lần nào; đợi khoảng 20 giây.</div>
+</section>
+
+<!-- ======================= LESSON 04 ======================= -->
+<div class="lesson" id="l4">
+  <div class="lnum">Lesson 04</div>
+  <h2>Node Exporter giám sát tài nguyên VPS</h2>
+</div>
+
+<section id="s41">
+  <div class="shead"><span class="snum">4.1</span><h2>Node Exporter giám sát cấp hệ điều hành</h2></div>
+  <p class="intro">Actuator cho bạn biết bên trong ứng dụng. Nhưng ứng dụng chạy trên một máy chủ, và máy chủ cũng có thể là thủ phạm.
+  Đi khám thì phải vừa cân đo vừa xét nghiệm máu.</p>
+
+  <div class="pair">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Cân, đo, huyết áp</h3>
+      <p>Nhìn thấy ngay, đo nhanh, nhưng chỉ nói về cái vỏ bên ngoài.</p>
+      <h3 style="margin-top:6px">Xét nghiệm máu</h3>
+      <p>Phải gửi mẫu đi, nhưng nói được chuyện đang xảy ra bên trong.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Node Exporter</h3>
+      <p>CPU, RAM vật lý, Disk I/O, Network của <strong>host</strong>. Cổng 9100, endpoint <code>/metrics</code>, chạy như container riêng.</p>
+      <h3 style="margin-top:6px">Spring Boot Actuator</h3>
+      <p>Heap, GC, threads, HTTP requests của <strong>JVM</strong>. Nhúng trong từng microservice.</p>
+    </div>
+  </div>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>RAM máy chủ</th><th>JVM heap</th><th>Kết luận</th></tr></thead>
+      <tbody>
+        <tr><td>Còn nhiều</td><td>Gần đầy</td><td>Lỗi ở <strong>ứng dụng</strong> — rò rỉ bộ nhớ hoặc heap cấp quá nhỏ</td></tr>
+        <tr><td>Cạn kiệt</td><td>Bình thường</td><td>Lỗi ở <strong>hạ tầng</strong> — container khác đang ngốn RAM</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chot">CPU 8%, RAM còn trống nhiều, nhưng 100% request trả lỗi 500.
+  <span class="k">Máy rất khỏe, ứng dụng đang chết.</span> Chỉ xem một tầng thì kết luận ngược hoàn toàn.</div>
+</section>
+
+<section id="s42">
+  <div class="shead"><span class="snum">4.2</span><h2>Mount tài nguyên host ở chế độ Read-Only</h2></div>
+  <p class="intro">Node Exporter chạy trong container, mà container thì bị cô lập — nó chỉ thấy tài nguyên của chính nó.
+  Muốn đọc được của máy chủ thì phải mount vào.</p>
+
+  <pre>node-exporter:
+  image: prom/node-exporter:v1.6.0
+  volumes:
+    - /proc:/host/proc:ro
+    - /sys:/host/sys:ro
+    - /:/rootfs:ro
+  command:
+    - --path.procfs=/host/proc
+    - --path.sysfs=/host/sys
+    - --path.rootfs=/rootfs
+  networks:
+    - quickbite5-net</pre>
+
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Mount</th><th>Dữ liệu chính</th></tr></thead>
+      <tbody>
+        <tr><td><code>/proc</code></td><td>Tiến trình, RAM và CPU</td></tr>
+        <tr><td><code>/sys</code></td><td>Thiết bị và thông tin kernel</td></tr>
+        <tr><td><code>/</code></td><td>Dung lượng filesystem của host</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pair" style="margin-top:20px">
+    <div class="pane">
+      <span class="tag">Ngoài đời</span>
+      <h3>Cho xem sổ, không cho cầm bút</h3>
+      <p>Kiểm toán viên được đọc toàn bộ sổ sách, nhưng không được sửa một dòng nào. Quyền đọc và quyền ghi là hai thứ tách rời.</p>
+    </div>
+    <div class="pane sys">
+      <span class="tag">Trong hệ thống</span>
+      <h3>Cờ <code>:ro</code></h3>
+      <p>Bảo đảm Node Exporter <strong>chỉ đọc</strong> dữ liệu host, ngăn mọi nguy cơ ghi đè hoặc can thiệp vào hệ điều hành.
+      Các cờ <code>--path.*</code> báo cho nó biết các thư mục đó nằm ở đâu bên trong container.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s43">
+  <div class="shead"><span class="snum">4.3</span><h2>Thêm Node Exporter vào Prometheus</h2></div>
+  <p class="intro">Job thứ hai, với <code>metrics_path</code> riêng vì Node Exporter không dùng đường dẫn của Actuator.</p>
+
+  <pre>- job_name: vps-hardware
+  metrics_path: /metrics
+  static_configs:
+    - targets:
+        - node-exporter:9100</pre>
+
+  <pre style="margin-top:12px">docker compose up -d node-exporter
+docker compose restart prometheus</pre>
+
+  <div class="note"><strong>Phải <code>restart prometheus</code> sau khi sửa <code>prometheus.yml</code>.</strong>
+  Prometheus <strong>chỉ đọc file cấu hình lúc khởi động</strong> — khác Nginx có <code>reload</code>.
+  Sửa file xong mà không restart thì nó vẫn chạy cấu hình cũ, và bạn sẽ ngồi tìm lỗi ở nhầm chỗ.</div>
+
+  <div class="chot">Không cần mở cổng 9100 ra host. Prometheus truy cập Node Exporter trực tiếp qua mạng nội bộ,
+  <span class="k">đúng nguyên tắc <code>ports</code> của Session 10.</span></div>
+</section>
+
+<!-- ======================= CAI DAT ======================= -->
+<div class="lesson" id="caidat">
+  <div class="lnum">Thực hành</div>
+  <h2>Cài đặt và kiểm tra từng bước</h2>
+</div>
+
+<section>
+  <p class="intro">Tám bước, theo đúng thứ tự. Mỗi bước có lệnh để chạy và <strong>kết quả phải thấy</strong> —
+  các kết quả dưới đây là output thật lấy từ máy đã chạy bài này, không phải ví dụ dựng sẵn.</p>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div class="step-c">
+      <h3>Bật Session 05 trước</h3>
+      <p>Prometheus cần có service để kéo metrics, và cần mạng <code>quickbite5-net</code> do Session 05 tạo ra. Không có mạng thì stack không lên được.</p>
+      <pre>cd session-05 && ./start-all.sh</pre>
+      <div class="expect"><div class="eh">Phải thấy</div><pre>docker ps liệt kê các container quickbite5-*
+docker network ls có dòng quickbite5-net</pre></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div class="step-c">
+      <h3>Tạo cấu trúc thư mục</h3>
+      <p>Hai file cấu hình, một thư mục con cho <code>prometheus.yml</code>.</p>
+      <pre>LAB_SS13/monitoring/
+├── docker-compose.yml
+└── prometheus/
+    └── prometheus.yml</pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">3</div>
+    <div class="step-c">
+      <h3>Viết <code>prometheus.yml</code> với hai job</h3>
+      <p>Hai job riêng vì hai loại target có <code>metrics_path</code> khác nhau — đúng như mục 3.1.</p>
+      <pre>global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: quickbite-backend
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+          - user-service:8081
+          - order-service:8083
+
+  - job_name: vps-hardware
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - node-exporter:9100</pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">4</div>
+    <div class="step-c">
+      <h3>Viết <code>docker-compose.yml</code> — không khai báo <code>ports</code></h3>
+      <p>Mạng khai <code>external: true</code> vì nó đã tồn tại từ Session 05, không tạo mới.</p>
+      <pre>services:
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: quickbite-prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks: [quickbite5-net]
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:v1.6.0
+    container_name: quickbite-node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/rootfs
+    networks: [quickbite5-net]
+    restart: unless-stopped
+
+volumes:
+  prometheus-data:
+
+networks:
+  quickbite5-net:
+    external: true</pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">5</div>
+    <div class="step-c">
+      <h3>Khởi chạy và đợi một chu kỳ scrape</h3>
+      <p>Đợi đủ 15 giây rồi mới kiểm tra, nếu không mọi target còn ở <code>unknown</code>.</p>
+      <pre>cd LAB_SS13/monitoring
+docker compose up -d
+sleep 20
+docker exec quickbite-prometheus wget -qO- http://localhost:9090/-/healthy</pre>
+      <div class="expect"><div class="eh">Phải thấy — output thật</div><pre class="out"><b>Prometheus Server is Healthy.</b></pre></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">6</div>
+    <div class="step-c">
+      <h3>Kiểm tra không có cổng nào mở ra ngoài</h3>
+      <p>Đây là yêu cầu bảo mật của mục 3.3, và nó kiểm tra được bằng một lệnh.</p>
+      <pre>docker inspect quickbite-prometheus --format '{{.HostConfig.PortBindings}}'</pre>
+      <div class="expect"><div class="eh">Phải thấy — output thật</div><pre class="out"><b>map[]</b>
+
+Ngoặc rỗng nghĩa là không ánh xạ cổng nào ra host. Nếu thấy
+map[9090/tcp:[...]] thì bạn còn khai ports trong compose.</pre></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">7</div>
+    <div class="step-c">
+      <h3>Xem trạng thái từng target</h3>
+      <p>Đây là lúc bạn gặp 404 nếu chưa làm Lesson 02. <strong>Đó là điều đúng ở bước này</strong> — nó chứng minh cho mục 2.2.</p>
+      <pre>docker exec quickbite-prometheus wget -qO- \
+  "http://localhost:9090/api/v1/query?query=up"</pre>
+      <div class="expect"><div class="eh">Khi chưa thêm Micrometer — output thật</div><pre class="out">vps-hardware        node-exporter:9100      up=<span class="g">1</span>
+quickbite-backend   order-service:8083      up=<span class="r">0</span>
+quickbite-backend   user-service:8081       up=<span class="r">0</span></pre></div>
+      <p>Hỏi tiếp <code>lastError</code> để biết vì sao:</p>
+      <pre>docker exec quickbite-prometheus wget -qO- \
+  "http://localhost:9090/api/v1/targets"</pre>
+      <div class="expect"><div class="eh">Lý do — output thật</div><pre class="out">http://user-service:8081/actuator/prometheus
+   -> <span class="r">server returned HTTP status 404</span>
+http://order-service:8083/actuator/prometheus
+   -> <span class="r">server returned HTTP status 404</span></pre></div>
+      <p>Node Exporter đã <code>up=1</code> ngay từ đầu vì nó không cần cài gì thêm — nó vốn đã nói đúng thứ tiếng đó.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">8</div>
+    <div class="step-c">
+      <h3>Thêm Micrometer rồi build lại để chữa 404</h3>
+      <p>Sửa <code>build.gradle</code> và <code>application.yml</code> theo mục 2.3 và 2.4, build lại service, đợi một chu kỳ scrape.</p>
+      <pre>./gradlew build
+docker compose up -d --build order-service user-service
+sleep 20</pre>
+      <div class="expect"><div class="eh">Phải thấy</div><pre class="out">cả ba target chuyển sang up=<span class="g">1</span>
+lastError trống</pre></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:34px">Kiểm chứng đã lấy được dữ liệu máy chủ</h3>
+  <p class="intro" style="margin:10px 0 14px">Node Exporter trả về text thuần giống hệt Actuator — cùng một định dạng, khác nguồn dữ liệu.</p>
+  <pre>docker exec quickbite-prometheus wget -qO- http://node-exporter:9100/metrics | head -3</pre>
+  <div class="expect"><div class="eh">Output thật</div><pre class="out"># HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
+# TYPE go_gc_duration_seconds <b>summary</b>
+go_gc_duration_seconds{quantile="0"} 4.5125e-05</pre></div>
+  <p class="hint">Chú ý dòng <code># TYPE ... summary</code> và nhãn <code>quantile="0"</code> — đây là một
+  <strong>Summary thật</strong> đang chạy, đúng loại metric đã học ở mục 1.4. Phân vị được tính sẵn tại nguồn.</p>
+
+  <pre style="margin-top:18px">docker exec quickbite-prometheus wget -qO- \
+  "http://localhost:9090/api/v1/query?query=node_memory_MemTotal_bytes"</pre>
+  <div class="expect"><div class="eh">Output thật trên máy đã chạy bài này</div><pre class="out">RAM máy chủ: <b>7934 MB</b></pre></div>
+
+  <div class="note"><strong>Dọn dẹp khi học xong.</strong> <code>docker compose down</code> giữ lại lịch sử metrics;
+  thêm cờ <code>-v</code> mới xoá volume. Muốn giữ dữ liệu cho buổi sau thì đừng dùng <code>-v</code>.</div>
+</section>
+
+<!-- ======================= TRA NHANH ======================= -->
+<div class="lesson" id="tra">
+  <div class="lnum">Tổng kết</div>
+  <h2>Bảng đối chiếu và tra nhanh</h2>
+</div>
+
+<section>
+  <h3>Từ chuyện đời sống về lại câu lệnh</h3>
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Ngoài đời</th><th>Trong hệ thống</th><th>Chỗ gặp lại</th></tr></thead>
+      <tbody>
+        <tr><td>Xe kêu lạ mà không có đồng hồ</td><td>Production là hộp đen</td><td>1.1</td></tr>
+        <tr><td>Phiếu khám có tên, ngày, chỉ số</td><td>Metric = tên + labels + giá trị + timestamp</td><td>1.2</td></tr>
+        <tr><td>Thêm cột mã sinh viên vào sổ</td><td>Cardinality explosion</td><td>1.2</td></tr>
+        <tr><td>Công-tơ-mét xe</td><td>Counter — chỉ tăng</td><td>1.3</td></tr>
+        <tr><td>Kim xăng</td><td>Gauge — lên xuống</td><td>1.3</td></tr>
+        <tr><td>Thay đồng hồ mới về 0</td><td>Counter reset → dùng <code>rate()</code></td><td>1.3</td></tr>
+        <tr><td>Bảng đếm điểm theo khoảng</td><td>Histogram — <code>_bucket</code></td><td>1.4</td></tr>
+        <tr><td>Nhà trường tính sẵn top 5%</td><td>Summary — <code>quantile</code></td><td>1.4</td></tr>
+        <tr><td>Giáo viên gọi tên điểm danh</td><td>Pull mỗi 15 giây</td><td>1.5</td></tr>
+        <tr><td>Ghi lý do vắng vào sổ</td><td><code>lastError</code></td><td>3.4</td></tr>
+        <tr><td>Quyển sổ của thợ đọc công-tơ</td><td>TSDB</td><td>1.6</td></tr>
+        <tr><td>Có quầy nhưng chưa có phiên dịch</td><td>Actuator không có Micrometer → 404</td><td>2.2</td></tr>
+        <tr><td>Đóng dấu tên khoa lên phiếu</td><td>Common tag <code>application</code></td><td>2.4</td></tr>
+        <tr><td>Gọi theo tên, không theo chỗ ngồi</td><td>DNS nội bộ Docker</td><td>3.2</td></tr>
+        <tr><td>Để sổ trong tủ</td><td>Named volume <code>prometheus-data</code></td><td>3.3</td></tr>
+        <tr><td>Cho xem sổ, không cho cầm bút</td><td>Mount <code>:ro</code></td><td>4.2</td></tr>
+        <tr><td>Cân đo + xét nghiệm máu</td><td>Hai tầng giám sát</td><td>4.1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:32px">Lệnh hay dùng</h3>
+  <div class="tbox">
+    <table>
+      <thead><tr><th>Việc</th><th>Lệnh</th></tr></thead>
+      <tbody>
+        <tr><td>Xem metrics thô của service</td><td><code>wget -qO- http://localhost:8083/actuator/prometheus</code></td></tr>
+        <tr><td>Khởi chạy Prometheus</td><td><code>docker compose up -d prometheus</code></td></tr>
+        <tr><td>Nạp lại cấu hình</td><td><code>docker compose restart prometheus</code></td></tr>
+        <tr><td>Xem danh sách targets</td><td><code>wget -qO- http://localhost:9090/api/v1/targets</code></td></tr>
+        <tr><td>Truy vấn một metric</td><td><code>wget -qO- "http://localhost:9090/api/v1/query?query=up"</code></td></tr>
+        <tr><td>Liệt kê mọi tên metric</td><td><code>wget -qO- "http://localhost:9090/api/v1/label/__name__/values"</code></td></tr>
+        <tr><td>Xem log</td><td><code>docker compose logs --tail=30 prometheus</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:32px">Ba điều nếu chỉ nhớ được ba điều</h3>
+  <div class="pair" style="grid-template-columns:1fr">
+    <div class="pane sys">
+      <ul>
+        <li><strong>Actuator tạo endpoint, Micrometer dịch định dạng.</strong> Thiếu một trong hai là 404.</li>
+        <li><strong>Metrics chỉ dành cho nội bộ.</strong> Không publish cổng, không proxy qua Nginx.</li>
+        <li><strong>Hai tầng giám sát trả lời hai câu khác nhau.</strong> Phải có cả hai mới khoanh được nguyên nhân.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>Session 13 — Giám sát hệ thống với Prometheus. Dùng kèm bảng lệnh thực hành và tài liệu tự học của buổi.
+Các output trong phần cài đặt được lấy từ máy đã chạy thật bài này.</footer>
+</div>
+
+<script>
+/* ---------- 1.5 diem danh: pull vs push ---------- */
+(function(){
+  var dead=false;
+  var svc=[
+    {n:'order-service'},
+    {n:'user-service'},
+    {n:'node-exporter'}
+  ];
+  var pull=document.getElementById('roll-pull'),
+      push=document.getElementById('roll-push'),
+      hint=document.getElementById('hint-1'),
+      bOk=document.getElementById('b-ok'), bDead=document.getElementById('b-dead');
+
+  function draw(){
+    pull.innerHTML=''; push.innerHTML='';
+    svc.forEach(function(s){
+      var down = dead && s.n==='user-service';
+      var r=document.createElement('div'); r.className='row';
+      r.innerHTML='<span class="nm">'+s.n+'</span><span class="pill '+(down?'down':'up')+'">up '+(down?'0':'1')+'</span>';
+      pull.appendChild(r);
+      if(down){
+        var e=document.createElement('div'); e.className='err';
+        e.textContent='lastError: connection refused';
+        pull.appendChild(e);
+      }
+      var r2=document.createElement('div'); r2.className='row';
+      r2.innerHTML='<span class="nm">'+s.n+'</span><span class="pill '+(down?'q':'up')+'">'+(down?'—':'14:21:08')+'</span>';
+      push.appendChild(r2);
+    });
+    if(dead){
+      var s=document.createElement('div'); s.className='silent';
+      s.textContent='Không có tin nhắn nào từ user-service. Nhưng là nó chết, mạng nghẽn, hay nó vẫn sống mà quên gửi?';
+      push.appendChild(s);
+      hint.innerHTML='Bên trái: Prometheus gọi không được nên ghi thẳng <code>up 0</code> kèm lý do — đọc một dòng là biết phải sửa gì. Bên phải chỉ có khoảng trống.';
+    }else{
+      hint.innerHTML='Cả ba đang trả lời bình thường. Bấm nút bên trên để tắt <code>user-service</code> và so sánh hai bên.';
+    }
+    bOk.setAttribute('aria-pressed',String(!dead));
+    bDead.setAttribute('aria-pressed',String(dead));
+  }
+  bOk.onclick=function(){dead=false;draw()};
+  bDead.onclick=function(){dead=true;draw()};
+  draw();
+})();
+
+/* ---------- 1.3 dong ho xe: counter vs gauge ---------- */
+(function(){
+  var km=12480, fuel=72;
+  var odo=document.getElementById('odo'), needle=document.getElementById('needle'),
+      arc=document.getElementById('arc-f'), hint=document.getElementById('hint-2');
+  var ARC=226;
+
+  function draw(){
+    var s=String(km).padStart(6,'0');
+    odo.innerHTML=s.split('').map(function(d){return '<span>'+d+'</span>'}).join('');
+    needle.style.transform='rotate('+(-90+fuel*1.8)+'deg)';
+    arc.setAttribute('stroke-dashoffset',String(ARC-ARC*fuel/100));
+    arc.setAttribute('stroke',fuel<20?'var(--needle)':'var(--ok)');
+  }
+  document.getElementById('b-run').onclick=function(){
+    km+=10; fuel=Math.max(0,fuel-7);
+    hint.innerHTML= fuel===0
+      ? 'Hết xăng: kim về E, nhưng công-tơ-mét vẫn giữ nguyên <strong>'+km+' km</strong>. Counter không bao giờ lùi.'
+      : 'Chạy thêm 10 km: công-tơ-mét tăng, kim xăng tụt. Hai chiều ngược nhau trên cùng một mặt đồng hồ.';
+    draw();
+  };
+  document.getElementById('b-fuel').onclick=function(){
+    fuel=100;
+    hint.innerHTML='Đổ xăng: kim vọt lên F, còn công-tơ-mét không giảm một mét nào. Đó là chỗ khác nhau giữa <strong>Gauge</strong> và <strong>Counter</strong>.';
+    draw();
+  };
+  document.getElementById('b-reset').onclick=function(){
+    km=0;
+    hint.innerHTML='Đồng hồ mới: về <strong>000000</strong>. Container restart làm đúng việc này với Counter — nên đừng đọc số thô, hãy hỏi <code>rate()</code> xem nó tăng bao nhiêu mỗi giây.';
+    draw();
+  };
+  draw();
+})();
+
+/* ---------- 1.4 trung binh vs percentile ---------- */
+(function(){
+  var FAST=0.9, SLOW=9, N=100;
+  var sl=document.getElementById('sl-slow'), out=document.getElementById('out-slow'),
+      strip=document.getElementById('strip'), hint=document.getElementById('hint-3');
+  var vM=document.getElementById('v-mean'), vP95=document.getElementById('v-p95'), vP99=document.getElementById('v-p99');
+  var sM=document.getElementById('s-mean'), sP95=document.getElementById('s-p95'), sP99=document.getElementById('s-p99');
+
+  for(var i=0;i<N;i++){ strip.appendChild(document.createElement('i')); }
+  var cells=strip.querySelectorAll('i');
+
+  function fmt(v){ return v.toFixed(2).replace('.',',')+'s'; }
+  function pct(n,p){ return (N-n) > p ? FAST : SLOW; }
+  function mark(el,v,st){
+    el.v.textContent=fmt(v);
+    el.v.classList.toggle('bad', v>=2);
+    el.s.textContent=st;
+  }
+
+  function draw(){
+    var n=+sl.value;
+    out.textContent=n+' / 100';
+    for(var i=0;i<N;i++){ cells[i].classList.toggle('slow', i>=N-n); }
+
+    var mean=(n*SLOW+(N-n)*FAST)/N;
+    var p95=pct(n,94), p99=pct(n,98);
+
+    mark({v:vM,s:sM}, mean, mean>=2?'Đã bị kéo lên':'Vẫn nhìn như bình thường');
+    mark({v:vP95,s:sP95}, p95, p95===SLOW?'Báo động':'Chưa chạm tới');
+    mark({v:vP99,s:sP99}, p99, p99===SLOW?'Báo động':'Chưa chạm tới');
+
+    if(n===0){
+      hint.innerHTML='Cả 100 khách đều chờ 0,9 giây. Ba con số bằng nhau — lúc hệ thống khỏe thì chọn chỉ số nào cũng như nhau.';
+    }else if(n<2){
+      hint.innerHTML='<strong>'+n+' khách</strong> chờ 9 giây. Trung bình nhúc nhích lên '+fmt(mean)+' — không ai để ý. Chưa chỉ số nào báo động.';
+    }else if(n<6){
+      hint.innerHTML='<strong>p99 đã báo động</strong> ở '+n+' khách, trong khi trung bình mới '+fmt(mean)+' — nghe vẫn rất ổn. Nếu chỉ xem trung bình, '+n+' khách này hoàn toàn vô hình.';
+    }else{
+      hint.innerHTML='<strong>Cả p95 và p99 đều báo động.</strong> Trung bình vẫn chỉ '+fmt(mean)+'. Nó mô tả một vị khách không hề tồn tại: không ai chờ '+fmt(mean)+' cả — người thì 0,9 giây, người thì 9 giây.';
+    }
+  }
+  sl.addEventListener('input',draw);
+  draw();
+})();
+</script>
+</body></html>

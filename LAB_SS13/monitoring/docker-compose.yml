@@ -1,0 +1,37 @@
+services:
+
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: quickbite-prometheus
+    platform: linux/amd64
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus          # giu lich su metrics khi container bi xoa
+    # KHONG khai bao "ports": Prometheus chi truy cap duoc trong mang noi bo
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:v1.6.0
+    container_name: quickbite-node-exporter
+    platform: linux/amd64
+    volumes:
+      - /proc:/host/proc:ro                  # :ro = chi doc, khong ghi duoc vao host
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/rootfs
+    # KHONG khai bao "ports": chi Prometheus trong mang noi bo goi toi
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+volumes:
+  prometheus-data:
+
+networks:
+  quickbite5-net:
+    external: true        # mang do Session 05 tao ra

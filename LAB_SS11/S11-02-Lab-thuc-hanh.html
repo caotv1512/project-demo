@@ -305,7 +305,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#bai-2-cau-hinh-nginx">BÀI 2 — CẤU HÌNH NGINX</a><ul>
 <li><a href="#21-xem-nginx-co-san-gi">2.1 · Xem Nginx có sẵn gì</a></li>
 <li><a href="#22-khoi-server-va-location">2.2 · Khối server và location</a></li>
-<li><a href="#thi-nghiem-1-cau-hinh-ung-ma-khong-co-tac-dung">🧪 Thí nghiệm 1 — Cấu hình đúng mà không có tác dụng</a></li>
+<li><a href="#thi-nghiem-1-cau-hinh-ung-ma-van-tra-404">🧪 Thí nghiệm 1 — Cấu hình đúng mà vẫn trả 404</a></li>
 <li><a href="#23-quy-tac-so-khop-location">2.3 · Quy tắc so khớp location</a></li>
 </ul>
 </li>
@@ -702,8 +702,22 @@ goi thang gateway: 200     ← ai trong mạng cũng gọi thẳng được
 </tbody>
 </table>
 <p><strong>Ví dụ</strong> — dán nguyên nội dung ở phần <strong>Cấu trúc file</strong> vào <code>nano</code>, lưu bằng <code>Ctrl+O</code> → <code>Enter</code> → <code>Ctrl+X</code>.</p>
-<h2 id="thi-nghiem-1-cau-hinh-ung-ma-khong-co-tac-dung">🧪 Thí nghiệm 1 — Cấu hình đúng mà không có tác dụng</h2>
-<p><strong>Lệnh</strong></p>
+<h2 id="thi-nghiem-1-cau-hinh-ung-ma-van-tra-404">🧪 Thí nghiệm 1 — Cấu hình đúng mà vẫn trả <code>404</code></h2>
+<p>Đây là cái bẫy <strong>đầu tiên và im lặng nhất</strong> của Nginx trên Ubuntu. Sandbox đã gỡ sẵn nguyên nhân để các bài sau chạy trơn tru, nên ta <strong>tự dựng lại lỗi</strong> để nhìn tận mắt.</p>
+<p><strong>Cấu trúc</strong> — Ubuntu nạp cấu hình từ <strong>hai</strong> thư mục, và chúng tranh nhau</p>
+<div class="highlight"><pre><span></span><code>/etc/nginx/nginx.conf
+  ├── include conf.d/*.conf          ← file của bài học
+  └── include sites-enabled/*        ← site mặc định của Ubuntu
+                                        cả hai cùng: listen 80 + server_name _
+</code></pre></div>
+
+<blockquote>
+<p>📌 <strong>Các lệnh dưới đây gõ BÊN TRONG VPS</strong> — bạn vẫn đang ở trong phiên <code>docker exec -it vps11 bash</code> mở từ mục 2.1. Dấu nhắc phải là <code>root@quickbite-vps:~#</code>.</p>
+</blockquote>
+<p><strong>Lệnh</strong> — bật lại site mặc định của Ubuntu để tạo xung đột</p>
+<div class="highlight"><pre><span></span><code>ln<span class="w"> </span>-sf<span class="w"> </span>/etc/nginx/sites-available/default<span class="w"> </span>/etc/nginx/sites-enabled/default
+</code></pre></div>
+
 <div class="highlight"><pre><span></span><code>nginx<span class="w"> </span>-t
 </code></pre></div>
 
@@ -723,36 +737,67 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 <tbody>
 <tr>
 <td><code>ignored</code></td>
-<td>Nginx <strong>bỏ qua</strong> khối server của bạn</td>
+<td>Nginx <strong>bỏ qua</strong> một trong hai khối server trùng nhau</td>
 </tr>
 <tr>
 <td><code>successful</code></td>
-<td>Chỉ nói <strong>cú pháp</strong> đúng, không nói cấu hình có tác dụng</td>
+<td>Chỉ nói <strong>cú pháp</strong> đúng — <strong>không</strong> nói cấu hình của bạn đang chạy</td>
+</tr>
+<tr>
+<td>Mức <code>[warn]</code></td>
+<td>Chỉ là cảnh báo, nên dòng kết luận vẫn là <code>successful</code> — rất dễ lướt qua</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Lệnh</strong> — tìm thủ phạm và sửa</p>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>/etc/nginx/sites-enabled/
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-nE<span class="w"> </span><span class="s1">'listen|server_name'</span><span class="w"> </span>/etc/nginx/sites-available/default<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-f<span class="w"> </span>/etc/nginx/sites-enabled/default
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code>nginx<span class="w"> </span>-t
-</code></pre></div>
-
+<p><strong>Lệnh</strong> — nạp lại rồi gọi thử</p>
 <div class="highlight"><pre><span></span><code>nginx<span class="w"> </span>-s<span class="w"> </span>reload
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s1">'trang mac dinh: %{http_code}\n'</span><span class="w"> </span>http://localhost/
+<div class="highlight"><pre><span></span><code>sleep<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>--max-time<span class="w"> </span><span class="m">5</span><span class="w"> </span>http://localhost/<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-o<span class="w"> </span><span class="s1">'&lt;title&gt;.*&lt;/title&gt;'</span>
 </code></pre></div>
 
-<p><strong>Ví dụ</strong> — sau khi sửa: không còn dòng <code>conflicting</code>, và <code>curl</code> trả <code>200</code>.</p>
+<p><strong>Ví dụ</strong> — nhận trang của <strong>Ubuntu</strong>, không phải trang của bạn</p>
+<div class="highlight"><pre><span></span><code>&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+</code></pre></div>
+
+<p><strong>Giải thích</strong> — triệu chứng đổi theo cấu hình bạn đang có</p>
+<table>
+<thead>
+<tr>
+<th>Cấu hình của bạn</th>
+<th>Khi bị xung đột, bạn thấy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chỉ có <code>location /</code> (như mục 2.2)</td>
+<td><strong>Trang chào mừng của Ubuntu</strong> — tưởng Nginx chạy đúng</td>
+</tr>
+<tr>
+<td>Có <code>location</code> riêng (như mục 2.3, 3.1)</td>
+<td><strong><code>404 Not Found</code></strong> cho mọi đường dẫn của bạn</td>
+</tr>
+</tbody>
+</table>
 <blockquote class="warn">
-<p>⚠️ <strong><code>nginx -t</code> báo <code>successful</code> ≠ cấu hình của bạn đang chạy.</strong> Luôn đọc cả dòng <code>warn</code>, và luôn kiểm chứng bằng một request thật.</p>
+<p>⚠️ <strong>Trường hợp đầu nguy hiểm hơn</strong> — vì trông như mọi thứ đang chạy tốt. Bạn chỉ phát hiện ra khi gọi tới một đường dẫn cụ thể và nhận <code>404</code>.</p>
+</blockquote>
+<p><strong>Lệnh</strong> — sửa: gỡ site mặc định đi</p>
+<div class="highlight"><pre><span></span><code>rm<span class="w"> </span>-f<span class="w"> </span>/etc/nginx/sites-enabled/default
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nginx<span class="w"> </span>-s<span class="w"> </span>reload
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>sleep<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s1">'trang mac dinh: %{http_code}\n'</span><span class="w"> </span>http://localhost/
+</code></pre></div>
+
+<p><strong>Ví dụ</strong> — không còn dòng <code>conflicting</code>, và <code>curl</code> trả <code>200</code>.</p>
+<blockquote class="warn">
+<p>⚠️ <strong>Trên VPS thật, site mặc định này BẬT SẴN.</strong> Cài <code>nginx</code> bằng <code>apt</code> xong là nó có ngay. Vì vậy <strong>việc đầu tiên cần làm</strong> sau khi tạo file cấu hình của mình là:</p>
+<p><code>sudo rm /etc/nginx/sites-enabled/default</code></p>
+<p>Sandbox đã gỡ sẵn trong <code>Dockerfile</code> để các bài sau không vướng — nhưng ngoài đời bạn phải tự làm.</p>
+<p>💡 <strong>Bài học lớn hơn Nginx:</strong> <code>nginx -t</code> trả về <em>successful</em> <strong>không</strong> có nghĩa là cấu hình của bạn đang có tác dụng. Nó chỉ kiểm tra <strong>cú pháp</strong>. Luôn đọc cả dòng <code>[warn]</code>, và luôn kiểm chứng bằng một request thật.</p>
 </blockquote>
 <h2 id="23-quy-tac-so-khop-location">2.3 · Quy tắc so khớp <code>location</code></h2>
 <p><strong>Cấu trúc</strong></p>
@@ -802,12 +847,46 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>nginx-conf/02-thi-nghiem-location.conf<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>vps11<span class="w"> </span>tee<span class="w"> </span>/etc/nginx/conf.d/quickbite.conf<span class="w"> </span>&gt;/dev/null
 </code></pre></div>
 
+<blockquote class="warn">
+<p>💡 <strong>Lệnh này KHÔNG in ra gì — đó là đúng.</strong> Phần <code>&gt;/dev/null</code> vứt bỏ những gì <code>tee</code> in ra màn hình, vì ta chỉ cần nó <strong>ghi file</strong>. Trong Unix, im lặng thường có nghĩa là thành công.</p>
+<p><strong>Kiểm chứng file đã được ghi:</strong></p>
+<p><code>docker exec vps11 wc -l /etc/nginx/conf.d/quickbite.conf</code></p>
+<p>Phải ra khoảng <strong>25 dòng</strong>. Ra <code>0</code> nghĩa là file rỗng — xem cảnh báo bên dưới.</p>
+<p>⚠️ <strong>Chạy riêng từng nửa của lệnh trên sẽ không ra kết quả như bạn tưởng:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Chạy riêng</th>
+<th>Chuyện gì xảy ra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cat nginx-conf/02-...conf</code></td>
+<td><strong>In file ra màn hình</strong> — vì không còn ống dẫn, stdout là màn hình</td>
+</tr>
+<tr>
+<td><code>docker exec -i vps11 tee ...</code></td>
+<td><strong>Treo terminal</strong> — <code>-i</code> giữ stdin mở, <code>tee</code> ngồi đợi bạn gõ</td>
+</tr>
+</tbody>
+</table>
+<p>Nếu lỡ chạy nửa sau và bấm <code>Ctrl+D</code> để thoát, bạn vừa ghi một <strong>file rỗng</strong> — và nginx sẽ trả <code>404</code> vì không còn khối <code>server</code> nào. Chạy lại <strong>nguyên câu lệnh có dấu <code>|</code></strong> là xong.</p>
+<p><strong>Dấu <code>|</code> làm hai việc:</strong> nối output của <code>cat</code> vào input của <code>tee</code>, <strong>và</strong> báo hết dữ liệu (EOF) khi <code>cat</code> đọc xong — nhờ đó <code>tee</code> biết lúc nào dừng.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vps11<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'nginx -t &amp;&amp; nginx -s reload'</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">10</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>--max-time<span class="w"> </span><span class="m">2</span><span class="w"> </span>http://localhost:8880/chinh-xac<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s1">'chinh xac'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"✅ cau hinh moi da co hieu luc"</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="o">}</span><span class="p">;</span><span class="w"> </span>sleep<span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>u<span class="w"> </span><span class="k">in</span><span class="w"> </span>/chinh-xac<span class="w"> </span>/uu-tien/anh.json<span class="w"> </span>/bat-ky.json<span class="w"> </span>/uu-tien/trang<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s1">'%-22s -&gt; %s'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$u</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span>--max-time<span class="w"> </span><span class="m">5</span><span class="w"> </span>http://localhost:8880<span class="nv">$u</span><span class="k">)</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
 </code></pre></div>
 
+<blockquote class="warn">
+<p>⚠️ <strong>Vì sao phải có vòng lặp chờ ở trên?</strong> <code>nginx -s reload</code> <strong>không có hiệu lực tức thì</strong> — nó để worker cũ xử lý nốt request đang chạy dở rồi mới tắt (xem mục 3.3). Gọi ngay sau khi reload rất dễ trúng worker cũ và nhận <strong><code>404</code></strong>, nhất là ở <strong>lần reload đầu tiên</strong> sau khi container vừa dựng.</p>
+<p>Đây không phải lỗi — đó chính là cơ chế <em>"reload không ngắt dịch vụ"</em> đang hoạt động.</p>
+</blockquote>
 <p><strong>Giải thích</strong> — kết quả phải ra đúng bảng này</p>
 <table>
 <thead>
@@ -883,6 +962,9 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>vps11<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'nginx -t &amp;&amp; nginx -s reload'</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">10</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>curl<span class="w"> </span>-fsS<span class="w"> </span>--max-time<span class="w"> </span><span class="m">3</span><span class="w"> </span>http://localhost:8880/api/v1/users<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"✅ cau hinh moi da co hieu luc"</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="o">}</span><span class="p">;</span><span class="w"> </span>sleep<span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>--max-time<span class="w"> </span><span class="m">10</span><span class="w"> </span>http://localhost:8880/api/v1/users<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">200</span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span>
@@ -1847,8 +1929,33 @@ nginx -T    in TOÀN BỘ cấu hình sau khi gộp mọi include
 <td><code>docker compose logs api-gateway</code></td>
 </tr>
 <tr>
+<td><strong><code>404</code> cho mọi đường dẫn ngay sau khi dựng lại sandbox</strong></td>
+<td><code>./tao-vps.sh</code> tạo container mới nên <strong>site mặc định Ubuntu quay lại</strong> và nuốt hết request</td>
+<td><code>docker exec vps11 rm -f /etc/nginx/sites-enabled/default</code> rồi reload</td>
+</tr>
+<tr>
+<td><strong><code>404</code> ngay sau khi <code>reload</code>, vài giây sau gọi lại thì được</strong></td>
+<td>Worker cũ chưa tắt — <code>reload</code> <strong>không</strong> có hiệu lực tức thì</td>
+<td>Dùng vòng lặp chờ ở mục 2.3, hoặc đợi 2–3 giây rồi gọi lại</td>
+</tr>
+<tr>
+<td>Lệnh nạp cấu hình <strong>không in ra gì</strong></td>
+<td><code>&gt;/dev/null</code> vứt output của <code>tee</code> — <strong>đây là bình thường</strong></td>
+<td>Kiểm tra bằng <code>docker exec vps11 wc -l /etc/nginx/conf.d/quickbite.conf</code></td>
+</tr>
+<tr>
+<td>Terminal <strong>treo</strong> sau khi gõ <code>docker exec -i ... tee ...</code></td>
+<td>Chạy thiếu vế <code>cat ... |</code> phía trước nên <code>tee</code> đợi bàn phím</td>
+<td><code>Ctrl+C</code> để huỷ, rồi chạy <strong>nguyên câu lệnh</strong> có dấu <code>|</code></td>
+</tr>
+<tr>
+<td>File cấu hình <strong>rỗng (0 dòng)</strong></td>
+<td>Đã bấm <code>Ctrl+D</code> khi terminal treo → <code>tee</code> ghi 0 byte</td>
+<td>Chạy lại nguyên câu lệnh có dấu <code>|</code></td>
+</tr>
+<tr>
 <td><code>404</code> cho mọi đường dẫn</td>
-<td>Không <code>location</code> nào khớp, hoặc site mặc định nuốt request</td>
+<td>Không <code>location</code> nào khớp</td>
 <td><code>nginx -T</code> xem khối nào đang chạy</td>
 </tr>
 <tr>

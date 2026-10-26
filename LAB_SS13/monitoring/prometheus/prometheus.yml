@@ -1,0 +1,19 @@
+# Cau hinh Prometheus cho QuickBite
+global:
+  scrape_interval: 15s          # chu ky keo metrics tu moi target
+
+scrape_configs:
+  # --- Backend: cac microservice Spring Boot ---
+  - job_name: quickbite-backend
+    metrics_path: /actuator/prometheus     # duong dan Actuator xuat metrics
+    static_configs:
+      - targets:
+          - user-service:8081
+          - order-service:8083
+
+  # --- Ha tang: tai nguyen cua may chu ---
+  - job_name: vps-hardware
+    metrics_path: /metrics                 # Node Exporter dung /metrics
+    static_configs:
+      - targets:
+          - node-exporter:9100

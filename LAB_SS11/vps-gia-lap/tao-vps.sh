@@ -13,10 +13,17 @@ fi
 echo "==> Dang dung VPS gia lap (co Nginx)..."
 docker compose up -d --build
 echo "==> Doi SSH va Nginx san sang..."
+# Luu y: Docker bind cong NGAY khi container tao ra, nen chi kiem tra cong la
+# chua du — phai doi den khi Nginx thuc su TRA LOI mot request.
 for i in $(seq 1 30); do
-  nc -z localhost 2223 2>/dev/null && nc -z localhost 8880 2>/dev/null && break
+  nc -z localhost 2223 2>/dev/null \
+    && curl -s -o /dev/null --max-time 2 http://localhost:8880/ 2>/dev/null \
+    && break
   sleep 1
 done
+if ! curl -s -o /dev/null --max-time 3 http://localhost:8880/ 2>/dev/null; then
+  echo "    ⚠️  Nginx chua phan hoi sau 30s. Xem log: docker logs vps11"
+fi
 echo
 echo "VPS gia lap da chay."
 echo "  SSH  : ssh -p 2223 root@localhost        (mat khau: quickbite)"
