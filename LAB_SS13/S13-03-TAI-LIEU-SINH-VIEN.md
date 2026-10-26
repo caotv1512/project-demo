@@ -195,6 +195,10 @@ Sau khi sửa, tải thư viện mới bằng `./gradlew build` hoặc **Refresh
 
 ## 2.4 · Cấu hình endpoint và common tag
 
+> ⚠️ **`application.yml` của service đã có sẵn một khối `management:`.** Sửa khối đó tại chỗ, đừng thêm khối thứ hai:
+> YAML không cho hai key trùng ở cùng cấp, app sẽ chết lúc khởi động với `DuplicateKeyException`.
+> Kiểm tra nhanh bằng `grep -c '^management:' application.yml` — phải ra đúng `1`.
+
 ```yaml
 spring:
   application:
@@ -266,6 +270,9 @@ jvm_memory_used_bytes{application="order-service", area="heap"} 4.194304E7
 
 1. Kiểm tra đã thêm đủ **hai** dependencies Actuator và Micrometer chưa
 2. Xác nhận `exposure.include` trong `application.yml` đã có `prometheus`
+
+**Nếu container restart liên tục, chưa kịp trả gì:** xem `docker logs <container>`. Gặp `DuplicateKeyException` nghĩa là
+`application.yml` đang có **hai** khối `management:` — gộp lại làm một rồi build lại.
 
 > 💡 **Dòng `# TYPE` cho bạn biết ngay đó là loại metric nào** — không cần đoán qua tên. Đây là cách nhanh nhất để kiểm chứng những gì Lesson 01 đã học.
 

@@ -599,6 +599,11 @@ footer{margin-top:clamp(46px,7vw,74px); border-top:2px solid var(--ink); padding
   <p class="intro">Thêm thư viện xong vẫn chưa đủ: mặc định Spring Boot không mở endpoint <code>prometheus</code> ra.
   Phải khai báo rõ.</p>
 
+  <div class="note"><strong>File đã có sẵn một khối <code>management:</code> — sửa khối đó, đừng thêm khối mới.</strong>
+  YAML không cho hai key trùng ở cùng cấp. Dán thêm một khối <code>management:</code> nữa xuống cuối file thì ứng dụng
+  chết ngay lúc khởi động với <code>DuplicateKeyException</code> và container rơi vào vòng restart.
+  Kiểm nhanh trước khi build: <code>grep -c '^management:' application.yml</code> phải ra đúng <strong>1</strong>.</div>
+
   <pre>spring:
   application:
     name: order-service
@@ -1106,12 +1111,28 @@ http://order-service:8083/actuator/prometheus
     <div class="step-n">8</div>
     <div class="step-c">
       <h3>Thêm Micrometer rồi build lại để chữa 404</h3>
-      <p>Sửa <code>build.gradle</code> và <code>application.yml</code> theo mục 2.3 và 2.4, build lại service, đợi một chu kỳ scrape.</p>
-      <pre>./gradlew build
+      <p>Sửa <code>build.gradle</code> và <code>application.yml</code> theo mục 2.3 và 2.4 — nhớ <strong>sửa khối
+      <code>management:</code> đã có</strong>, không thêm khối mới. Kiểm trước khi build:</p>
+      <pre>cd session-05/stack
+grep -c '^management:' order-service/src/main/resources/application.yml</pre>
+      <div class="expect"><div class="eh">Phải ra đúng</div><pre class="out"><b>1</b>
+
+Ra 2 nghĩa là bạn đã dán thêm khối mới. Gộp lại rồi mới build,
+nếu không container sẽ restart liên tục.</pre></div>
+      <p>Build từ <strong>trong thư mục service</strong>, rồi dựng lại từ <code>session-05/stack</code>:</p>
+      <pre>(cd order-service &amp;&amp; ./gradlew build)
+(cd user-service  &amp;&amp; ./gradlew build)
 docker compose up -d --build order-service user-service
 sleep 20</pre>
-      <div class="expect"><div class="eh">Phải thấy</div><pre class="out">cả ba target chuyển sang up=<span class="g">1</span>
-lastError trống</pre></div>
+      <div class="expect"><div class="eh">Phải thấy — output thật</div><pre class="out">node-exporter:9100=<span class="g">1</span>
+order-service:8083=<span class="g">1</span>
+user-service:8081=<span class="g">1</span>
+
+lastError trống ở cả ba target</pre></div>
+      <div class="note"><strong>Container restart liên tục, chưa kịp trả gì?</strong>
+      Chạy <code>docker logs quickbite5-order | grep -i duplicate</code>.
+      Thấy <code>DuplicateKeyException</code> là lỗi YAML trùng key, không phải lỗi Micrometer —
+      lúc này <code>lastError</code> sẽ báo <code>connection refused</code> chứ không phải <code>404</code>, rất dễ đi tìm nhầm hướng.</div>
     </div>
   </div>
 

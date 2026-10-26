@@ -751,6 +751,11 @@ user-service:8081   order-service:8083   node-exporter:9100
 <p><strong>Ví dụ</strong> — lệnh <code>grep -c</code> phải trả về <code>1</code>.</p>
 <h2 id="23-mo-endpoint-va-gan-nhan-chung">2.3 · Mở endpoint và gắn nhãn chung</h2>
 <p><strong>Cấu trúc file</strong> — <code>order-service/src/main/resources/application.yml</code></p>
+<blockquote class="warn">
+<p>⚠️ <strong>File này ĐÃ CÓ SẴN một khối <code>management:</code></strong> (đang để <code>include: health,info</code>).
+Hãy <strong>sửa khối đó tại chỗ</strong>, đừng dán khối dưới đây xuống cuối file — YAML không cho phép hai key <code>management</code> ở cùng cấp,
+app sẽ chết ngay khi khởi động với lỗi <code>DuplicateKeyException</code> và container rơi vào vòng restart.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code><span class="nt">management</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">endpoints</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">web</span><span class="p">:</span>
@@ -790,6 +795,16 @@ user-service:8081   order-service:8083   node-exporter:9100
 <blockquote class="warn">
 <p>⚠️ <strong>Không bao giờ dùng <code>include: "*"</code> trên production.</strong> Nó mở toàn bộ endpoint Actuator — bao gồm cả những endpoint lộ biến môi trường, cấu hình và cấu trúc hệ thống.</p>
 <p>💡 <strong>Nhãn chung giải quyết bài toán gì?</strong> Khi 5 service cùng báo <code>jvm_memory_used_bytes</code>, bạn phải phân biệt được của ai. Nhãn <code>application</code> làm đúng việc đó, và chỉ cần khai <strong>một lần</strong> cho cả service.</p>
+</blockquote>
+<p><strong>Ví dụ</strong> — đếm số khối <code>management:</code> trước khi build, phải ra đúng <code>1</code></p>
+<div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-c<span class="w"> </span><span class="s1">'^management:'</span><span class="w"> </span>~/Downloads/quickbite-demo/session-05/stack/order-service/src/main/resources/application.yml
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>1
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ Ra <code>2</code> nghĩa là bạn đã dán thêm khối mới. Xoá bớt một khối rồi mới build, nếu không service sẽ không lên được.</p>
 </blockquote>
 <p><strong>Ví dụ</strong> — kiểm tra file đã sửa đúng chưa</p>
 <div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-A3<span class="w"> </span><span class="s1">'exposure'</span><span class="w"> </span>~/Downloads/quickbite-demo/session-05/stack/order-service/src/main/resources/application.yml
