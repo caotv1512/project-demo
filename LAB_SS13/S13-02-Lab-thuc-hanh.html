@@ -404,6 +404,30 @@ Session 11 đã đưa hệ thống ra Internet an toàn. Hôm nay ta <strong>nh�
 </tbody>
 </table>
 <h2 id="a2-ieu-kien-can">A2. Điều kiện cần</h2>
+<blockquote>
+<p>💡 <strong>Vì sao bài hôm nay lại đụng vào thư mục <code>session-05</code>?</strong>
+Buổi này không có ứng dụng riêng. Prometheus là <strong>công cụ đo</strong>, nên phải có thứ để đo — và thứ đó là hệ thống QuickBite
+bạn đã dựng ở Session 05. Việc thêm Micrometer vào <code>order-service</code> chính là nội dung của buổi 13:
+<em>làm sao bắt một ứng dụng đang chạy phải xuất metrics ra ngoài</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Thư mục</th>
+<th>Vai trò trong buổi 13</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>session-05/</code></td>
+<td><strong>Hệ thống bị giám sát</strong> — ta sửa nó để nó biết xuất metrics</td>
+</tr>
+<tr>
+<td><code>LAB_SS13/monitoring/</code></td>
+<td><strong>Hệ thống giám sát</strong> — Prometheus và Node Exporter, dựng mới hoàn toàn</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 <p><strong>Lệnh</strong></p>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>version
 </code></pre></div>
@@ -815,6 +839,46 @@ app sẽ chết ngay khi khởi động với lỗi <code>DuplicateKeyException<
 </code></pre></div>
 
 <h2 id="24-build-lai-va-kiem-chung">2.4 · Build lại và kiểm chứng</h2>
+<blockquote class="warn">
+<p>⚠️ <strong>Gặp <code>Gradle build daemon disappeared unexpectedly</code>?</strong> Đây <strong>không</strong> phải lỗi code của bạn.
+JVM của Gradle bị kernel giết vì máy ảo Docker hết RAM: 6 container của Session 05 đã chiếm sẵn khoảng <strong>2,6 GB</strong>,
+Gradle cần thêm chừng <strong>1–1,5 GB</strong> nữa.</p>
+<p>Dấu hiệu nhận ra: log Gradle dừng ngay ở dòng <code>The daemon has started executing the build</code> rồi mất hẳn,
+<strong>không có exception Java nào</strong>. Bị giết từ bên ngoài thì không kịp in lỗi.</p>
+<p>Cách xử lý, thử theo thứ tự:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Cách</th>
+<th>Khi nào dùng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Tắt service trong lúc build: <code>cd ../ &amp;&amp; ./stop-all.sh</code>, build xong rồi <code>./start-all.sh</code></td>
+<td>Nhanh nhất, không cần đổi cài đặt</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Tăng RAM cho Docker Desktop lên <strong>ít nhất 6 GB</strong> (Settings → Resources → Memory)</td>
+<td>Máy có đủ RAM</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Hạ mức giới hạn build: <code>BUILD_MEM=1g ./build-all.sh order-service</code></td>
+<td>Máy yếu, RAM Docker dưới 4 GB</td>
+</tr>
+</tbody>
+</table>
+<p><code>build-all.sh</code> đã ghim sẵn <code>-m 1500m</code> và <code>GRADLE_OPTS=-Xmx384m</code>, nên nếu bạn gọi Gradle bằng lệnh khác
+thì phải tự đặt giới hạn, đừng để JVM tự định cỡ theo toàn bộ RAM máy ảo.</p>
+</blockquote>
+<p><strong>Kiểm tra RAM trước khi build</strong></p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>stats<span class="w"> </span>--no-stream<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.Name}}\t{{.MemUsage}}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>quickbite5
+</code></pre></div>
+
 <p><strong>Cấu trúc quy trình</strong></p>
 <div class="highlight"><pre><span></span><code>sửa build.gradle + application.yml
    → build lại JAR (trong Docker, không cần JDK)
@@ -904,6 +968,18 @@ http_server_requests_seconds_bucket            0 dong
 </code></pre></div>
 
 <p><strong>Lệnh</strong> — bật rồi build lại</p>
+<div class="highlight"><pre><span></span><code>nano<span class="w"> </span>~/Downloads/quickbite-demo/session-05/stack/order-service/src/main/resources/application.yml
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>grep<span class="w"> </span>-c<span class="w"> </span><span class="s1">'percentiles-histogram'</span><span class="w"> </span>~/Downloads/quickbite-demo/session-05/stack/order-service/src/main/resources/application.yml
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>1
+</code></pre></div>
+
+<blockquote class="warn">
+<p>⚠️ Phải ra <code>1</code> rồi mới build. Ra <code>0</code> nghĩa là bạn chưa lưu file — build lại cũng không có bucket nào.</p>
+</blockquote>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Downloads/quickbite-demo/session-05<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./build-all.sh<span class="w"> </span>order-service<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>stack<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build<span class="w"> </span>--force-recreate<span class="w"> </span>order-service
 </code></pre></div>
 
@@ -1626,7 +1702,7 @@ node-exporter PortBindings = map[]
 
 <h2 id="53-cau-hinh-nao-ang-that-su-chay">5.3 · Cấu hình nào đang thật sự chạy</h2>
 <p><strong>Lệnh</strong></p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>quickbite-prometheus<span class="w"> </span>cat<span class="w"> </span>/etc/nginx/../prometheus/prometheus.yml<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>quickbite-prometheus<span class="w"> </span>cat<span class="w"> </span>/etc/prometheus/prometheus.yml
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>quickbite-prometheus<span class="w"> </span>cat<span class="w"> </span>/etc/prometheus/prometheus.yml
 </code></pre></div>
 
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/Downloads/quickbite-demo/LAB_SS13/monitoring<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>prometheus
