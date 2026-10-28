@@ -1,0 +1,8 @@
+# Khai bao Data Source bang file thay vi bam tay trong giao dien.
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://quickbite-prometheus:9090   # ten container, KHONG dung localhost
+    isDefault: true
