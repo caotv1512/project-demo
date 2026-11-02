@@ -1,0 +1,7 @@
+# File chong len docker-compose.yml cua session-05, chi doi log level.
+# Khong sua gi trong session-05.
+services:
+  order-service:
+    environment:
+      - LOGGING_LEVEL_COM_QUICKBITE_ORDER=DEBUG
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG
