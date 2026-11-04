@@ -14,6 +14,7 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'co.elastic.logging:logback-ecs-encoder:1.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 implementation 'io.micrometer:micrometer-registry-prometheus'      
 implementation 'org.springframework.boot:spring-boot-starter-actuator'

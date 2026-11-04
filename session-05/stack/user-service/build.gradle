@@ -11,6 +11,7 @@ ext { set('springCloudVersion', '2023.0.3') }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'co.elastic.logging:logback-ecs-encoder:1.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hai dinh dang log cho hai moi truong:
+    - khong co profile "json"  -> pattern chu de doc bang mat (Development)
+    - co profile "json"        -> JSON chuan ECS cho Fluentd (Production)
+  Bat bang: SPRING_PROFILES_ACTIVE=json
+-->
+<configuration>
+
+  <springProfile name="!json">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="json">
+    <appender name="ECS_JSON" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="co.elastic.logging.logback.EcsEncoder">
+        <serviceName>order-service</serviceName>
+        <serviceVersion>1.0.0</serviceVersion>
+        <includeMarkers>false</includeMarkers>
+        <stackTraceAsArray>false</stackTraceAsArray>
+      </encoder>
+    </appender>
+    <root level="INFO">
+      <appender-ref ref="ECS_JSON"/>
+    </root>
+  </springProfile>
+
+</configuration>

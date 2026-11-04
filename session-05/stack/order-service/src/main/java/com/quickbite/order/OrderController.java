@@ -77,7 +77,7 @@ public class OrderController {
         } catch (FeignException e) {
             jdbc.update("UPDATE orders SET status='CANCELLED', note=? WHERE id=?",
                         "Tru tien that bai: " + shortMsg(e), orderId);
-            log.warn("[BUOC 3] THAT BAI - huy don #{}", orderId);
+            log.warn("[BUOC 3] THAT BAI - huy don #{}", orderId, e);
             return result(orderId, "CANCELLED", "Khong tru duoc tien vi: " + shortMsg(e), false);
         }
 
@@ -90,7 +90,7 @@ public class OrderController {
             // Tien da bi tru o buoc 3 nhung nha hang tu choi o buoc 4.
             // Hai database nam o hai service khac nhau => KHONG co rollback tu dong.
             // Phai TU TAY goi sang user-service de hoan tien.
-            log.warn("[BUOC 4] Nha hang TU CHOI don #{} -> chay giao dich bu (hoan tien)", orderId);
+            log.warn("[BUOC 4] Nha hang TU CHOI don #{} -> chay giao dich bu (hoan tien)", orderId, e);
             userClient.refundWallet(userId, price);
             jdbc.update("UPDATE orders SET status='CANCELLED', note=? WHERE id=?",
                         "Nha hang tu choi - da hoan " + price + "d", orderId);

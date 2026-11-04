@@ -1,0 +1,61 @@
+# ==========================================================================
+#  File CHONG LEN docker-compose.yml cua session-05.
+#  Khong sua mot dong nao trong session-05.
+#
+#  Hai thay doi cho moi service:
+#    1. SPRING_PROFILES_ACTIVE=json  -> Logback in JSON chuan ECS
+#    2. SPRING_MAIN_BANNER_MODE=off  -> bo banner ASCII (khong phai JSON)
+#    3. logging.driver: fluentd      -> Docker gui log sang Fluentd
+#
+#  Cach dung (dung trong thu muc session-05/stack):
+#    docker compose -f docker-compose.yml -f ../../LAB_SS17/logging-fluentd.yml \
+#                   up -d --force-recreate
+#
+#  Tra ve binh thuong:
+#    docker compose up -d --force-recreate
+# ==========================================================================
+services:
+
+  order-service:
+    environment:
+      - SPRING_PROFILES_ACTIVE=json
+      - SPRING_MAIN_BANNER_MODE=off
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "127.0.0.1:24224"
+        fluentd-async: "true"
+        tag: "quickbite.order"
+
+  user-service:
+    environment:
+      - SPRING_PROFILES_ACTIVE=json
+      - SPRING_MAIN_BANNER_MODE=off
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "127.0.0.1:24224"
+        fluentd-async: "true"
+        tag: "quickbite.user"
+
+  restaurant-service:
+    environment:
+      - SPRING_PROFILES_ACTIVE=json
+      - SPRING_MAIN_BANNER_MODE=off
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "127.0.0.1:24224"
+        fluentd-async: "true"
+        tag: "quickbite.restaurant"
+
+  notification-service:
+    environment:
+      - SPRING_PROFILES_ACTIVE=json
+      - SPRING_MAIN_BANNER_MODE=off
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: "127.0.0.1:24224"
+        fluentd-async: "true"
+        tag: "quickbite.notification"

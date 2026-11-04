@@ -1,0 +1,72 @@
+# ==========================================================================
+#  Session 17 - EFK Stack (Elasticsearch + Fluentd + Kibana)
+#
+#  Compose project RIENG, tach khoi 4 microservices cua session-05.
+#  Hai project noi voi nhau bang mang dung chung quickbite5-net.
+#
+#  Ba cong deu bind tren 127.0.0.1 -> khong mo ra internet.
+# ==========================================================================
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    container_name: quickbite-elasticsearch
+    environment:
+      discovery.type: single-node          # lab mot node, khong lap cluster
+      xpack.security.enabled: "false"      # CHI dung cho lab da co lap
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"        # co dinh RAM cua JVM, tranh OOM
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - "127.0.0.1:9200:9200"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.15.0
+    container_name: quickbite-kibana
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    ports:
+      - "127.0.0.1:5601:5601"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+  fluentd:
+    build:
+      context: ./fluentd
+    image: quickbite-fluentd:1.19.3
+    container_name: quickbite-fluentd
+    volumes:
+      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf:ro
+      - fluentd-buffer:/fluentd/buffer
+    environment:
+      FLUENTD_CONF: fluent.conf
+    ports:
+      - "127.0.0.1:24224:24224"
+      - "127.0.0.1:24224:24224/udp"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - quickbite5-net
+    restart: unless-stopped
+
+volumes:
+  elasticsearch-data:      # index va document log
+  fluentd-buffer:          # chunk dang cho gui sang Elasticsearch
+
+networks:
+  quickbite5-net:
+    external: true         # mang do session-05 tao ra

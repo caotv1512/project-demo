@@ -1,5 +1,7 @@
 package com.quickbite.notification;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/notifications")
 public class NotificationController {
+
+    private static final Logger log = LoggerFactory.getLogger(NotificationController.class);
 
     private final JdbcTemplate jdbc;
     public NotificationController(JdbcTemplate jdbc) { this.jdbc = jdbc; }
@@ -31,6 +35,7 @@ public class NotificationController {
     @PostMapping
     public Map<String, Object> send(@RequestParam Long userId, @RequestParam String message) {
         jdbc.update("INSERT INTO notifications (user_id, message) VALUES (?, ?)", userId, message);
+        log.info("[THONG BAO] Da gui cho user #{}: {}", userId, message);
         return Map.of("sent", true, "userId", userId, "message", message);
     }
 }

@@ -1,5 +1,7 @@
 package com.quickbite.user;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private final JdbcTemplate jdbc;
     public UserController(JdbcTemplate jdbc) { this.jdbc = jdbc; }
@@ -42,10 +46,13 @@ public class UserController {
         Long balance = jdbc.queryForObject(
             "SELECT wallet_balance FROM users WHERE id = ?", Long.class, id);
         if (balance == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Khong co user id=" + id);
-        if (balance < amount)
+        if (balance < amount) {
+            log.warn("[VI] Tru tien THAT BAI cho user #{} - can {}d, con {}d", id, amount, balance);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 "So du khong du: co " + balance + ", can " + amount);
+        }
         jdbc.update("UPDATE users SET wallet_balance = wallet_balance - ? WHERE id = ?", amount, id);
+        log.info("[VI] Da tru {}d cua user #{} - con lai {}d", amount, id, balance - amount);
         return Map.of("userId", id, "deducted", amount, "newBalance", balance - amount);
     }
 
@@ -55,6 +62,7 @@ public class UserController {
         jdbc.update("UPDATE users SET wallet_balance = wallet_balance + ? WHERE id = ?", amount, id);
         Long balance = jdbc.queryForObject(
             "SELECT wallet_balance FROM users WHERE id = ?", Long.class, id);
+        log.info("[VI] Da hoan {}d cho user #{} - so du {}d", amount, id, balance);
         return Map.of("userId", id, "refunded", amount, "newBalance", balance);
     }
 }
